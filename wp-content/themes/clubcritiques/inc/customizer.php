@@ -3,7 +3,7 @@
  * Club Critiques: Customizer
  *
  * @package WordPress
- * @subpackage Twenty_Seventeen
+ * @subpackage Club_Critiques
  * @since 1.0
  */
 

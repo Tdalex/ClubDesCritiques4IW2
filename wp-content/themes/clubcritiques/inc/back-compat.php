@@ -7,7 +7,7 @@
  * relies on many newer functions and markup changes introduced in 4.7.
  *
  * @package WordPress
- * @subpackage Twenty_Seventeen
+ * @subpackage Club_Critiques
  * @since Club Critiques 1.0
  */
 
