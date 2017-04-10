@@ -123,8 +123,8 @@ msgid "Smoother Menu Building"
 msgstr "Construction de menu plus fluide"
 
 #: wp-admin/about.php:129
-msgid "Sometimes a big atmospheric video as a moving header image is just what you need to showcase your wares; go ahead and try it out with Twenty Seventeen. Need some video inspiration? Try searching for sites with video headers available for download and use."
-msgstr "Il se peut que vous vouliez utiliser une belle vidéo atmosphérique comme une image d'en-tête afin de présenter vos marchandises&nbsp;; c’est possible avec Twenty Seventeen. Besoin d’une inspiration vidéo&nbsp;? Lancez une recherche sur des sites de téléchargement d’en-têtes vidéo prêtes à l’emploi."
+msgid "Sometimes a big atmospheric video as a moving header image is just what you need to showcase your wares; go ahead and try it out with Club Critiques. Need some video inspiration? Try searching for sites with video headers available for download and use."
+msgstr "Il se peut que vous vouliez utiliser une belle vidéo atmosphérique comme une image d'en-tête afin de présenter vos marchandises&nbsp;; c’est possible avec Club Critiques. Besoin d’une inspiration vidéo&nbsp;? Lancez une recherche sur des sites de téléchargement d’en-têtes vidéo prêtes à l’emploi."
 
 #: wp-admin/about.php:119
 msgid "Video Headers"
@@ -155,16 +155,16 @@ msgid "Your Site, Your Way"
 msgstr "Votre site, à votre manière"
 
 #: wp-admin/about.php:76
-msgid "Twenty Seventeen focuses on business sites and features a customizable front page with multiple sections. Personalize it with widgets, navigation, social menus, a logo, custom colors, and more. Our default theme for 2017 works great in many languages, on any device, and for a wide range of users."
-msgstr "Twenty Seventeen se concentre sur les sites d’entreprises et dispose d’une page d’accueil personnalisable avec plusieurs sections. Personnalisez-le avec des widgets, navigation, menus sociaux, logo, des couleurs personnalisées et bien plus encore. Notre thème par défaut pour 2017 fonctionne parfaitement dans de nombreuses langues, sur n’importe quel appareil et pour un large éventail d’utilisateurs."
+msgid "Club Critiques focuses on business sites and features a customizable front page with multiple sections. Personalize it with widgets, navigation, social menus, a logo, custom colors, and more. Our default theme for 2017 works great in many languages, on any device, and for a wide range of users."
+msgstr "Club Critiques se concentre sur les sites d’entreprises et dispose d’une page d’accueil personnalisable avec plusieurs sections. Personnalisez-le avec des widgets, navigation, menus sociaux, logo, des couleurs personnalisées et bien plus encore. Notre thème par défaut pour 2017 fonctionne parfaitement dans de nombreuses langues, sur n’importe quel appareil et pour un large éventail d’utilisateurs."
 
 #: wp-admin/about.php:70
 msgid "A brand new default theme brings your site to life with immersive featured images and video headers."
 msgstr "Un nouveau thème par défaut qui apporte de la vie à votre site avec des images mises en avant et des en-têtes vidéo immersives."
 
 #: wp-admin/about.php:69
-msgid "Presenting Twenty Seventeen"
-msgstr "Présentation de Twenty Seventeen"
+msgid "Presenting Club Critiques"
+msgstr "Présentation de Club Critiques"
 
 #: wp-admin/about.php:37 wp-admin/credits.php:23 wp-admin/freedoms.php:22
 msgid "Thank you for updating to the latest version! WordPress %s helps you get your site set up the way you want it."
