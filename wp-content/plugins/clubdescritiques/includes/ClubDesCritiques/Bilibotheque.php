@@ -91,27 +91,6 @@ class Bibliotheque
         );
         register_taxonomy('bibliotheque_genre', array('genre'), $args);
     }
-    
-    /*public static function loadTextDomain()
-    {
-        load_plugin_textdomain('uimmcrm', false, dirname(plugin_basename(__FILE__)) . '/languages/');
-    }*/
-
-    /**
-    * add custom param for WP_QUERY for *like*
-    */
-    public static function search_posts_where( $where, &$wp_query )
-    {
-        global $wpdb;
-        if ( $search_like = $wp_query->get( 'search' ) ) {
-            //title
-            $where .= ' AND ' . $wpdb->posts . '.post_title LIKE \'%' . esc_sql( $wpdb->esc_like( $search_like ) ) . '%\'';
-
-            //meta
-            // $where .= ' OR ( ' . $wpdb->postmeta . '.meta_value LIKE \'%' . esc_sql( $wpdb->esc_like( $search_like ) ) . '%\' )';
-        }
-        return $where;
-    }
 
     /**
     * Return the brands
@@ -120,59 +99,77 @@ class Bibliotheque
     */
     public static function getBibliothequeAPI($request){
         $params = $request->get_params();
+        global $wpdb;
 
-        $args['posts_per_page']  = -1;
-        $args['post_type']       = 'product';
+        $limit      = 10;
+        $offset     = 0;
+        $where      = array();
+        $having     = array();
+        $join       = '';
 
-        foreach($params as $key => $value){
-            switch($key){
-                case 'market':
-                    $args['tax_query'] =
-                        array(
-                            array(
-                                'taxonomy' => 'product_market',
-                                'field'    => 'term_id',
-                                'terms'    => $value,
-                            )
-                        );
-                    break;
+        $query      = "SELECT DISTINCT ". $wpdb->posts .".ID, ".$wpdb->posts .".post_title  FROM ". $wpdb->posts;
+        $countQuery = "SELECT COUNT(*) as count FROM(SELECT ".  $wpdb->posts .".ID  FROM ". $wpdb->posts;
 
-                case 'search':
+        //set OFFSET
+        if(isset($params['offset']) && !empty($params['offset']))
+            $offset        = $params['offset'];
 
-                    // title like value
-                    $args[$key] = $value;
+        //set limit
+        if(isset($params['limit']) && !empty($params['limit']))
+            $limit         = $params['limit'];
 
-                    // keyword + mechanical properties like search
-                    // $args['meta_query'] = 
-                    //     array(
-                    //         'relation'      => 'OR',
-                    //         array(
-                    //             // 'key'       => 'keyword',
-                    //             'value'     => $value,
-                    //             'compare'   => 'LIKE',
-                    //         ),
-                    //         // array(
-                    //         //     'key'       => 'mechanical_properties_%_value',
-                    //         //     'value'     => $value,
-                    //         //     'compare'   => 'LIKE',
-                    //         // )
-                    //     );
-
-                    break;
-
-                default:
-                    $args[$key] = $value;
-                    break;
-            }
+        // filter by theme
+        if(isset($params['theme']) && !empty($params['theme'])){
+            $join         .= " LEFT JOIN ". $wpdb->term_relationships ." AS taxA ON (". $wpdb->posts .".ID = taxA.object_id)";
+            $where[]       = "taxA.term_taxonomy_id IN (". $params[''] ."))";
+            if(isset($params['exact_market']))
+                $having[]  = " count(distinct taxA.term_taxonomy_id)=". count(explode(',',$params['theme']));
         }
 
-        $wp = new \WP_Query($args);
-        if($wp !== null && !empty($wp->posts)){
-            // return $wp->request;
-            $response['total'] = $wp->post_count;
-            $response['body']  = $wp->posts;
-            return $response;
+        // filter by title or meta
+        if(isset($params['search']) && !empty($params['search'])){
+            $join         .= " INNER JOIN ". $wpdb->postmeta ." as metaA ON (". $wpdb->posts .".ID = metaA.post_id)";
+            $needle        = array(' ','-','/');
+            $search        = str_replace($needle, '%',$params['search']);
+            $where[]       = $wpdb->posts .".post_title LIKE '%". $search ."%' OR metaA.meta_value LIKE '%". $search ."%')";
         }
-        return false;
+
+        //merge filters
+        if(!empty($where)){
+            $where   = implode($where, ' AND (');
+        }else{
+            $where   = '1=1)';
+        }
+
+        //merge having
+        if(!empty($having)){
+            $having  = 'having'. implode($having, ' AND ');
+        }else{
+            $having  = '';
+        }
+
+        // create QUERY
+        $query .= $join ." WHERE ". $wpdb->posts .".post_type = 'product' AND (". $where ." GROUP BY ". $wpdb->posts .".ID  ". $having ." LIMIT ". $offset .", ". $limit;
+
+        //return query if asked
+        if(isset($params['query']))
+            return $query;
+
+        //get result
+        $result = $wpdb->get_results($query);
+
+        //send response
+        if(!empty($result)){
+
+            //create count query
+            $countQuery .= $join ." WHERE ". $wpdb->posts .".post_type = 'product' AND (". $where ." GROUP BY ". $wpdb->posts .".ID  ". $having .") as T";
+            $response['nb_products'] = $wpdb->get_results($countQuery)[0]->count;
+
+            $response['items'] = $result;
+
+            return wp_send_json_success($response);
+        }
+
+        return wp_send_json_error();
     }
 }

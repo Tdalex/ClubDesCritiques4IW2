@@ -74,7 +74,11 @@ function clubcritiques_setup() {
 		'gallery',
 		'caption',
 	) );
+	
+	/* Export ACF */
 
+	require_once 'includes/acf.plugin.php';
+	
 	/*
 	 * Enable support for Post Formats.
 	 *

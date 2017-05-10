@@ -37,13 +37,11 @@ add_action('init', array('ClubDesCritiques\Bibliotheque', 'initCustomTaxonomies'
 // init custom WP API endpoint
 add_action( 'rest_api_init', function () {
     register_rest_route( 'ClubDesCritiques/', "bibliotheque", array(
-        'methods'  => WP_REST_Server::READABLE,
+        'methods'  => 'POST, GET',
         'callback' => array('ClubDesCritiques\Bibliotheque', 'getBibliothequeAPI'),
     ));
 });
 
-//add custom param for WP_QUERY for *like*
-add_filter( 'posts_where', array('ClubDesCritiques\Bibliotheque', 'search_posts_where'), 10, 2 );
 
 ClubDesCritiques\Settings::registerHooks();
 ClubDesCritiques\Cron\Task\Migration::registerHooks();
