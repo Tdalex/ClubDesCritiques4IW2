@@ -1,6 +1,14 @@
 <?php
 /**
  * Club Des Critiques
+ *
+ * @wordpress-plugin
+ * Plugin Name:       Club Des Critiques
+ * Description:       Club Des Critiques plugin
+ * Version:           1.0.0
+ * Author:            Dalex Tanguy, Bornstein Alexandre, Alexandre Marine
+ * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * Domain Path:       /languages
  */
 
 // Exit if accessed directly
@@ -8,7 +16,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-require WP_CONTENT_DIR. '/themes/clubdescritiques/vendor/autoload.php';
+// require WP_CONTENT_DIR. '/themes/clubcritiques/vendor/autoload.php';
 
 spl_autoload_register(function($class) {
     $namespaces = explode('\\', $class);
@@ -41,9 +49,5 @@ add_action( 'rest_api_init', function () {
         'callback' => array('ClubDesCritiques\Bibliotheque', 'getBibliothequeAPI'),
     ));
 });
-
-
-ClubDesCritiques\Settings::registerHooks();
-ClubDesCritiques\Cron\Task\Migration::registerHooks();
 
 
