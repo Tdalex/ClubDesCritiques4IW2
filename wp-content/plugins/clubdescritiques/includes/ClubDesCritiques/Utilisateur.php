@@ -16,7 +16,7 @@ class Utilisateur{
         
     }
 	
-	public function register($request){
+	public static function register($request){
 		if(empty($request))
 			return false;
 		
@@ -31,7 +31,7 @@ class Utilisateur{
 		return wp_mail($request['email'], $object, $message, $headers);
 	}
 	
-	public function activateAccount($newPassword){
+	public static function activateAccount($newPassword){
 		if(count($newPassword)<6)
 			return 'Veuillez entrer un mot de passe plus long';
 		
@@ -44,7 +44,7 @@ class Utilisateur{
 		return true;
 	}
 	
-	public function modifyUserInfo($request){
+	public static function modifyUserInfo($request){
 		$user_id = get_current_user_id();
 		$request['userInfo']['ID'] = $user_id;
 		
@@ -53,5 +53,40 @@ class Utilisateur{
 			wp_set_password($newPassword, $user_id);
 			
 		return wp_update_user($request['userInfo']);
+	}
+	
+	public static function postCommentary($idProduct, $content){
+		$user_id	  = get_current_user_id();
+		$productTitle = get_the_title($idProduct);
+		$post   	  = array('post_author' => $user_id, 'post_type' => 'commentaire', 'post_title' => $productTitle.'_'.$user_id.'_');
+		
+		$idCommentary = wp_insert_post($post, $user_id);
+		update_field('commented_product', $idProduct, $idCommentary);
+		update_field('commentary', $idProduct, $content);
+		return true;
+	}
+	
+	public static function ChangeNotation($idProduct, $note){
+		$user_id	  = get_current_user_id();
+		$productTitle = get_the_title($idProduct);
+		
+		$args = array(
+			'posts_per_page'   => -1,
+			'meta_value'       => $idProduct,
+			'post_type'        => 'notation',
+			'author'	  	   => $user_id,
+			'post_status'      => 'publish'
+		);
+		$existNote 	  = get_posts($args);
+		if(empty($existNote){
+			$post   	  = array('post_author' => $user_id, 'post_type' => 'notation', 'post_title' => $productTitle.'_'.$user_id);
+			
+			$idNotation = wp_insert_post($post, $user_id);
+			update_field('product_noted', $idNotation, $idProduct);
+		}else{
+			$idNotation = $existNote[0];
+		}
+		update_field('note', $idNotation, $note);
+		return true;
 	}
 }
