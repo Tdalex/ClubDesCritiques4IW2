@@ -27,10 +27,33 @@ class Bibliotheque
                 'labels' => array(
                     'name' => __('Bibliotheques', 'clubdescritiques'),
                     'singular_name' => __('Bibliotheque', 'clubdescritiques'),
-                    'all_items' => __('Toutes les  bibliotheques', 'clubdescritiques'),
+                    'all_items' => __('Toutes les bibliotheques', 'clubdescritiques'),
                     'add_new_item' => __("Ajout d'une bibliotheque", 'clubdescritiques'),
                     'search_items' => __('Recherche dans la bibliotheque', 'clubdescritiques'),
                     'not_found' => __('Aucune bibliotheque trouvee.', 'clubdescritiques')
+                ),
+                'public' => true,
+                'show_ui' => true, // passer à false pour ne pas y accéder en BO, mais sera accessible en front
+                'show_in_nav_menus' => false,
+                'show_in_admin_bar' => false,
+                'supports' => array('title'),
+                'can_export' => true,
+                'show_in_rest'  => true,
+                'custom_metadata' => true,
+            )
+        );
+		
+		// post_type = commentaire
+        register_post_type(
+            'Commentaire',
+            array(
+                'labels' => array(
+                    'name' => __('Commentaires', 'clubdescritiques'),
+                    'singular_name' => __('Commentaire', 'clubdescritiques'),
+                    'all_items' => __('Tout les commentaires', 'clubdescritiques'),
+                    'add_new_item' => __("Ajout d'un commentaire", 'clubdescritiques'),
+                    'search_items' => __('Recherche dans les commentaires', 'clubdescritiques'),
+                    'not_found' => __('Aucun commentaire trouvee.', 'clubdescritiques')
                 ),
                 'public' => true,
                 'show_ui' => true, // passer à false pour ne pas y accéder en BO, mais sera accessible en front
