@@ -55,15 +55,61 @@ class Utilisateur{
 		return wp_update_user($request['userInfo']);
 	}
 	
-	public static function postCommentary($idProduct, $content){
+	public static function postComment($idProduct, $content){
 		$user_id	  = get_current_user_id();
 		$productTitle = get_the_title($idProduct);
 		$post   	  = array('post_author' => $user_id, 'post_type' => 'commentaire', 'post_title' => $productTitle.'_'.$user_id.'_');
 		
-		$idCommentary = wp_insert_post($post, $user_id);
-		update_field('commented_product', $idProduct, $idCommentary);
-		update_field('commentary', $idProduct, $content);
+		$idComment = wp_insert_post($post, $user_id);
+		update_field('commented_product', $idComment, $idProduct);
+		update_field('comment', $idComment, $content);
 		return true;
+	}
+	
+	public static function editComment($idComment, $content){
+		update_field('comment', $idComment, $content);
+		return true;
+	}
+	
+	public static function deleteComment($idComment){
+		wp_delete_post($idComment);
+		return true;
+	}
+	
+	public static function getNotation($idProduct, $user_id){
+		$args = array(
+			'posts_per_page'   => -1,
+			'meta_value'       => $idProduct,
+			'post_type'        => 'notation',
+			'author'	  	   => $user_id,
+			'post_status'      => 'publish'
+		);
+		$notation = get_posts($args);
+		if(!empty($notation)){
+			return get_field('note', $notation[0]->ID);
+		}else{
+			return 'aucune note donnée';
+		}
+	}
+	
+	public static function getAverageNote($idProduct){
+		$args = array(
+			'posts_per_page'   => -1,
+			'meta_value'       => $idProduct,
+			'post_type'        => 'notation',
+			'post_status'      => 'publish'
+		);
+		
+		$nbNotation = 0;
+		$totalNote  = 0;
+		$notations  = get_posts($args);
+		if(!empty($notations)){
+			foreach($notations as $notation){
+				$totalNote += get_field('note', $notation);
+				$nbNotation++;
+			}
+		}
+		return array('average' => $totalNote/$nbNotation, 'total' => $nbNotation);
 	}
 	
 	public static function ChangeNotation($idProduct, $note){
@@ -87,6 +133,7 @@ class Utilisateur{
 			$idNotation = $existNote[0];
 		}
 		update_field('note', $idNotation, $note);
+	
 		return true;
 	}
 }
