@@ -1,4 +1,4 @@
-<?php
+ï»¿<?php
 /**
  * Club Des Critiques Extension
  *
@@ -14,7 +14,9 @@ class Utilisateur{
         global $wpdb;        
     }
 	
-	public static function redirect($url = get_home_url()){
+	public static function redirect($url = false){
+		if(!$url)
+			$url = get_home_url();
         echo '<script type="text/javascript">window.location = "' . $url . '"</script>';
         return true;
     }
@@ -30,8 +32,8 @@ class Utilisateur{
 		if(!$user){
 			$password = wp_generate_password(8, false); 
 			$user = wp_create_user($request['email'], $password, $request['email']);
-			$object  = 'Bienvenue à Club Des Critiques';
-			$message = 'Bienvenue à Club Des Critiques ' . $request['email'] . ', <br> Afin de valider votre compte, veuillez <a href="'. home_url() .'">vous connecter</a> avec ce mot de passe: <br><br> ' . $password . ' <br><br> il vous sera ensuite demandé de le modifier.<br><br><br> Cordialement.';
+			$object  = 'Bienvenue Ã  Club Des Critiques';
+			$message = 'Bienvenue Ã  Club Des Critiques ' . $request['email'] . ', <br> Afin de valider votre compte, veuillez <a href="'. home_url() .'">vous connecter</a> avec ce mot de passe: <br><br> ' . $password . ' <br><br> il vous sera ensuite demandÃ© de le modifier.<br><br><br> Cordialement, <br> Le club des critiques';
 			$headers[] = 'From: '. NO_REPLY;
 			wp_mail($request['email'], $object, $message, $headers);
 		}else{
@@ -75,29 +77,41 @@ class Utilisateur{
 	}
 	
 	public static function activateAccount($request){
-		if(count($request['newPassword'])<6)
+		$error = false;
+		
+		if(strlen($request['newPassword'])<6){
 			echo 'Veuillez entrer un mot de passe plus long';
+			$error = true;
+		}
 		
-		if($request['newPassword'] != $request['newPasswordCheck'])
-			echo 'Veuillez valider la vérification de mot de passe';
+		if($request['newPassword'] != $request['newPasswordCheck']){
+			echo 'Veuillez valider la vÃ©rification de mot de passe';
+			$error = true;
+		}
 		
-		$activate = "
-		<form action='' method='POST'>
-			<input type='hidden' name='type' value='activate'></input>
-			password:<input type='password' name='newPassword'></input><br>
-			confirm password:<input type='password' name='newPasswordCheck'></input><br>
-			<button type='submit'>modifier  mot de passe</button>
-		</form>";
-		echo $activate;
+		if($error){
+			$activate = "
+			<form action='' method='POST'>
+				<input type='hidden' name='type' value='activate'></input>
+				password:<input type='password' name='newPassword'></input><br>
+				confirm password:<input type='password' name='newPasswordCheck'></input><br>
+				<button type='submit'>modifier  mot de passe</button>
+			</form>";
+			return $activate;
+		}
 		
-		$user_id = get_current_user_id();
-		wp_set_password($request['newPassword'], $user_id);
-		update_field('activated', true, 'user_'.$user_id);
-		$object  = 'Activation du compte terminé';
-		$message = 'Bonjour,<br><br>Votre compte a bien été activé,<br> en esperant vous voir tres bientôt. <br> Cordialement, <br><BR> Le club des critiques';
+		$user = wp_get_current_user();
+		wp_set_password($request['newPassword'], $user->ID);
+		update_field('activated', true, 'user_'.$user->ID);
+		$object  = 'Activation du compte terminÃ©';
+		$message = 'Bonjour,<br><br>Votre compte a bien Ã©tÃ© activÃ©,<br> en esperant vous voir tres bientÃ´t<br> Cordialement, <br><BR> Le club des critiques';
 		$headers[] = 'From: '. NO_REPLY;
-		wp_mail($request['email'], $object, $message, $headers);	
-		$_SESSION['login_msg'] = 'Votre compte a bien été activé';
+		wp_mail($user->user_email , $object, $message, $headers);	
+		$_SESSION['login_msg'] = 'Votre compte a bien Ã©tÃ© activÃ©'
+		wp_set_current_user($user->ID);
+		wp_set_auth_cookie($user->ID);
+		do_action( 'wp_login', $user->user_login );
+
 		return self::redirect($_SERVER['REQUEST_URI']);
 			
 	}
