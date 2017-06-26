@@ -141,9 +141,9 @@ class Utilisateur{
 		unset($request['passwordCheck']);
 		$request = array_filter($request);
 		
-		if(isset($request['email'] && $lastEmail != $request['email']){
+		if(isset($request['email'] && $lastEmail != $request['user_email']){
 			$object    = 'Modification de votre email';
-			$message   = 'Bonjour,<br><br>Votre email vient d\'êtres modifié vers '. $request['email'] .', En cas de problème veuillez nous contacter au plus tôt,<br> sinon veuillez ignorer ce message.<br> Cordialement, <br><BR> Le club des critiques';
+			$message   = 'Bonjour,<br><br>Votre email vient d\'êtres modifié vers '. $request['user_email'] .', En cas de problème veuillez nous contacter au plus tôt,<br> sinon veuillez ignorer ce message.<br> Cordialement, <br><BR> Le club des critiques';
 			$headers[] = 'From: '. NO_REPLY;
 			wp_mail($lastEmail , $object, $message, $headers);
 		}
