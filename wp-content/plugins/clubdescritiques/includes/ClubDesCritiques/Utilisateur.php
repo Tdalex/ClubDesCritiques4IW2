@@ -32,7 +32,7 @@ class Utilisateur{
 			$user = wp_create_user($request['email'], $password, $request['email']);
 			$object  = 'Bienvenue à Club Des Critiques';
 			$message = 'Bienvenue à Club Des Critiques ' . $request['email'] . ', <br> Afin de valider votre compte, veuillez <a href="'. home_url() .'">vous connecter</a> avec ce mot de passe: <br><br> ' . $password . ' <br><br> il vous sera ensuite demandé de le modifier.<br><br><br> Cordialement.';
-			$headers[] = 'From: tdalexsmtp@gmail.com';
+			$headers[] = 'From: '. NO_REPLY;
 			wp_mail($request['email'], $object, $message, $headers);
 		}else{
 			return 'email deja utilise';
@@ -95,7 +95,7 @@ class Utilisateur{
 		update_field('activated', true, 'user_'.$user_id);
 		$object  = 'Activation du compte terminé';
 		$message = 'Bonjour,<br><br>Votre compte a bien été activé,<br> en esperant vous voir tres bientôt. <br> Cordialement, <br><BR> Le club des critiques';
-		$headers[] = 'From: tdalexsmtp@gmail.com';
+		$headers[] = 'From: '. NO_REPLY;
 		wp_mail($request['email'], $object, $message, $headers);	
 		$_SESSION['login_msg'] = 'Votre compte a bien été activé';
 		return self::redirect($_SERVER['REQUEST_URI']);

@@ -17,7 +17,13 @@
  *
  * @package WordPress
  */
-
+  
+if($_SERVER['HTTP_HOST'] == 'club-des-critiques.loc'){
+	define('NO_REPLY', 'tdalexsmtp@gmail.com');
+}else{
+	define('NO_REPLY', 'NO_REPLY');
+}
+ 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
 define('DB_NAME', 'club-critique');
