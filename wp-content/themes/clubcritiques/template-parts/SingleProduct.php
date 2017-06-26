@@ -19,16 +19,22 @@ if(!is_object($product) || $product->post_type != 'bibliotheque'){
 //product
 $author = get_field('author', $product_ID)[0];
 $published_date = get_field('published_date', $product_ID);
+$published_date = new DateTime($published_date);
+
 $description    = get_field('description', $product_ID);
 $original_title = get_field('original_title', $product_ID);
 $image = get_field('image', $product_ID);
 
 //auteur
-$birthdate = get_field('birthdate', $author->ID);
 $sexe      = get_field('sexe', $author->ID);
-$deathdate = get_field('deathdate', $author->ID);
 $photo     = get_field('photo', $author->ID);
 $descriptionAuthor = get_field('description', $author->ID);
+
+$birthdate = get_field('birthdate', $author->ID);
+$birthdate = new DateTime($birthdate);
+
+$deathdate = get_field('deathdate', $author->ID);
+$deathdate = new DateTime($deathdate);
 ?>
 
 
@@ -37,11 +43,10 @@ $descriptionAuthor = get_field('description', $author->ID);
 <h2><?php echo $original_title; ?></h2>
 <img style='height:50px; length:50px;'src='<?php echo $image;?>'></img>
 <div><?php echo $description;?></div>
-<div><?php echo $published_date;?></div>
-<br>
-<br>
-<div><?php echo $author->post_title;?></div>
-<div><?php echo $birthdate . ' --- ' . $deathdate;?></div>
+<div><?php echo $published_date->format('j/m/Y'); ?></div>
+<br><br>
+<a href='<?php echo get_permalink(get_page_by_title('Auteur')).$author->ID; ?>'><?php echo $author->post_title;?></a>
+<div><?php echo $birthdate->format('j/m/Y') . ' --- ' . $deathdate->format('j/m/Y')?></div>
 <img style='height:50px; length:50px;'src='<?php echo $photo;?>'></img>
 <div><?php echo $descriptionAuthor;?></div>
 <div><?php echo $sexe;?></div>

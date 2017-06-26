@@ -218,4 +218,20 @@ class Bibliotheque
 
         return wp_send_json_error();
     }
+
+	public static function getAuthorBiblio($authorId, $max = -1){
+		$args = array(
+			'posts_per_page'   => $max,
+			'meta_key'         => 'author',
+			'meta_value'       => "a:1:{i:0;s:2:\"". $authorId ."\";}",
+			'post_type'        => 'bibliotheque',
+			'post_status'      => 'publish',
+		);
+		
+		$posts = get_posts( $args );
+		if(!empty($posts))
+			return $posts;
+		return false;
+	} 
 }
+
