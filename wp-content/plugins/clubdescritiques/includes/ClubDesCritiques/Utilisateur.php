@@ -79,6 +79,7 @@ class Utilisateur{
 	
 	public static function activateAccount($request){
 		$error = false;
+		$user = wp_get_current_user();
 		
 		if(strlen($request['newPassword'])<6){
 			echo 'Veuillez entrer un mot de passe plus long';
@@ -101,9 +102,9 @@ class Utilisateur{
 			return $activate;
 		}
 		
-		$user = wp_get_current_user();
 		wp_set_password($request['newPassword'], $user->ID);
-		update_field('activated', 'a:1:{i:0;s:4:"true";}', 'user_'.$user->ID);
+		//field 'activated'
+		update_field('field_5938214cbbae4', array("true"), 'user_'.$user->ID);
 		$object    = 'Activation du compte terminé';
 		$message   = 'Bonjour,<br><br>Votre compte a bien été activé,<br> en esperant vous voir tres bientôt<br> Cordialement, <br><BR> Le club des critiques';
 		$headers[] = 'From: '. NO_REPLY;
@@ -141,7 +142,7 @@ class Utilisateur{
 		unset($request['passwordCheck']);
 		$request = array_filter($request);
 		
-		if(isset($request['email'] && $lastEmail != $request['user_email']){
+		if(isset($request['email']) && $lastEmail != $request['user_email']){
 			$object    = 'Modification de votre email';
 			$message   = 'Bonjour,<br><br>Votre email vient d\'êtres modifié vers '. $request['user_email'] .', En cas de problème veuillez nous contacter au plus tôt,<br> sinon veuillez ignorer ce message.<br> Cordialement, <br><BR> Le club des critiques';
 			$headers[] = 'From: '. NO_REPLY;

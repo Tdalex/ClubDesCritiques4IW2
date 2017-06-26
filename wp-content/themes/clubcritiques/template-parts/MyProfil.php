@@ -19,7 +19,7 @@ if(isset($_POST)){
 	Vérification mot de passe: <input type='password' name='passwordCheck'></input><br>
 	<br>
 	Prénom: <input type='text' name='first_name' value='<?php echo $user->user_firstname;?>'></input><br>
-	Nom de famille: <input type='text' name='lastname' value='<?php echo $user->user_lastname ;?>'></input><br>
+	Nom de famille: <input type='text' name='last_name' value='<?php echo $user->user_lastname ;?>'></input><br>
 	<br>
 	<button type='submit'>Modifier mes infos</button>
 </form>
