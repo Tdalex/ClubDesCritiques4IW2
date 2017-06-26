@@ -32,7 +32,7 @@ class Utilisateur{
 		}else{
 			return 'email deja utilise';
 		}
-		return true;
+		return 'un email vous a ete envoye';
 		// return wp_redirect($_SERVER['REQUEST_URI']);
 	}
 	
@@ -43,15 +43,12 @@ class Utilisateur{
 		//get user by email
 		$user =	get_user_by('email', $request['email']);
 		if($user){
-			$creds = array(
-				'user_login'    => $user->user_login,
-				'user_password' => $request['password'],
-				'remember'      => true
-			);
-			$user = wp_signon($cred, false );
+			$user = wp_authenticate($user->user_login, $request['password']);
 			if ( $user->ID ){
 				wp_set_current_user($user->ID);
-				if(!get_field('activated', $user->ID)){
+				wp_set_auth_cookie($user->ID);
+				do_action( 'wp_login', $user->user_login );
+				if(!get_field('activated', 'user_'.$user->ID)){
 					$activate = "
 					<form action='' method='POST'>
 						<input type='hidden' name='type' value='activate'></input>
@@ -61,7 +58,7 @@ class Utilisateur{
 					</form>";
 					return $activate;
 				}else{
-					return true;
+					return 'bienvenue';
 					// return wp_redirect($_SERVER['REQUEST_URI']);
 				}
 			}else{
