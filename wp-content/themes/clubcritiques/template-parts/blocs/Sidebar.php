@@ -8,9 +8,9 @@ if(isset($_POST) && $_POST['type'] == 'register'){
 	echo Utilisateur::login($_POST);
 }elseif(isset($_POST) && $_POST['type'] == 'logout'){
 	wp_logout();
-	wp_redirect($_SERVER['REQUEST_URI']);
+}elseif(isset($_POST) && $_POST['type'] == 'activate'){
+	echo Utilisateur::activateAccount($_POST);
 }
-
 ?>
 
 <?php if(!is_user_logged_in()){ ?>

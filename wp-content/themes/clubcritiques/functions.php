@@ -579,3 +579,10 @@ add_filter( 'wp_mail_charset', 'change_mail_charset' );
 function change_mail_charset( $charset ) {
 	return 'UTF-8';
 }
+
+function init_sessions() {
+    if (!session_id()) {
+        session_start();
+    }
+}
+add_action('init', 'init_sessions');

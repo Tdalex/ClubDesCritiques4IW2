@@ -32,6 +32,7 @@ class Utilisateur{
 		}else{
 			return 'email deja utilise';
 		}
+		return true;
 		// return wp_redirect($_SERVER['REQUEST_URI']);
 	}
 	
@@ -42,24 +43,56 @@ class Utilisateur{
 		//get user by email
 		$user =	get_user_by('email', $request['email']);
 		if($user){
-			wp_login($user->user_login, $request['password']);
-			return wp_redirect($_SERVER['REQUEST_URI']);
+			$creds = array(
+				'user_login'    => $user->user_login,
+				'user_password' => $request['password'],
+				'remember'      => true
+			);
+			$user = wp_signon($cred, false );
+			if ( $user->ID ){
+				wp_set_current_user($user->ID);
+				if(!get_field('activated', $user->ID)){
+					$activate = "
+					<form action='' method='POST'>
+						<input type='hidden' name='type' value='activate'></input>
+						password:<input type='password' name='newPassword'></input><br>
+						confirm password:<input type='password' name='newPasswordCheck'></input><br>
+						<button type='submit'>modifier  mot de passe</button>
+					</form>";
+					return $activate;
+				}else{
+					return true;
+					// return wp_redirect($_SERVER['REQUEST_URI']);
+				}
+			}else{
+				return 'email ou mot de passe non valide';
+			}
 		}else{
 			return 'email ou mot de passe non valide';
 		}
 	}
 	
-	public static function activateAccount($newPassword){
-		if(count($newPassword)<6)
-			return 'Veuillez entrer un mot de passe plus long';
+	public static function activateAccount($request){
+		if(count($request['newPassword'])<6)
+			echo 'Veuillez entrer un mot de passe plus long';
 		
 		if($request['newPassword'] != $request['newPasswordCheck'])
-			return 'Veuillez valider la vérification de mot de passe';
-			
+			echo 'Veuillez valider la vérification de mot de passe';
+		
+		$activate = "
+		<form action='' method='POST'>
+			<input type='hidden' name='type' value='activate'></input>
+			password:<input type='password' name='newPassword'></input><br>
+			confirm password:<input type='password' name='newPasswordCheck'></input><br>
+			<button type='submit'>modifier  mot de passe</button>
+		</form>";
+		echo $activate;
+		
 		$user_id = get_current_user_id();
-		wp_set_password($newPassword, $user_id);
+		wp_set_password($request['newPassword'], $user_id);
 		update_field('activated', true, 'user_'.$user_id);
 		return true;
+		// return wp_redirect($_SERVER['REQUEST_URI']);
 	}
 	
 	public static function modifyUserInfo($request){
