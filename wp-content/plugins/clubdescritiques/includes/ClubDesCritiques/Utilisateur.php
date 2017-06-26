@@ -11,9 +11,7 @@ namespace ClubDesCritiques;
 class Utilisateur{
     public static function activate()
     {
-        global $wpdb;
-
-        
+        global $wpdb;        
     }
 	
 	public static function register($request){
@@ -21,14 +19,34 @@ class Utilisateur{
 			return false;
 		
 		//generate random password
-		$password = wp_generate_password(8, false); 
-		$user = wp_create_user($request['email'], $password, $request['email']);
 		
-		$object  = 'Bienvenue à Club Des Critiques';
-		$message = 'Bienvenue à Club Des Critiques ' . $request['email'] . ', <br> Afin de valider votre compte, veuillez vous connecter avec ce mot de passe: <br><br> ' . $password . ' <br><br> il vous sera ensuite demandé de le modifier.<br><br><br> Cordialement.';
-		$headers[] = 'From: no_reply';
+		$user =	get_user_by('email', $request['email']);
 		
-		return wp_mail($request['email'], $object, $message, $headers);
+		if(!$user){
+			$password = wp_generate_password(8, false); 
+			$user = wp_create_user($request['email'], $password, $request['email']);
+			$object  = 'Bienvenue à Club Des Critiques';
+			$message = 'Bienvenue à Club Des Critiques ' . $request['email'] . ', <br> Afin de valider votre compte, veuillez <a href="'. home_url() .'">vous connecter</a> avec ce mot de passe: <br><br> ' . $password . ' <br><br> il vous sera ensuite demandé de le modifier.<br><br><br> Cordialement.';
+			$headers[] = 'From: tdalexsmtp@gmail.com';
+			wp_mail($request['email'], $object, $message, $headers);
+		}else{
+			return 'email deja utilise';
+		}
+		// return wp_redirect($_SERVER['REQUEST_URI']);
+	}
+	
+	public static function login($request){
+		if(empty($request))
+			return false;
+		
+		//get user by email
+		$user =	get_user_by('email', $request['email']);
+		if($user){
+			wp_login($user->user_login, $request['password']);
+			return wp_redirect($_SERVER['REQUEST_URI']);
+		}else{
+			return 'email ou mot de passe non valide';
+		}
 	}
 	
 	public static function activateAccount($newPassword){
@@ -124,7 +142,8 @@ class Utilisateur{
 			'post_status'      => 'publish'
 		);
 		$existNote 	  = get_posts($args);
-		if(empty($existNote){
+		
+		if(empty($existNote)){
 			$post   	  = array('post_author' => $user_id, 'post_type' => 'notation', 'post_title' => $productTitle.'_'.$user_id);
 			
 			$idNotation = wp_insert_post($post, $user_id);

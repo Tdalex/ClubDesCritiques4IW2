@@ -568,3 +568,14 @@ require get_parent_theme_file_path( '/inc/customizer.php' );
  * SVG icons functions and filters.
  */
 require get_parent_theme_file_path( '/inc/icon-functions.php' );
+
+
+function wpse27856_set_content_type(){
+    return "text/html";
+}
+add_filter( 'wp_mail_content_type','wpse27856_set_content_type' );
+
+add_filter( 'wp_mail_charset', 'change_mail_charset' );
+function change_mail_charset( $charset ) {
+	return 'UTF-8';
+}

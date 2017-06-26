@@ -3,7 +3,6 @@
  * Template name: Home
  */
  ?>
-
 <?php
 
 
@@ -29,3 +28,4 @@ if( have_posts() ): while( have_posts() ): the_post();
     endif;
 endwhile; endif;
 ?>
+<?php include(get_stylesheet_directory().'/template-parts/blocs/sidebar.php'); ?>

@@ -1,25 +1,34 @@
 <?php
 
+use ClubDesCritiques\Utilisateur as Utilisateur;
 
-/*
-* Bloc Flexible - Slider
-*
-*
-*/
-if( have_posts() ): while( have_posts() ): the_post();
-    if( have_rows('blocs') ):
+if(isset($_POST) && $_POST['type'] == 'register'){
+	echo Utilisateur::register($_POST);
+}elseif(isset($_POST) && $_POST['type'] == 'login'){
+	echo Utilisateur::login($_POST);
+}elseif(isset($_POST) && $_POST['type'] == 'logout'){
+	wp_logout();
+	wp_redirect($_SERVER['REQUEST_URI']);
+}
 
-        while ( have_rows('blocs') ) : the_row();
-
-        $layout = get_row_layout();
-        $path = get_template_directory() . '/templates/blocs/' . $layout . '.php';
-        
-        if (file_exists($path)) {
-            require $path;
-        }
-
-        endwhile;
-
-    endif;
-endwhile; endif;
 ?>
+
+<?php if(!is_user_logged_in()){ ?>
+	<form action="" method="POST">
+		<input type='hidden' name='type' value='login'></input>
+		email:<input type='text' name='email'></input><br>
+		password:<input type='password' name='password'></input><br>
+		<button type='submit'>se connecter</button>
+	</form>
+
+	<form action="" method="POST">
+		<input type='hidden' name='type' value='register'></input>
+		email:<input type='text' name='email'></input><br>
+		<button type='submit'>s'inscrire</button>
+	</form>
+<?php }else{ ?>
+	<form action="" method="POST">
+		<input type='hidden' name='type' value='logout'></input>
+		<button type='submit'>se deconnecter</button>
+	</form>	
+<?php } ?>
