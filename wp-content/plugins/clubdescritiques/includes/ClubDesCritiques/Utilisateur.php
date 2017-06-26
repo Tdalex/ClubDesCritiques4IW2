@@ -30,10 +30,10 @@ class Utilisateur{
 		$user =	get_user_by('email', $request['email']);
 		
 		if(!$user){
-			$password = wp_generate_password(8, false); 
-			$user = wp_create_user($request['email'], $password, $request['email']);
-			$object  = 'Bienvenue à Club Des Critiques';
-			$message = 'Bienvenue à Club Des Critiques ' . $request['email'] . ', <br> Afin de valider votre compte, veuillez <a href="'. home_url() .'">vous connecter</a> avec ce mot de passe: <br><br> ' . $password . ' <br><br> il vous sera ensuite demandé de le modifier.<br><br><br> Cordialement, <br> Le club des critiques';
+			$password  = wp_generate_password(8, false); 
+			$user      = wp_create_user($request['email'], $password, $request['email']);
+			$object    = 'Bienvenue à Club Des Critiques';
+			$message   = 'Bienvenue à Club Des Critiques ' . $request['email'] . ', <br> Afin de valider votre compte, veuillez <a href="'. home_url() .'">vous connecter</a> avec ce mot de passe: <br><br> ' . $password . ' <br><br> il vous sera ensuite demandé de le modifier.<br><br><br> Cordialement, <br> Le club des critiques';
 			$headers[] = 'From: '. NO_REPLY;
 			wp_mail($request['email'], $object, $message, $headers);
 		}else{
@@ -103,8 +103,8 @@ class Utilisateur{
 		$user = wp_get_current_user();
 		wp_set_password($request['newPassword'], $user->ID);
 		update_field('activated', true, 'user_'.$user->ID);
-		$object  = 'Activation du compte terminé';
-		$message = 'Bonjour,<br><br>Votre compte a bien été activé,<br> en esperant vous voir tres bientôt<br> Cordialement, <br><BR> Le club des critiques';
+		$object    = 'Activation du compte terminé';
+		$message   = 'Bonjour,<br><br>Votre compte a bien été activé,<br> en esperant vous voir tres bientôt<br> Cordialement, <br><BR> Le club des critiques';
 		$headers[] = 'From: '. NO_REPLY;
 		wp_mail($user->user_email , $object, $message, $headers);	
 		$_SESSION['login_msg'] = 'Votre compte a bien été activé'
@@ -160,7 +160,7 @@ class Utilisateur{
 		if(!empty($notation)){
 			return get_field('note', $notation[0]->ID);
 		}else{
-			return 'aucune note donn�e';
+			return 'aucune note donn�e';
 		}
 	}
 	
