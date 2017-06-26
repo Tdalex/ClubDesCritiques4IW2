@@ -14,6 +14,11 @@ class Utilisateur{
         global $wpdb;        
     }
 	
+	public static function redirect($url = get_home_url()){
+        echo '<script type="text/javascript">window.location = "' . $url . '"</script>';
+        return true;
+    }
+	
 	public static function register($request){
 		if(empty($request))
 			return false;
@@ -32,8 +37,8 @@ class Utilisateur{
 		}else{
 			return 'email deja utilise';
 		}
-		return 'un email vous a ete envoye';
-		// return wp_redirect($_SERVER['REQUEST_URI']);
+		$_SESSION['login_msg'] = 'un email vous a ete envoye';
+		return self::redirect($_SERVER['REQUEST_URI']);
 	}
 	
 	public static function login($request){
@@ -58,8 +63,8 @@ class Utilisateur{
 					</form>";
 					return $activate;
 				}else{
-					return 'bienvenue';
-					// return wp_redirect($_SERVER['REQUEST_URI']);
+					$_SESSION['login_msg'] = 'bienvenue';
+					return self::redirect($_SERVER['REQUEST_URI']);
 				}
 			}else{
 				return 'email ou mot de passe non valide';
@@ -88,8 +93,13 @@ class Utilisateur{
 		$user_id = get_current_user_id();
 		wp_set_password($request['newPassword'], $user_id);
 		update_field('activated', true, 'user_'.$user_id);
-		return true;
-		// return wp_redirect($_SERVER['REQUEST_URI']);
+		$object  = 'Activation du compte terminé';
+		$message = 'Bonjour,<br><br>Votre compte a bien été activé,<br> en esperant vous voir tres bientôt. <br> Cordialement, <br><BR> Le club des critiques';
+		$headers[] = 'From: tdalexsmtp@gmail.com';
+		wp_mail($request['email'], $object, $message, $headers);	
+		$_SESSION['login_msg'] = 'Votre compte a bien été activé';
+		return self::redirect($_SERVER['REQUEST_URI']);
+			
 	}
 	
 	public static function modifyUserInfo($request){

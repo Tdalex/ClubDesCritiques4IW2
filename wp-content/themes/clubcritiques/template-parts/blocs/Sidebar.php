@@ -1,5 +1,8 @@
 <?php
-
+/*
+ * Template name: sidebar
+ */
+ 
 use ClubDesCritiques\Utilisateur as Utilisateur;
 
 if(isset($_POST) && $_POST['type'] == 'register'){
