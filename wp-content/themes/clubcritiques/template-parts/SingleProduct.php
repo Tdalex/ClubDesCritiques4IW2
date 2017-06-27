@@ -3,6 +3,11 @@
  * Template name: singleProduct
  */
 
+use ClubDesCritiques\Bibliotheque as Bibliotheque;
+use ClubDesCritiques\Utilisateur as Utilisateur;
+ 
+ 
+
 // get product ID
 $path       = array_filter(explode("/", $_SERVER['REQUEST_URI']));
 $product_ID = end($path);
@@ -35,11 +40,46 @@ $birthdate = new DateTime($birthdate);
 
 $deathdate = get_field('deathdate', $author->ID);
 $deathdate = new DateTime($deathdate);
+
+$userNote = 0;
+
+if(isset($_POST['userNote'])){
+	$userNote = $_POST['userNote'];
+	Utilisateur::ChangeNotation($product_ID, $userNote);
+}elseif($userId = get_current_user_id()){
+	$userNote = Utilisateur::getNotation($product_ID, $userId);
+}		
+
+$averageNote = Utilisateur::getAverageNote($product_ID);
 ?>
 
 
-
 <h1><?php echo $product->post_title; ?></h1>
+<?php if ($averageNote['total'] > 0){ ?>
+	<p>Moyenne des notes: <?php echo $averageNote['average']; ?>/5</p>
+	<p>Nombre total de notes: <?php echo $averageNote['total']; ?></p>
+<?php }else{ ?>
+	<p>Aucune note</p>
+<?php } 
+
+if(get_current_user_id()){ ?>
+<p>Votre note:</p> 
+<form action="" method='POST'>
+	<p>
+		<select name='userNote' id="userNote">
+			<?php for($i=0;$i<=5;$i++){ ?>
+				<?php if($i==$userNote){ ?>
+					<option selected value="<?php echo $i; ?>"><?php echo $i; ?></option> 
+				<?php }else{ ?>
+					<option value="<?php echo $i; ?>"><?php echo $i; ?></option> 
+				<?php } ?>
+			<?php } ?>
+		</select>/5
+	</p>
+	<button type='submit'>Changer ma note</button>
+</form>
+<?php } ?>
+
 <h2><?php echo $original_title; ?></h2>
 <img style='height:50px; length:50px;'src='<?php echo $image;?>'></img>
 <div><?php echo $description;?></div>

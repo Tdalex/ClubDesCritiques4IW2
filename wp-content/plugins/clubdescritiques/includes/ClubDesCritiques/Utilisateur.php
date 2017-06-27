@@ -175,7 +175,7 @@ class Utilisateur{
 	public static function getNotation($idProduct, $user_id){
 		$args = array(
 			'posts_per_page'   => -1,
-			'meta_value'       => $idProduct,
+			'meta_value'       => "a:1:{i:0;s:2:\"".$idProduct."\";}",
 			'post_type'        => 'notation',
 			'author'	  	   => $user_id,
 			'post_status'      => 'publish'
@@ -191,12 +191,13 @@ class Utilisateur{
 	public static function getAverageNote($idProduct){
 		$args = array(
 			'posts_per_page'   => -1,
-			'meta_value'       => $idProduct,
+			'meta_value'       => "a:1:{i:0;s:2:\"".$idProduct."\";}",
 			'post_type'        => 'notation',
 			'post_status'      => 'publish'
 		);
 		
 		$nbNotation = 0;
+		$average    = 0;
 		$totalNote  = 0;
 		$notations  = get_posts($args);
 		if(!empty($notations)){
@@ -205,7 +206,10 @@ class Utilisateur{
 				$nbNotation++;
 			}
 		}
-		return array('average' => $totalNote/$nbNotation, 'total' => $nbNotation);
+		if($nbNotation > 0)
+			$average = $totalNote/$nbNotation;
+		
+		return array('average' => $average, 'total' => $nbNotation);
 	}
 	
 	public static function ChangeNotation($idProduct, $note){
@@ -214,22 +218,23 @@ class Utilisateur{
 		
 		$args = array(
 			'posts_per_page'   => -1,
-			'meta_value'       => $idProduct,
+			'meta_value'       => "a:1:{i:0;s:2:\"".$idProduct."\";}",
 			'post_type'        => 'notation',
 			'author'	  	   => $user_id,
 			'post_status'      => 'publish'
 		);
-		$existNote 	  = get_posts($args);
-		
+		$existNote = get_posts($args);
 		if(empty($existNote)){
-			$post   	  = array('post_author' => $user_id, 'post_type' => 'notation', 'post_title' => $productTitle.'_'.$user_id);
+			$post = array('post_author' => $user_id, 'post_type' => 'notation', 'post_title' => $productTitle.'_'.$user_id, 'post_status' => 'publish');
 			
 			$idNotation = wp_insert_post($post, $user_id);
-			update_field('product_noted', $idNotation, $idProduct);
+			// product noted
+			update_field('field_593a597075cb8', array($idProduct) , $idNotation);
 		}else{
 			$idNotation = $existNote[0];
 		}
-		update_field('note', $idNotation, $note);
+		// note
+		update_field('field_593a5956855e4', $note, $idNotation);
 	
 		return true;
 	}

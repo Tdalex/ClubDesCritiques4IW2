@@ -105,7 +105,7 @@ class Bibliotheque
                 'show_ui' => true, // passer à false pour ne pas y accéder en BO, mais sera accessible en front
                 'show_in_nav_menus' => false,
                 'show_in_admin_bar' => false,
-                'supports' => array('title'),
+                'supports' => array('title', 'author'),
                 'can_export' => true,
                 'show_in_rest'  => true,
                 'custom_metadata' => true,
