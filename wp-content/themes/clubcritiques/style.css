@@ -1768,6 +1768,26 @@ body:not(.has-header-image):not(.has-header-video) .custom-header-media {
 	padding: 0;
 }
 
+.page-about {
+	text-align: center;
+	width: 100%;
+	float: inherit;
+	border-bottom : 1px solid #eee;
+	margin-bottom: 20px;
+}
+
+.title_book {
+	font-weight: 700;
+	font-size: 20px;
+
+}
+
+.title-about {
+	color: #222;
+	font-weight: 700;
+	font-size: 30px;
+}
+
 .clubcritiques-panel {
 	overflow: hidden;
 	position: relative;
@@ -1889,8 +1909,7 @@ body:not(.has-header-image):not(.has-header-video) .custom-header-media {
 .page-title,
 body.page:not(.clubcritiques-front-page) .entry-title {
 	color: #222;
-	font-size: 14px;
-	font-size: 0.875rem;
+	font-size: 3rem;
 	font-weight: 800;
 	letter-spacing: 0.14em;
 	text-transform: uppercase;
@@ -3277,7 +3296,7 @@ object {
 	/* Layout */
 
 	.wrap {
-		max-width: 1000px;
+		max-width: 1200px;
 		padding-left: 3em;
 		padding-right: 3em;
 	}
