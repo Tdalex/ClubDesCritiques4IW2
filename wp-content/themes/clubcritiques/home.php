@@ -42,7 +42,7 @@ get_header(); ?>
 						<div class="col-xs-6 col-lg-4">
 							<img src="<?php echo get_field('image', $product->ID); ?>"></img>
 							<p class="title_book"><?php echo $product->post_title; ?></p>
-							<p><a class="btn btn-default" href="#" role="button">plus d'infos &raquo;</a></p>
+							<p><a class="btn btn-default" href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>" role="button">plus d'infos &raquo;</a></p>
 						</div><!--/.col-xs-6.col-lg-4-->
 					<?php } ?>
                 </div><!--/row-->
@@ -56,34 +56,33 @@ get_header(); ?>
         </div><!--/row-->
 
         <div class="contact-section">
-                <h2>Contact Us</h2>
-                <p>Feel free to shout us by feeling the contact form or visiting our social network sites like Fackebook,Whatsapp,Twitter.</p>
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
-                        <form class="form-horizontal">
-                            <div class="form-group">
-                                <label for="exampleInputName2">Name</label>
-                                <input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail2">Email</label>
-                                <input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
-                            </div>
-                            <div class="form-group ">
-                                <label for="exampleInputText">Your Message</label>
-                                <textarea  class="form-control" placeholder="Description"></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-default">Send Message</button>
-                        </form>
+			<h2>Contact Us</h2>
+			<p>Feel free to shout us by feeling the contact form or visiting our social network sites like Fackebook,Whatsapp,Twitter.</p>
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2">
+					<form class="form-horizontal">
+						<div class="form-group">
+							<label for="exampleInputName2">Name</label>
+							<input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
+						</div>
+						<div class="form-group">
+							<label for="exampleInputEmail2">Email</label>
+							<input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
+						</div>
+						<div class="form-group ">
+							<label for="exampleInputText">Your Message</label>
+							<textarea  class="form-control" placeholder="Description"></textarea>
+						</div>
+						<button type="submit" class="btn btn-default">Send Message</button>
+					</form>
 
 
-                    </div>
-                </div>
+				</div>
+			</div>
         </div>
 
     </div><!--/.container-->
 
-<?php include(get_stylesheet_directory().'/template-parts/blocs/sidebar.php'); ?>
 
 <?php get_footer();
 ?>
