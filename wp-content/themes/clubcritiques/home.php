@@ -2,6 +2,21 @@
 /*
  * Template name: Home
  */
+
+use ClubDesCritiques\Bibliotheque as Bibliotheque;
+use ClubDesCritiques\Utilisateur as Utilisateur;
+
+$args = array(
+	'posts_per_page'   => 6,
+	'offset'           => 0,
+	'orderby'          => 'ID',
+	'order'            => 'DESC',
+	'post_type'        => 'bibliotheque',
+	'post_status'      => 'publish',
+	'suppress_filters' => true 
+);
+$lastProducts = get_posts( $args );
+
 ?>
 
 <?php
@@ -23,36 +38,13 @@ get_header(); ?>
 
                 <div class="row">
                     <h2 class="blog-post-title">Livres du moment</h2>
-                    <div class="col-xs-6 col-lg-4">
-                        <img src="http://static.intellego.fr/uploads/6/0/60029/media/couverture_cf.jpg"></img>
-                        <p class="title_book">Harry Peloteur et la croupe en feu. </p>
-                        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-                    </div><!--/.col-xs-6.col-lg-4-->
-                    <div class="col-xs-6 col-lg-4">
-                        <img src="http://static.intellego.fr/uploads/6/0/60029/media/couverture_cf.jpg"></img>
-                        <p class="title_book">Harry Peloteur et la croupe en feu. </p>
-                        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-                    </div><!--/.col-xs-6.col-lg-4-->
-                    <div class="col-xs-6 col-lg-4">
-                        <img src="http://static.intellego.fr/uploads/6/0/60029/media/couverture_cf.jpg"></img>
-                        <p class="title_book">Harry Peloteur et la croupe en feu. </p>
-                        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-                    </div><!--/.col-xs-6.col-lg-4-->
-                    <div class="col-xs-6 col-lg-4">
-                        <img src="http://static.intellego.fr/uploads/6/0/60029/media/couverture_cf.jpg"></img>
-                        <p class="title_book">Harry Peloteur et la croupe en feu. </p>
-                        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-                    </div><!--/.col-xs-6.col-lg-4-->
-                    <div class="col-xs-6 col-lg-4">
-                        <img src="http://static.intellego.fr/uploads/6/0/60029/media/couverture_cf.jpg"></img>
-                        <p class="title_book">Harry Peloteur et la croupe en feu. </p>
-                        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-                    </div><!--/.col-xs-6.col-lg-4-->
-                    <div class="col-xs-6 col-lg-4">
-                        <img src="http://static.intellego.fr/uploads/6/0/60029/media/couverture_cf.jpg"></img>
-                        <p class="title_book">Harry Peloteur et la croupe en feu. </p>
-                        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-                    </div><!--/.col-xs-6.col-lg-4-->
+					<?php foreach($lastProducts as $product){ ?>
+						<div class="col-xs-6 col-lg-4">
+							<img src="<?php echo get_field('image', $product->ID); ?>"></img>
+							<p class="title_book"><?php echo $product->post_title; ?></p>
+							<p><a class="btn btn-default" href="#" role="button">plus d'infos &raquo;</a></p>
+						</div><!--/.col-xs-6.col-lg-4-->
+					<?php } ?>
                 </div><!--/row-->
             </div><!--/.col-xs-12.col-sm-9-->
 
