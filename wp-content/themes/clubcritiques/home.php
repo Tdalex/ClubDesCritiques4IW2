@@ -15,7 +15,7 @@ $args = array(
 	'post_status'      => 'publish',
 	'suppress_filters' => true 
 );
-$lastProducts = get_posts( $args );
+$products = get_posts( $args );
 
 ?>
 
@@ -38,7 +38,7 @@ get_header(); ?>
 
                 <div class="row">
                     <h2 class="blog-post-title">Livres du moment</h2>
-					<?php foreach($lastProducts as $product){ ?>
+					<?php foreach($products as $product){ ?>
 						<div class="col-xs-6 col-lg-4">
 							<img src="<?php echo get_field('image', $product->ID); ?>"></img>
 							<p class="title_book"><?php echo $product->post_title; ?></p>
