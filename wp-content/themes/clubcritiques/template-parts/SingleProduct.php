@@ -51,43 +51,113 @@ if(isset($_POST['userNote'])){
 }		
 
 $averageNote = Utilisateur::getAverageNote($product_ID);
+
+get_header(); 
 ?>
 
+<div class="container">
+	<div class="row">
+		<div class="col-md-3">
+			<img class="img-responsive" style='height:300px; length:300px;'src='<?php echo $image;?>'></img>
+		</div>
 
-<h1><?php echo $product->post_title; ?></h1>
-<?php if ($averageNote['total'] > 0){ ?>
-	<p>Moyenne des notes: <?php echo $averageNote['average']; ?>/5</p>
-	<p>Nombre total de notes: <?php echo $averageNote['total']; ?></p>
-<?php }else{ ?>
-	<p>Aucune note</p>
-<?php } 
+		<div class="col-md-9">
+			<div class="row">
+				<h1 class="title"><?php echo $product->post_title; ?></h1>
+			</div>
 
-if(get_current_user_id()){ ?>
-<p>Votre note:</p> 
-<form action="" method='POST'>
-	<p>
-		<select name='userNote' id="userNote">
-			<?php for($i=0;$i<=5;$i++){ ?>
-				<?php if($i==$userNote){ ?>
-					<option selected value="<?php echo $i; ?>"><?php echo $i; ?></option> 
+			<div class="row author">		
+				<a href='<?php echo get_permalink(get_page_by_title('Auteur')).$author->ID; ?>'><?php echo $author->post_title;?></a>
+				<?php echo $published_date->format('j/m/Y'); ?>
+			</div>
+
+			<div class="row">
+				<div class="rating"><!--
+				   --><a href="#5" title="Donner 5 étoiles">★</a><!--
+				   --><a href="#4" title="Donner 4 étoiles">★</a><!--
+				   --><a href="#3" title="Donner 3 étoiles">★</a><!--
+				   --><a href="#2" title="Donner 2 étoiles">★</a><!--
+				   --><a href="#1" title="Donner 1 étoile">★</a>
+				</div>
+			</div>
+
+			<div class="row description">
+			<?php echo $description;?>
+			</div>
+
+
+<!-- 
+	système de notation
+		<?php if ($averageNote['total'] > 0){ ?>
+					<p>Moyenne des notes: <?php echo $averageNote['average']; ?>/5</p>
+					<p>Nombre total de notes: <?php echo $averageNote['total']; ?></p>
 				<?php }else{ ?>
-					<option value="<?php echo $i; ?>"><?php echo $i; ?></option> 
-				<?php } ?>
-			<?php } ?>
-		</select>/5
-	</p>
-	<button type='submit'>Changer ma note</button>
-</form>
-<?php } ?>
+					<p>Aucune note</p>
+				<?php } 
 
-<h2><?php echo $original_title; ?></h2>
-<img style='height:50px; length:50px;'src='<?php echo $image;?>'></img>
-<div><?php echo $description;?></div>
-<div><?php echo $published_date->format('j/m/Y'); ?></div>
-<br><br>
-<a href='<?php echo get_permalink(get_page_by_title('Auteur')).$author->ID; ?>'><?php echo $author->post_title;?></a>
-<div><?php echo $birthdate->format('j/m/Y') . ' --- ' . $deathdate->format('j/m/Y')?></div>
-<img style='height:50px; length:50px;'src='<?php echo $photo;?>'></img>
-<div><?php echo $descriptionAuthor;?></div>
-<div><?php echo $sexe;?></div>
-<div><?php echo $description;?></div>
+				if(get_current_user_id()){ ?>
+				<p>Votre note:</p> 
+				<form action="" method='POST'>
+					<p>
+						<select name='userNote' id="userNote">
+							<?php for($i=0;$i<=5;$i++){ ?>
+								<?php if($i==$userNote){ ?>
+									<option selected value="<?php echo $i; ?>"><?php echo $i; ?></option> 
+								<?php }else{ ?>
+									<option value="<?php echo $i; ?>"><?php echo $i; ?></option> 
+								<?php } ?>
+							<?php } ?>
+						</select>/5
+					</p>
+					<button type='submit'>Changer ma note</button>
+				</form>
+				<?php } ?> -->
+		</div>
+	
+	</div>
+
+		
+<!-- 		<div><?php echo $birthdate->format('j/m/Y') . ' --- ' . $deathdate->format('j/m/Y')?></div>
+		<div><?php echo $descriptionAuthor;?></div>
+		<div><?php echo $sexe;?></div>
+		<div><?php echo $description;?></div> -->
+
+	<div class="row">
+		<h2 class="cat_h2">Autres suggestions</h2>
+	</div>
+
+	<div class="row">
+		<div class="col-md-3 suggestions col-xs-6">
+			<a href=#>
+				<img class="img-responsive" src='<?php echo $image;?>' />
+				<h3>Théorie de l'information et du codage</h3>
+				<p>Olivier Rioul</p>
+			</a>
+		</div>
+		<div class="col-md-3 suggestions col-xs-6">
+			<a href=#>
+				<img class="img-responsive" src='<?php echo $image;?>' />
+				<h3>Théorie de l'information et du codage</h3>
+				<p>Olivier Rioul</p>
+			</a>
+		</div>
+		<div class="col-md-3 suggestions col-xs-6">
+			<a href=#>
+				<img class="img-responsive" src='<?php echo $image;?>' />
+				<h3>Théorie de l'information et du codage</h3>
+				<p>Olivier Rioul</p>
+			</a>
+		</div>
+		<div class="col-md-3 suggestions col-xs-6">
+			<a href=#>
+				<img class="img-responsive" src='<?php echo $image;?>' />
+				<h3>Théorie de l'information et du codage</h3>
+				<p>Olivier Rioul</p>
+			</a>
+		</div>			
+	</div>
+</div>
+
+<?php
+get_footer(); 
+?>
