@@ -158,88 +158,6 @@ class Bibliotheque
         register_taxonomy('bibliotheque_format', array('bibliotheque'), $args);
     }
 
-    /**
-    * Return the brands
-    * @param  WP_REST_Request $value
-    * @return Json response
-    */
-    public static function getBibliothequeAPI($request){
-		$params = $request->get_params();
-        global $wpdb;
-
-		$page	    = $request['page'] ? $request['page'] : 1;
-        $limit      = 12;
-        $offset     = ($page - 1 ) * $limit;
-        $where      = array();
-        $having     = array();
-        $join       = '';	
-
-        $query      = "SELECT DISTINCT ". $wpdb->posts .".ID, ".$wpdb->posts .".post_title  FROM ". $wpdb->posts;
-        $countQuery = "SELECT COUNT(*) as count FROM(SELECT ".  $wpdb->posts .".ID  FROM ". $wpdb->posts;
-
-        //set OFFSET
-        if(isset($params['offset']) && !empty($params['offset']))
-            $offset        = $params['offset'];
-
-        //set limit
-        if(isset($params['limit']) && !empty($params['limit']))
-            $limit         = $params['limit'];
-
-        // filter by theme
-        if(isset($params['theme']) && !empty($params['theme'])){
-            $join         .= " LEFT JOIN ". $wpdb->term_relationships ." AS taxA ON (". $wpdb->posts .".ID = taxA.object_id)";
-            $where[]       = "taxA.term_taxonomy_id IN (". $params[''] ."))";
-            if(isset($params['exact_market']))
-                $having[]  = " count(distinct taxA.term_taxonomy_id)=". count(explode(',',$params['theme']));
-        }
-
-        // filter by title or meta
-        if(isset($params['search']) && !empty($params['search'])){
-            $join         .= " INNER JOIN ". $wpdb->postmeta ." as metaA ON (". $wpdb->posts .".ID = metaA.post_id)";
-            $needle        = array(' ','-','/');
-            $search        = str_replace($needle, '%',$params['search']);
-            $where[]       = $wpdb->posts .".post_title LIKE '%". $search ."%' OR metaA.meta_value LIKE '%". $search ."%')";
-        }
-
-        //merge filters
-        if(!empty($where)){
-            $where   = implode($where, ' AND (');
-        }else{
-            $where   = '1=1)';
-        }
-
-        //merge having
-        if(!empty($having)){
-            $having  = 'having'. implode($having, ' AND ');
-        }else{
-            $having  = '';
-        }
-
-        // create QUERY
-        $query .= $join ." WHERE ". $wpdb->posts .".post_type = 'product' AND (". $where ." GROUP BY ". $wpdb->posts .".ID  ". $having ." LIMIT ". $offset .", ". $limit;
-
-        //return query if asked
-        if(isset($params['query']))
-            return $query;
-
-        //get result
-        $result = $wpdb->get_results($query);
-
-        //send response
-        if(!empty($result)){
-
-            //create count query
-            $countQuery .= $join ." WHERE ". $wpdb->posts .".post_type = 'product' AND (". $where ." GROUP BY ". $wpdb->posts .".ID  ". $having .") as T";
-            $response['nb_products'] = $wpdb->get_results($countQuery)[0]->count;
-
-            $response['items'] = $result;
-
-            return wp_send_json_success($response);
-        }
-
-        return wp_send_json_error();
-    }
-
 	/**
     * Return the brands
     * @param  WP_REST_Request $value
@@ -247,13 +165,21 @@ class Bibliotheque
     */
     public static function getBibliotheque($params){
         global $wpdb;
+        foreach($params as $key => $value){
+            if(!is_array($params[$key])){
+                $params[$key] = sanitize_text_field($value);
+            }else{
+                foreach($params[$key] as $k => $val)
+                    $params[$key][$k] = sanitize_text_field($val);
+            }
+        }
 
-		$page	    = $request['page'] ? $request['page'] : 1;
-        $limit      = 12;
-        $offset     = ($page - 1 ) * $limit;
-        $where      = array();
-        $having     = array();
-        $join       = '';	
+        $limit  = 12;
+        $offset = 0;
+        $where  = array();
+        $having = array();
+        $join   = '';
+		$auteurId = array();
 
         $query      = "SELECT DISTINCT ". $wpdb->posts .".ID, ".$wpdb->posts .".post_title  FROM ". $wpdb->posts;
         $countQuery = "SELECT COUNT(*) as count FROM(SELECT ".  $wpdb->posts .".ID  FROM ". $wpdb->posts;
@@ -261,25 +187,60 @@ class Bibliotheque
         //set OFFSET
         if(isset($params['offset']) && !empty($params['offset']))
             $offset        = $params['offset'];
-
+	
         //set limit
         if(isset($params['limit']) && !empty($params['limit']))
             $limit         = $params['limit'];
 
-        // filter by theme
-        if(isset($params['theme']) && !empty($params['theme'])){
-            $join         .= " LEFT JOIN ". $wpdb->term_relationships ." AS taxA ON (". $wpdb->posts .".ID = taxA.object_id)";
-            $where[]       = "taxA.term_taxonomy_id IN (". $params[''] ."))";
-            if(isset($params['exact_market']))
-                $having[]  = " count(distinct taxA.term_taxonomy_id)=". count(explode(',',$params['theme']));
-        }
-
-        // filter by title or meta
-        if(isset($params['search']) && !empty($params['search'])){
+        // filter by title, author or meta
+		if(isset($params['keywords']) && !empty($params['keywords'])){					
+			$search_query = 'SELECT ID FROM wp_posts WHERE post_type = "auteurs" AND post_title LIKE %s';
+			$like = '%'.$params['keywords'].'%';
+			$results = $wpdb->get_results($wpdb->prepare($search_query, $like), ARRAY_N);
+			foreach($results as $key => $array){
+				 $auteurId[] = 'a:1:{i:0;s:2:"'.$array[0].'";}';
+			}
+			
             $join         .= " INNER JOIN ". $wpdb->postmeta ." as metaA ON (". $wpdb->posts .".ID = metaA.post_id)";
             $needle        = array(' ','-','/');
-            $search        = str_replace($needle, '%',$params['search']);
-            $where[]       = $wpdb->posts .".post_title LIKE '%". $search ."%' OR metaA.meta_value LIKE '%". $search ."%')";
+            $keywords      = str_replace($needle, '%',$params['keywords']);
+            $firstWhere    = '( '.$wpdb->posts .".post_title LIKE '%". $keywords ."%' OR metaA.meta_value LIKE '%". $keywords ."%' )";
+			if(!empty($auteurId)){
+				$join     .= " INNER JOIN ". $wpdb->postmeta ." as metaB ON (". $wpdb->posts .".ID = metaB.post_id)";
+				$auteurId  = implode('\',\'', $auteurId);
+				$firstWhere .= " OR metaB.meta_value IN ('". $auteurId ."')";
+			}
+			$where[]   = $firstWhere .")";	
+        }
+        // filter by genre
+        if(isset($params['genre']) && !empty($params['genre'])){
+            if(is_array($params['genre']))
+                $params['genre'] = implode(',', $params['genre']);
+
+            $join         .= " LEFT JOIN ". $wpdb->term_relationships ." as taxA ON (". $wpdb->posts .".ID = taxA.object_id)";
+            $where[]       = " taxA.term_taxonomy_id IN (". $params['genre'] ."))";
+            if(isset($params['genre']))
+                $having[]  = " count(distinct taxA.term_taxonomy_id)=". count(explode(',',$params['genre']));
+        }
+
+		// filter by format
+        if(isset($params['format']) && !empty($params['format'])){
+            if(is_array($params['format']))
+                $params['format'] = implode(',', $params['format']);
+
+            $join         .= " LEFT JOIN ". $wpdb->term_relationships ." as taxB ON (". $wpdb->posts .".ID = taxB.object_id)";
+            $where[]       = " taxB.term_taxonomy_id IN (". $params['format'] ."))";
+            if(isset($params['format']))
+                $having[]  = " count(distinct taxB.term_taxonomy_id)=". count(explode(',',$params['format']));
+        }
+		
+        // filter by note
+        if(isset($params['note']) && !empty($params['note'])){
+            $join         .= " INNER JOIN ". $wpdb->postmeta ." as metaC ON (". $wpdb->posts .".ID = metaC.post_id)";
+            if(is_array($params['note']))
+                $params['note'] = implode("','",$params['note']);
+            $where[]       = " metaC.meta_value LIKE '%true%' AND metaC.meta_key IN ('". $params['note'] ."'))";
+            $having[]      = " count(metaC.meta_value)=". count(explode(',',$params['note']));
         }
 
         //merge filters
@@ -297,7 +258,7 @@ class Bibliotheque
         }
 
         // create QUERY
-        $query .= $join ." WHERE ". $wpdb->posts .".post_type = 'product' AND (". $where ." GROUP BY ". $wpdb->posts .".ID  ". $having ." LIMIT ". $offset .", ". $limit;
+        $query .= $join ." WHERE (". $wpdb->posts .".post_type = 'bibliotheque' AND ". $wpdb->posts .".post_status = 'publish' AND ". $where ." GROUP BY ". $wpdb->posts .".ID  ". $having ." LIMIT ". $offset .", ". $limit;
 
         //return query if asked
         if(isset($params['query']))
@@ -308,17 +269,15 @@ class Bibliotheque
 
         //send response
         if(!empty($result)){
-
             //create count query
-            $countQuery .= $join ." WHERE ". $wpdb->posts .".post_type = 'product' AND (". $where ." GROUP BY ". $wpdb->posts .".ID  ". $having .") as T";
+            $countQuery .= $join ." WHERE (". $wpdb->posts .".post_type = 'product' AND ". $wpdb->posts .".post_status = 'publish' AND ". $where ." GROUP BY ". $wpdb->posts .".ID  ". $having .") as T";
             $response['nb_products'] = $wpdb->get_results($countQuery)[0]->count;
-
-            $response['items'] = $result;
-
+			$response['products']    = $result;
             return $response;
         }
-
-        return array();
+        $response['nb_products'] = 0;
+        $response['products']    = array();
+        return $response;
     }
 	
 	public static function getAuthorBiblio($authorId, $max = -1){

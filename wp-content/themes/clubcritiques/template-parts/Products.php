@@ -7,10 +7,11 @@ use ClubDesCritiques\Bibliotheque as Bibliotheque;
 use ClubDesCritiques\Utilisateur as Utilisateur;
  
 if(isset($_POST['type']) && $_POST['type'] == 'search'){
-	$products = Bibliotheque::getBibliothequeAPI($_POST);
+	$response = Bibliotheque::getBibliotheque($_POST);
 	$page = $_POST['page'];
-	var_dump($_POST);
-	var_dump($products);
+	
+	$products = $response['products'];
+	$countProducts = $response['nb_products'];
 }else{
 	$page = 1;
 	$args = array(
@@ -47,25 +48,26 @@ $formats = get_terms( array(
 
 <form action="" method="POST">
 	<input type='hidden' name='type' value='search'></input>
-	Titre, auteur,etc... : <input type='text' name='keywords'></input><br>
+	Titre ou auteur : <input type='text' name='keywords' value='<?php echo $_POST['keywords'] ?>'></input><br>
 	<label>Genre</label><br>
 	<?php foreach($genres as $genre){ ?>
-		<?php if(isset($_POST['genre']) && in_array($genre,$_POST['genre'])){ ?>
-			<input type="checkbox" checked name="genre" value="<?php echo $genre->term_id ?>"><?php echo $genre->name ?><br>
+		<?php if(isset($_POST['genre']) && in_array($genre->term_id ,$_POST['genre'])){ ?>
+			<input type="checkbox" checked name="genre[]" value="<?php echo $genre->term_id ?>"><?php echo $genre->name ?><br>
 		<?php }else{ ?>
-			<input type="checkbox" name="genre" value="<?php echo $genre->term_id ?>"><?php echo $genre->name ?><br>
+			<input type="checkbox" name="genre[]" value="<?php echo $genre->term_id ?>"><?php echo $genre->name ?><br>
 		<?php } ?>
 	<?php } ?>
 	<label>Format</label><br>
 	<?php foreach($formats as $format){ ?>
-		<?php if(isset($_POST['format']) && in_array($genre,$_POST['format'])){ ?>
-			<input type="checkbox" checked name="format" value="<?php echo $format->term_id ?>"><?php echo $format->name ?><br>
+		<?php if(isset($_POST['format']) && in_array($format->term_id ,$_POST['format'])){ ?>
+			<input type="checkbox" checked name="format[]" value="<?php echo $format->term_id ?>"><?php echo $format->name ?><br>
 		<?php }else{ ?>
-			<input type="checkbox" name="format" value="<?php echo $format->term_id ?>"><?php echo $format->name ?><br>
+			<input type="checkbox" name="format[]" value="<?php echo $format->term_id ?>"><?php echo $format->name ?><br>
 		<?php } ?>
 	<?php } ?>
 	<label>Note minimale</label>
 	<select name='note' id="note">
+		<option></option> 
 		<?php for($i=0;$i<=5;$i++){ ?>
 			<?php if(isset($_POST['note']) && $i==$_POST['note']){ ?>
 				<option selected value="<?php echo $i; ?>"><?php echo $i; ?></option> 
