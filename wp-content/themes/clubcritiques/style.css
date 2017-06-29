@@ -4394,3 +4394,7 @@ object {
 .submit_contact {
 	font-size: 12px !important;
 }
+
+#sidebar {
+	top: 70px;
+}

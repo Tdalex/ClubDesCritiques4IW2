@@ -18,7 +18,7 @@ if(isset($_POST) && $_POST['type'] == 'register'){
 ?>
 
 <?php if(!is_user_logged_in()){ ?>
-	<form action="" method="POST">
+	<form action="" method="POST" class="login">
 		<input type='hidden' name='type' value='login'></input>
 		email:<input type='text' name='email'></input><br>
 		password:<input type='password' name='password'></input><br>
@@ -31,7 +31,7 @@ if(isset($_POST) && $_POST['type'] == 'register'){
 		<button type='submit'>s'inscrire</button>
 	</form>
 <?php }else{ ?>
-	<form action="" method="POST">
+	<form action="" method="POST" class="logout">
 		<input type='hidden' name='type' value='logout'></input>
 		<button type='submit'>se deconnecter</button>
 	</form>	
