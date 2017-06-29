@@ -4273,8 +4273,8 @@ object {
 .rating a:focus,
 .rating a:hover ~ a,
 .rating a:focus ~ a {
-	color: orange;
-	cursor: pointer;
+   color: orange;
+   cursor: pointer;
 }
 
 .description p{
