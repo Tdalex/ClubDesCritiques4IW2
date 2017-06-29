@@ -16,5 +16,8 @@ if(!is_object($user)){
     get_template_part( 404 ); exit();
 }
 
+$userMeta = get_user_meta( $user->ID );
+
 ?>
 <h1><?php echo $user->user_firstname. ' '. $user->user_lastname; ?></h1>
+Description: <p><?php echo $userMeta['description'][0] ?></p><br>
