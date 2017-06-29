@@ -87,8 +87,18 @@ get_header();
 					</div><br>
 					<div class="row">
 							<a href="#contact"><button>Contacter</button></a>
-					</div>
+					</div><br>
 				<?php } ?>
+				<div class="row">
+					<h2>Liste contact</h2>
+					<div class="menu_flottant">
+					<?php foreach(get_field('contact', 'user_'.$user->ID) as $contact){ ?>
+						<ul>
+							<a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$contact['ID']; ?>'><li><?php echo $contact['user_firstname']. ' ' .$contact['user_lastname'];;?></li></a>
+						</ul>
+					<?php } ?>
+					</div>
+				</div>
 				</div>
 		</div>
 	</div>	
