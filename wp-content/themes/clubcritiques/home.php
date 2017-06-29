@@ -37,9 +37,9 @@ get_header(); ?>
 					<?php foreach($products as $product){ ?>
 						<div class="col-xs-6 col-lg-4">
 							<?php if(!get_field('image', $product->ID)){ ?> 
-								<img src="https://pictures.abebooks.com/isbn/9782070543588-fr.jpg"> 
+								<a href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>"><img src="https://pictures.abebooks.com/isbn/9782070543588-fr.jpg"></img></a>
 							<?php }else{ ?>
-								<img src="<?php echo get_field('image', $product->ID); ?>"></img>
+								<a href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>"><img src="<?php echo get_field('image', $product->ID); ?>"></img></a>
 							<?php } ?>
 							<p class="title_book"><?php echo $product->post_title; ?></p>
 							<p><a class="btn btn-default" href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>" role="button">plus d'infos &raquo;</a></p>

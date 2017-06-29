@@ -102,6 +102,7 @@ get_header();
 				   --><a href="#2" title="Donner 2 étoiles">★</a><!--
 				   --><a href="#1" title="Donner 1 étoile">★</a>
 				</div>
+				<span><?php echo $averageNote['total']; ?> notations</span>
 			</div>
 
 			<div class="row description">
