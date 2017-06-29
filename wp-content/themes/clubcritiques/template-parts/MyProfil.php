@@ -11,17 +11,26 @@ if(!is_user_logged_in()){
 
 $user = wp_get_current_user();
 
-if(isset($_POST)){
+Utilisateur::modifyContact(7, 'add');
+Utilisateur::modifyContact(9, 'add');
+
+if(isset($_POST['type']) && $_POST['type'] == 'modifyUser'){
 	Utilisateur::modifyUserInfo($_POST);
+}elseif(isset($_POST['type']) && $_POST['type'] == 'contact'){
+	if(	Utilisateur::isContact($user->ID);){
+		Utilisateur::modifyContact($user->ID, 'remove');		
+	}else{
+		Utilisateur::modifyContact($user->ID, 'remove');
+	}	
 }
 
 $userMeta = get_user_meta( $user->ID );
-
 get_header(); 
 ?>
 
 
 <!-- <form action="" method="POST">
+	<input type='hidden' name='type' value='modifyUser'><input>
 	Email: <input type='text' name='user_email' value='<?php echo $user->user_email;?>'></input><br>
 	Mot de passe: <input type='password' name='password'></input><br>
 	Vérification mot de passe: <input type='password' name='passwordCheck'></input><br>
@@ -34,20 +43,18 @@ get_header();
 </form> -->
 
 
-
-
 <div class="container">
 	<div class="row title_profil">
 		<h1>Profil Utilisateur</h1>
 	</div>
 	<div class="row content_profil">
 		<div class="col-md-3 col-xs-12">
-			<img src="http://lorempixel.com/400/400/">
+			<img src="<?php echo get_field('photo', 'user_'.$user->ID); ?>">
 		</div>
 		<div class="col-md-6 col-xs-12">
 			<h2><?php echo strtoupper($user->user_lastname).' '.ucfirst(strtolower ($user->user_firstname));?></h2>
 			<p><?php echo $user->user_email;?></p>
-			<p>Curabitur vehicula scelerisque tincidunt. Donec hendrerit venenatis leo, a congue dolor pellentesque at. Proin at orci quis velit feugiat accumsan pellentesque quis lectus. Fusce sollicitudin molestie arcu, non eleifend mauris rhoncus ac. Ut velit justo, ultrices vitae commodo sed, pellentesque nec libero. Nunc in aliquet justo, et tempus neque. Morbi nec orci magna. Donec convallis, lorem ut viverra convallis, diam ipsum pretium massa, eu malesuada libero tortor eget felis. Maecenas erat sem, iaculis sed consequat sed, pretium eu erat. Vivamus volutpat malesuada ex, convallis pellentesque magna rhoncus nec. Nulla pulvinar, lorem a hendrerit tristique, ex velit bibendum neque, sit amet sollicitudin odio felis vitae nisl. Sed placerat elit orci, id vulputate ante mattis sed. Vestibulum eget mollis dolor. Pellentesque tellus urna, lobortis in iaculis nec, aliquet vitae enim. Aenean condimentum fermentum semper.</p>
+			<p><?php echo $userMeta['description'][0] ?></p>
 		</div>
 		<div class="row col-md-3 div_menu_right">
 			<div class="menu_right">
@@ -60,13 +67,18 @@ get_header();
 					</ul>
 				</div>
 			</div>
-			<div class="row">
-					<a href="#contact"><button>Contacter</button></a>
-			</div>
-			</div>
+				<?php if($user->ID != wp_get_current_user()->ID){ ?>
+				<form action="" method='POST'>
+					<button type='submit' name='type' value='modifyContact'>Ajouter Contact</button>
+				</form>
+					<div class="row">
+							<a href="#contact"><button>Contacter</button></a>
+					</div>
+				<?php } ?>
+				</div>
 		</div>
 	</div>	
-
+<br>
 	<div class="row exchange">
 		<h2>Pour échanger</h2>
 	</div>

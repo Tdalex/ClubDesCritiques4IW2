@@ -138,6 +138,9 @@ class Utilisateur{
 				echo 'Veuillez entrer un mot de passe plus long';	
 			}
 		}
+		// if(!empty($_FILES['photo']){
+			// update_field('photo', $_FILES['photo'], 'user_'.$user->ID)
+		// }
 		unset($request['password']);
 		unset($request['passwordCheck']);
 		$request = array_filter($request);
@@ -236,6 +239,63 @@ class Utilisateur{
 		// note
 		update_field('field_593a5956855e4', $note, $idNotation);
 	
+		return true;
+	}
+	
+	public static function isContact($idContact){
+		$myContact = get_field('contact', 'user_'.$user_id) ? get_field('contact', 'user_'.$user_id) : array();
+	
+		foreach($myContact as $key => $fc){
+			if($idContact == $fc['ID']){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static function ModifyContact($idContact, $type = 'add'){
+		$user_id = get_current_user_id();
+		$friendContact = get_field('contact', 'user_'.$idContact) ? get_field('contact', 'user_'.$idContact) : array();
+		$myContact = get_field('contact', 'user_'.$user_id) ? get_field('contact', 'user_'.$user_id) : array();
+		$already = false;
+		if($type == 'add'){
+			foreach($friendContact as $fc){	
+				$friendContactTemp[] = $fc['ID'];
+				if($user_id == $fc['ID']){				
+					$already = true;
+					break;
+				}
+			}
+			if(!$already){
+				$friendContactTemp[] = $user_id;
+				update_field('field_5954b2cf2206c', $friendContactTemp , 'user_'.$idContact);
+				$already = false;
+			}
+			foreach($myContact as $mc){
+				$myContactTemp[] = $mc['ID'];
+				if($idContact == $mc['ID']){			
+					$already = true;
+				}
+			}
+			if(!$already){
+				$myContactTemp[] = $idContact;
+				var_dump($myContactTemp);
+				update_field('field_5954b2cf2206c', $myContactTemp , 'user_'.$user_id);
+			}
+		}else{
+			foreach($friendContact as $key => $fc){
+				if($user_id != $fc['ID']){
+					$friendContactTemp[] = $fc['ID'];	
+				}
+			}
+			update_field('field_5954b2cf2206c', $friendContactTemp , 'user_'.$idContact);
+			foreach($myContact as $key => $mc){
+				if($idContact != $mc['ID']){
+					$myContactTemp[] = $fc['ID'];	
+				}
+			}
+			update_field('field_5954b2cf2206c', $myContactTemp , 'user_'.$user_id);
+		}
 		return true;
 	}
 }
