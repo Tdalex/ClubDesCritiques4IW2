@@ -296,6 +296,6 @@ class Utilisateur{
 			}
 			update_field('field_5954b2cf2206c', $myContactTemp , 'user_'.$user_id);
 		}
-		return true;
+		return self::redirect($_SERVER['REQUEST_URI']);
 	}
 }

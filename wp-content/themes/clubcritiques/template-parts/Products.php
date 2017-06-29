@@ -60,7 +60,7 @@ $formats = get_terms( array(
 			<form action="" method="POST">
 				<input type='hidden' name='type' value='search'></input>
 				Titre ou auteur : <input type='text' name='keywords' value='<?php echo $_POST['keywords'] ?>'></input><br>
-				<label>Genre</label><br>
+				<br><label>Genre</label>
 
 				<?php foreach($genres as $genre){ ?>
 					<?php if(isset($_POST['genre']) && in_array($genre->term_id ,$_POST['genre'])){ ?>
@@ -69,8 +69,8 @@ $formats = get_terms( array(
 						<input type="checkbox" name="genre[]" value="<?php echo $genre->term_id ?>"><?php echo $genre->name ?><br>
 					<?php } ?>
 				<?php } ?>
-
-				<label>Format</label><br>
+				
+				<br><label>Format</label>
 				<?php foreach($formats as $format){ ?>
 					<?php if(isset($_POST['format']) && in_array($format->term_id ,$_POST['format'])){ ?>
 						<input type="checkbox" checked name="format[]" value="<?php echo $format->term_id ?>"><?php echo $format->name ?><br>
@@ -78,7 +78,7 @@ $formats = get_terms( array(
 						<input type="checkbox" name="format[]" value="<?php echo $format->term_id ?>"><?php echo $format->name ?><br>
 					<?php } ?>
 				<?php } ?>
-				<label>Note minimale</label>
+				<br><label>Note minimale</label>
 				<select name='note' id="note">
 					<option></option>
 					<?php for($i=0;$i<=5;$i++){ ?>
@@ -96,8 +96,11 @@ $formats = get_terms( array(
 		<div class="col-sm-8">
 		<?php foreach($products as $product){ ?>
 			<div class="col-xs-6 col-lg-4">
-				<img src="https://pictures.abebooks.com/isbn/9782070543588-fr.jpg">
-                <!-- <img src="<?php echo get_field('image', $product->ID); ?>"></img> -->
+				<?php if(!get_field('image', $product->ID)){ ?> 
+					<img src="https://pictures.abebooks.com/isbn/9782070543588-fr.jpg"> 
+                <?php }else{ ?>
+					<img src="<?php echo get_field('image', $product->ID); ?>"></img>
+				<?php } ?>
 				<span class="title_book"><?php echo $product->post_title; ?></span>
 				<span class="author_book"><?php echo get_field('author',$product->ID)[0]->post_title; ?></span><br>
 				<?php  $averageNote = Utilisateur::getAverageNote($product->ID);
