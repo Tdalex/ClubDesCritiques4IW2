@@ -55,14 +55,21 @@ $averageNote = Utilisateur::getAverageNote($product_ID);
 //random suggested books
 
 $args = array(
-	'posts_per_page'   => 4,
+	'posts_per_page'   => 5,
 	'orderby'          => 'rand',
 	'post_type'        => 'bibliotheque',
 	'post_status'      => 'publish',
 	'suppress_filters' => true 
 );
 $suggestedProducts = get_posts( $args );
-
+for($i=0; $i<4; $i++){
+	if($product_ID != $suggestedProducts[$i]->ID){
+		$suggestedProductsTemp[] = $suggestedProducts[$i];
+	}
+}
+if(count($suggestedProductsTemp)<4){
+	$suggestedProductsTemp[] = $suggestedProducts[4];
+}
 
 get_header(); 
 ?>
@@ -138,10 +145,14 @@ get_header();
 	</div>
 
 	<div class="row">
-	<?php foreach($suggestedProducts as $sp){ ?>
+	<?php foreach($suggestedProductsTemp as $sp){ ?>
 		<div class="col-md-3 suggestions col-xs-6">
-			<a href=<?php echo get_permalink(get_page_by_title('Produit')).$sp->ID; ?>>
-				<img class="img-responsive" src='<?php get_field('image', $sp->ID);?>' />
+			<a href="<?php echo get_permalink(get_page_by_title('Produit')).$sp->ID; ?>">
+				<?php if(!get_field('image', $sp->ID)){ ?> 
+					<img class="img-responsive"  src="https://pictures.abebooks.com/isbn/9782070543588-fr.jpg"> 
+				<?php }else{ ?>
+					<img class="img-responsive"  src="<?php echo get_field('image', $sp->ID); ?>"></img>
+				<?php } ?>
 				<h3><?php echo $sp->post_title; ?></h3>
 				<p><?php echo get_field('author', $sp->ID)[0]->post_title; ?></p>
 			</a>
