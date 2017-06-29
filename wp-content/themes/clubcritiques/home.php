@@ -29,12 +29,8 @@ get_header(); ?>
             <div class="col-xs-12 col-sm-9">
 
                 <div class="wrap">
-                    <h1 class="page-title">Hello world!</h1>
-                    <p class="lead blog-description">Quanta autem vis amicitiae sit, ex hoc intellegi maxime potest, quod ex
-                        infinita societate generis humani, quam conciliavit ipsa natura, ita contracta res est et adducta in angustum ut omnis caritas aut inter duos aut inter paucos iungeretur.
-
-                        Nisi mihi Phaedrum, inquam, tu mentitum aut Zenonem putas, quorum utrumque audivi, cum mihi nihil sane praeter sedulitatem probarent, omnes mihi Epicuri sententiae satis notae sunt. atque eos, quos nominavi, cum Attico nostro frequenter audivi, cum miraretur ille quidem utrumque, Phaedrum autem etiam amaret, cotidieque inter nos ea, quae audiebamus, conferebamus, neque erat umquam controversia, quid ego intellegerem, sed quid probarem.</p>
-                </div>
+                    <h1 class="page-title"><?php echo get_the_title() ?></h1>
+                    <p class="lead blog-description"><?php echo get_the_content()?><p></div>
 
                 <div class="row">
                     <h2 class="blog-post-title">Livres du moment</h2>

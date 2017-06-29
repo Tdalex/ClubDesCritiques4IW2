@@ -7,7 +7,9 @@
  * @since 1.0
  * @version 1.0
  */
-
+if(is_front_page()){
+	include(get_template_directory().'/home.php');
+}else{
 ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'clubcritiques-panel ' ); ?> >
 
@@ -51,3 +53,4 @@
 	</div><!-- .panel-content -->
 
 </article><!-- #post-## -->
+<?php } ?>
