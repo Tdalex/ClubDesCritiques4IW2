@@ -33,10 +33,10 @@ get_header();
 			<div class="menu_right">
 				<?php if(is_user_logged_in() && $user->ID == wp_get_current_user()->ID){ ?>
 				<div class="row">
+					<h2>Paramètres</h2>
 					<div class="menu_flottant">
 						<ul>
 							<a href='<?php echo get_permalink(get_page_by_title('Modifier profil')); ?>'><li>Modifier mes informations</li></a>
-							<a href="#"><li>Modifier mon mot de passe</li></a>
 							<a href="#"><li>Gérer ses contacts</li></a>
 						</ul>
 					</div>
