@@ -77,7 +77,11 @@ get_header();
 <div class="container">
 	<div class="row">
 		<div class="col-md-3">
-			<img class="img-responsive" style='height:300px; length:300px;'src='<?php echo $image;?>'></img>
+		<?php if(!$image){ ?> 
+			<img class="img-responsive" style='height:300px; length:300px;' src="https://pictures.abebooks.com/isbn/9782070543588-fr.jpg"> 
+		<?php }else{ ?>
+			<img class="img-responsive" style='height:300px; length:300px;' src="<?php echo $image; ?>"></img>
+		<?php } ?>
 		</div>
 
 		<div class="col-md-9">
