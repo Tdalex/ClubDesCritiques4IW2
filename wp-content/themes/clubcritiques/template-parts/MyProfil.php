@@ -5,6 +5,10 @@
  
 use ClubDesCritiques\Utilisateur as Utilisateur;
 
+if(!is_user_logged_in()){
+	Utilisateur::redirect('/');
+}
+
 $user = wp_get_current_user();
 
 if(isset($_POST)){

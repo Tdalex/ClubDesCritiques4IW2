@@ -52,6 +52,18 @@ if(isset($_POST['userNote'])){
 
 $averageNote = Utilisateur::getAverageNote($product_ID);
 
+//random suggested books
+
+$args = array(
+	'posts_per_page'   => 4,
+	'orderby'          => 'rand',
+	'post_type'        => 'bibliotheque',
+	'post_status'      => 'publish',
+	'suppress_filters' => true 
+);
+$suggestedProducts = get_posts( $args );
+
+
 get_header(); 
 ?>
 
@@ -88,7 +100,7 @@ get_header();
 
 <!-- 
 	système de notation
-		<?php if ($averageNote['total'] > 0){ ?>
+				<?php if ($averageNote['total'] > 0){ ?>
 					<p>Moyenne des notes: <?php echo $averageNote['average']; ?>/5</p>
 					<p>Nombre total de notes: <?php echo $averageNote['total']; ?></p>
 				<?php }else{ ?>
@@ -127,34 +139,15 @@ get_header();
 	</div>
 
 	<div class="row">
+	<?php foreach($suggestedProducts as $sp){ ?>
 		<div class="col-md-3 suggestions col-xs-6">
-			<a href=#>
-				<img class="img-responsive" src='<?php echo $image;?>' />
-				<h3>Théorie de l'information et du codage</h3>
-				<p>Olivier Rioul</p>
+			<a href=<?php echo get_permalink(get_page_by_title('Produit')).$sp->ID; ?>>
+				<img class="img-responsive" src='<?php get_field('image', $sp->ID);?>' />
+				<h3><?php echo $sp->post_title; ?></h3>
+				<p><?php echo get_field('author', $sp->ID)[0]->post_title; ?></p>
 			</a>
 		</div>
-		<div class="col-md-3 suggestions col-xs-6">
-			<a href=#>
-				<img class="img-responsive" src='<?php echo $image;?>' />
-				<h3>Théorie de l'information et du codage</h3>
-				<p>Olivier Rioul</p>
-			</a>
-		</div>
-		<div class="col-md-3 suggestions col-xs-6">
-			<a href=#>
-				<img class="img-responsive" src='<?php echo $image;?>' />
-				<h3>Théorie de l'information et du codage</h3>
-				<p>Olivier Rioul</p>
-			</a>
-		</div>
-		<div class="col-md-3 suggestions col-xs-6">
-			<a href=#>
-				<img class="img-responsive" src='<?php echo $image;?>' />
-				<h3>Théorie de l'information et du codage</h3>
-				<p>Olivier Rioul</p>
-			</a>
-		</div>			
+	<?php } ?>
 	</div>
 </div>
 

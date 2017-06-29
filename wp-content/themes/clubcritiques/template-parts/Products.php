@@ -88,7 +88,7 @@ $formats = get_terms( array(
 							<option value="<?php echo $i; ?>"><?php echo $i; ?></option>
 						<?php } ?>
 					<?php } ?>
-				</select>
+				</select><br>
 				<br><button type='submit'>rechercher</button>
 			</form>
 		</div><!-- /.blog-sidebar -->
@@ -98,7 +98,14 @@ $formats = get_terms( array(
 			<div class="col-xs-6 col-lg-4">
 				<img src="https://pictures.abebooks.com/isbn/9782070543588-fr.jpg">
                 <!-- <img src="<?php echo get_field('image', $product->ID); ?>"></img> -->
-				<p class="title_book"><?php echo $product->post_title; ?></p>
+				<span class="title_book"><?php echo $product->post_title; ?></span>
+				<span class="author_book"><?php echo get_field('author',$product->ID)[0]->post_title; ?></span><br>
+				<?php  $averageNote = Utilisateur::getAverageNote($product->ID);
+				if ( $averageNote['total'] > 0){ ?>
+					<span class="notation_book"><?php echo $averageNote['average']; ?>/5</span>
+				<?php }else{ ?>
+					<span>Aucune note</span>
+				<?php } ?>
 				<p><a class="btn btn-default" href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>" role="button">plus d'infos &raquo;</a></p>
 			</div><!--/.col-xs-6.col-lg-4-->
 		<?php } ?>
