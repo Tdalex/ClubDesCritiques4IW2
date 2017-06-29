@@ -21,7 +21,7 @@ get_header();
 
 <div class="container">
 	<div class="row title_profil">
-		<h1>Profil Utilisateur</h1>
+		<h1><?php echo get_the_title();  ?></h1>
 	</div>
 	<div class="row content_profil">
 		<div class="col-md-3 col-xs-12">
