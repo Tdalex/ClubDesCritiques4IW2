@@ -11,13 +11,10 @@ if(!is_user_logged_in()){
 
 $user = wp_get_current_user();
 
-Utilisateur::modifyContact(7, 'add');
-Utilisateur::modifyContact(9, 'add');
-
 if(isset($_POST['type']) && $_POST['type'] == 'modifyUser'){
 	Utilisateur::modifyUserInfo($_POST);
 }elseif(isset($_POST['type']) && $_POST['type'] == 'contact'){
-	if(	Utilisateur::isContact($user->ID);){
+	if(	Utilisateur::isContact($user->ID)){
 		Utilisateur::modifyContact($user->ID, 'remove');		
 	}else{
 		Utilisateur::modifyContact($user->ID, 'remove');
@@ -58,19 +55,23 @@ get_header();
 		</div>
 		<div class="row col-md-3 div_menu_right">
 			<div class="menu_right">
-			<div class="row">
-				<div class="menu_flottant">
-					<ul>
-						<a href="#"><li>Modifier mes informations</li></a>
-						<a href="#"><li>Modifier mon mot de passe</li></a>
-						<a href="#"><li>Gérer ses contacts</li></a>
-					</ul>
+				<?php if(is_user_logged_in() && $user->ID == wp_get_current_user()->ID){ ?>
+				<div class="row">
+					<div class="menu_flottant">
+						<ul>
+							<a href="#"><li>Modifier mes informations</li></a>
+							<a href="#"><li>Modifier mon mot de passe</li></a>
+							<a href="#"><li>Gérer ses contacts</li></a>
+						</ul>
+					</div>
 				</div>
-			</div>
+				<?php } ?>
 				<?php if($user->ID != wp_get_current_user()->ID){ ?>
-				<form action="" method='POST'>
-					<button type='submit' name='type' value='modifyContact'>Ajouter Contact</button>
-				</form>
+					<div class="row">
+						<form action="" method='POST'>
+							<button type='submit' name='type' value='modifyContact'>Ajouter Contact</button>
+						</form>	
+					</div><br>
 					<div class="row">
 							<a href="#contact"><button>Contacter</button></a>
 					</div>
