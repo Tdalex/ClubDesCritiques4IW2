@@ -243,10 +243,11 @@ class Utilisateur{
 	}
 	
 	public static function isContact($idContact){
+		$user_id = get_current_user_id();
 		$myContact = get_field('contact', 'user_'.$user_id) ? get_field('contact', 'user_'.$user_id) : array();
 	
-		foreach($myContact as $key => $fc){
-			if($idContact == $fc['ID']){
+		foreach($myContact as $key => $mc){
+			if($idContact == $mc['ID']){
 				return true;
 			}
 		}
@@ -279,7 +280,6 @@ class Utilisateur{
 			}
 			if(!$already){
 				$myContactTemp[] = $idContact;
-				var_dump($myContactTemp);
 				update_field('field_5954b2cf2206c', $myContactTemp , 'user_'.$user_id);
 			}
 		}else{

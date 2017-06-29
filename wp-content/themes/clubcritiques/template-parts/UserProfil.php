@@ -22,11 +22,11 @@ $userMeta = get_user_meta( $user->ID );
 
 if(isset($_POST['type']) && $_POST['type'] == 'modifyUser'){
 	Utilisateur::modifyUserInfo($_POST);
-}elseif(isset($_POST['type']) && $_POST['type'] == 'contact'){
+}elseif(isset($_POST['type']) && $_POST['type'] == 'modifyContact'){
 	if(	Utilisateur::isContact($user->ID)){
 		Utilisateur::modifyContact($user->ID, 'remove');		
 	}else{
-		Utilisateur::modifyContact($user->ID, 'remove');
+		Utilisateur::modifyContact($user->ID, 'add');
 	}	
 }
 
