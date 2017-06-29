@@ -36,7 +36,11 @@ get_header(); ?>
                     <h2 class="blog-post-title">Livres du moment</h2>
 					<?php foreach($products as $product){ ?>
 						<div class="col-xs-6 col-lg-4">
-							<img src="<?php echo get_field('image', $product->ID); ?>"></img>
+							<?php if(!get_field('image', $product->ID)){ ?> 
+								<img src="https://pictures.abebooks.com/isbn/9782070543588-fr.jpg"> 
+							<?php }else{ ?>
+								<img src="<?php echo get_field('image', $product->ID); ?>"></img>
+							<?php } ?>
 							<p class="title_book"><?php echo $product->post_title; ?></p>
 							<p><a class="btn btn-default" href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>" role="button">plus d'infos &raquo;</a></p>
 						</div><!--/.col-xs-6.col-lg-4-->

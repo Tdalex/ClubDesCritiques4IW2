@@ -1,6 +1,6 @@
 <?php
 /*
- * Template name: my profil
+ * Template name: edit profil
  */
  
 use ClubDesCritiques\Utilisateur as Utilisateur;
@@ -11,10 +11,13 @@ if(!is_user_logged_in()){
 
 $user = wp_get_current_user();
 
+if(isset($_POST['type']) && $_POST['type'] == 'modifyUser'){
+	Utilisateur::modifyUserInfo($_POST);
+}
+
 $userMeta = get_user_meta( $user->ID );
 get_header(); 
 ?>
-
 
 <div class="container">
 	<div class="row title_profil">
@@ -25,23 +28,21 @@ get_header();
 			<img src="<?php echo get_field('photo', 'user_'.$user->ID); ?>">
 		</div>
 		<div class="col-md-6 col-xs-12">
-			<h2><?php echo strtoupper($user->user_lastname).' '.ucfirst(strtolower ($user->user_firstname));?></h2>
-			<p><?php echo $user->user_email;?></p>
-			<p><?php echo $userMeta['description'][0] ?></p>
+			<form action="" method="POST">
+				<input type='hidden' name='type' value='modifyUser'></input>
+				Email: <input type='text' name='user_email' value='<?php echo $user->user_email;?>'></input><br>
+				Mot de passe: <input type='password' name='password'></input><br>
+				Vérification mot de passe: <input type='password' name='passwordCheck'></input><br>
+				<br>
+				Prénom: <input type='text' name='first_name' value='<?php echo $user->user_firstname;?>'></input><br>
+				Nom de famille: <input type='text' name='last_name' value='<?php echo $user->user_lastname ;?>'></input><br>
+				Description: <textarea name='description' ><?php echo $userMeta['description'][0] ?></textarea><br>
+				<br>
+				<button type='submit'>Modifier mes infos</button>
+			</form>
 		</div>
 		<div class="row col-md-3 div_menu_right">
 			<div class="menu_right">
-				<?php if(is_user_logged_in() && $user->ID == wp_get_current_user()->ID){ ?>
-				<div class="row">
-					<div class="menu_flottant">
-						<ul>
-							<a href='<?php echo get_permalink(get_page_by_title('Modifier profil')); ?>'><li>Modifier mes informations</li></a>
-							<a href="#"><li>Modifier mon mot de passe</li></a>
-							<a href="#"><li>Gérer ses contacts</li></a>
-						</ul>
-					</div>
-				</div>
-				<?php } ?>
 				<div class="row">
 					<h2>Liste contact</h2>
 					<div class="menu_flottant">
@@ -139,11 +140,6 @@ get_header();
 		</div>
 		
 	</div>
-
-
-
-
-
 </div>
 
 <?php
