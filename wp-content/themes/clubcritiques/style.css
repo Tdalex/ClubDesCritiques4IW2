@@ -4310,3 +4310,87 @@ object {
 	font-style: italic;
 	text-align: center;
 }
+
+.title_profil h1{
+	text-align: center;
+	font-size: 25px;
+	font-weight: bold;
+	margin-bottom: 8%;
+
+}
+
+.content_profil h2{
+	font-weight: bold;
+	font-size: 18px;
+	margin: 0;
+}
+
+.content_profil p{
+	font-size: 13px;
+	text-align: justify;
+}
+
+.exchange h2{
+	font-weight: bold;
+	font-size: 25px;
+	margin-left: 1%;
+	margin-top: 5%;
+	margin-bottom: 2%;
+}
+
+.separator{
+
+	margin: 8%;
+}
+
+.contact_profil h2{
+	font-weight: bold;
+	font-size: 25px;
+	margin-left: 1%;
+	margin-bottom: 2%;
+}
+
+.form_contact{
+	margin-top: 2%;
+}
+
+.form_contact div label{
+	text-align: right;
+	font-size: 18px;
+	font-weight: normal;
+	margin: 0;
+}
+
+.form_contact div input .btn{
+	font-size: 30px;
+}
+
+.div_menu_right {
+	padding-left: 5%;
+}
+
+.menu_right {
+	position: fixed;
+}
+
+.menu_flottant {
+	/*position: fixed;*/
+	padding-left: 5px;
+	border-left: solid;
+	border-width: 2px;
+}
+
+.menu_flottant ul li {
+	list-style: none;
+	margin: auto;
+	font-size: 13px;
+
+}
+
+.menu_right div button {
+
+}
+
+.submit_contact {
+	font-size: 12px !important;
+}
