@@ -66,7 +66,6 @@ class Utilisateur{
 					</form>";
 					return $activate;
 				}else{
-					$_SESSION['login_msg'] = 'bienvenue';
 					return self::redirect($_SERVER['REQUEST_URI']);
 				}
 			}else{
@@ -154,25 +153,62 @@ class Utilisateur{
 		return wp_update_user($request);
 	}
 	
-	public static function postComment($idProduct, $content){
-		$user_id	  = get_current_user_id();
-		$productTitle = get_the_title($idProduct);
-		$post   	  = array('post_author' => $user_id, 'post_type' => 'commentaire', 'post_title' => $productTitle.'_'.$user_id.'_');
+	public static function postComment($idProduct, $request){
+		$user_id = get_current_user_id();
+		$comment = self::getUserComment($idProduct);
 		
-		$idComment = wp_insert_post($post, $user_id);
-		update_field('commented_product', $idComment, $idProduct);
-		update_field('comment', $idComment, $content);
-		return true;
+		self::ChangeNotation($idProduct, $request['userNote']);
+		
+		if(is_object($comment)){
+			$update = array('ID' => $comment->ID, 'post_content' => $request['comment']);
+			wp_update_post($update);
+		}else{
+			$productTitle = get_the_title($idProduct);
+			$post   	  = array('post_author' => $user_id, 'post_content' => $request['comment'], 'post_type' => 'commentaire','post_status' => 'publish', 'post_title' => $productTitle.'_'.$user_id);
+			
+			$idComment = wp_insert_post($post, $user_id);
+			update_field('field_593a461c598a5', $idProduct, $idComment);
+		}
+		return self::redirect($_SERVER['REQUEST_URI']);
 	}
 	
-	public static function editComment($idComment, $content){
-		update_field('comment', $idComment, $content);
-		return true;
+	public static function getProductComments($idProduct){
+		$args = array(
+			'posts_per_page'   => -1,
+			'meta_value'       => "a:1:{i:0;s:2:\"".$idProduct."\";}",
+			'post_type'        => 'commentaire',
+			'post_status'      => 'publish'
+		);
+		
+		return get_posts($args);
+	}
+
+	public static function getUserComment($idProduct, $user_id = null){
+		if($user_id === null)
+			$user_id = get_current_user_id();
+		
+		$args = array(
+			'posts_per_page'   => -1,
+			'meta_value'       => "a:1:{i:0;s:2:\"".$idProduct."\";}",
+			'post_type'        => 'commentaire',
+			'post_status'      => 'publish',
+			'post_author'	   => $user_id
+		);
+		$comment = get_posts($args);
+		if(isset($comment[0])){
+			return $comment[0];
+		}
+		return array();
 	}
 	
-	public static function deleteComment($idComment){
-		wp_delete_post($idComment);
-		return true;
+	public static function deleteComment($productId, $userId = null){
+		if($userId === null)
+			$userId = get_current_user_id();
+			
+		$comment = self::getUserComment($productId, $userId);
+		if(is_object($comment))
+			wp_delete_post($comment->ID);
+		return self::redirect($_SERVER['REQUEST_URI']);
 	}
 	
 	public static function getNotation($idProduct, $user_id){

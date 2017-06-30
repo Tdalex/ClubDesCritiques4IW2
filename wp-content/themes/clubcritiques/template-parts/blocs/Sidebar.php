@@ -2,19 +2,7 @@
 /*
  * Template name: sidebar
  */
- 
-use ClubDesCritiques\Utilisateur as Utilisateur;
 
-if(isset($_POST) && $_POST['type'] == 'register'){
-	echo Utilisateur::register($_POST);
-}elseif(isset($_POST) && $_POST['type'] == 'login'){
-	echo Utilisateur::login($_POST);
-}elseif(isset($_POST) && $_POST['type'] == 'logout'){
-	wp_logout();
-	Utilisateur::redirect($_SERVER['REQUEST_URI']);
-}elseif(isset($_POST) && $_POST['type'] == 'activate'){
-	echo Utilisateur::activateAccount($_POST);
-}
 ?>
 
 <?php if(!is_user_logged_in()){ ?>

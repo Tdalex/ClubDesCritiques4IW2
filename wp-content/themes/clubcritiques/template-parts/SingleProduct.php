@@ -6,13 +6,10 @@
 use ClubDesCritiques\Bibliotheque as Bibliotheque;
 use ClubDesCritiques\Utilisateur as Utilisateur;
 
-
-
 // get product ID
 $path       = array_filter(explode("/", $_SERVER['REQUEST_URI']));
 $product_ID = end($path);
 $product    = get_post($product_ID);
-
 //404 if not product
 if(!is_object($product) || $product->post_type != 'bibliotheque'){
     global $wp_query;
@@ -30,6 +27,7 @@ $description    = get_field('description', $product_ID);
 $original_title = get_field('original_title', $product_ID);
 $image = get_field('image', $product_ID);
 
+
 //auteur
 $sexe      = get_field('sexe', $author->ID);
 $photo     = get_field('photo', $author->ID);
@@ -43,17 +41,20 @@ $deathdate = new DateTime($deathdate);
 
 $userNote = 0;
 
-if(isset($_POST['userNote'])){
-    $userNote = $_POST['userNote'];
-    Utilisateur::ChangeNotation($product_ID, $userNote);
-}elseif($userId = get_current_user_id()){
+if($userId = get_current_user_id()){
     $userNote = Utilisateur::getNotation($product_ID, $userId);
 }
 
+if(isset($_POST['type']) && $_POST['type'] == 'comment'){
+		Utilisateur::postComment($product_ID, $_POST);
+}elseif(isset($_POST['type']) && $_POST['type'] == 'deleteComment'){
+		Utilisateur::deleteComment($product_ID);
+}
+
+$comments    = Utilisateur::getProductComments($product_ID);
 $averageNote = Utilisateur::getAverageNote($product_ID);
 
 //random suggested books
-
 $args = array(
 	'posts_per_page'   => 5,
 	'orderby'          => 'rand',
@@ -61,6 +62,7 @@ $args = array(
 	'post_status'      => 'publish',
 	'suppress_filters' => true 
 );
+
 $suggestedProducts = get_posts( $args );
 for($i=0; $i<4; $i++){
 	if($product_ID != $suggestedProducts[$i]->ID){
@@ -163,6 +165,42 @@ get_header();
 			</a>
 		</div>
 	<?php } ?>
+	</div>
+	
+	<?php if(is_user_logged_in()){ ?>
+	
+	<div class="row">
+		<form method='POST' action=''>
+			Note: <select name='userNote' id="userNote">
+				<?php for($i=0;$i<=5;$i++){ ?>
+					<?php if($i==$userNote){ ?>
+						<option selected value="<?php echo $i; ?>"><?php echo $i; ?></option> 
+					<?php }else{ ?>
+						<option value="<?php echo $i; ?>"><?php echo $i; ?></option> 
+					<?php } ?>
+				<?php } ?>
+			</select>/5<br>
+			Commentaire: 
+			<?php if( Utilisateur::getUserComment($product_ID)){
+			$userComment = Utilisateur::getUserComment($product_ID); ?>
+			<textarea name='comment'><?php echo strip_tags($userComment->post_content); ?></textarea>
+			<button type='submit' value='deleteComment' name='type'>supprimer</button>
+			<?php }else{ ?>
+			<textarea name='comment'></textarea>
+			<?php } ?>
+			<button type='submit' value='comment' name='type'>commenter</button>
+			
+		</form>
+	</div>
+	<?php } ?>
+	<div class="row">
+		<?php foreach($comments as $comment){ ?>
+			<?php $commentAuthor = get_user_by('ID', $comment->post_author); ?>
+			<div class="col-md-3 comments col-xs-6">
+				<h2><a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$commentAuthor->ID; ?>'><?php echo $commentAuthor->user_firstname .' '. $commentAuthor->user_lastname; ?></a> <span><?php echo Utilisateur::getNotation($product_ID, $commentAuthor->ID); ?>/5</span></h2>
+				<?php  echo $comment->post_content; ?>
+			</div>
+		<?php } ?>
 	</div>
 </div>
 
