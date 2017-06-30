@@ -334,4 +334,54 @@ class Utilisateur{
 		}
 		return self::redirect($_SERVER['REQUEST_URI']);
 	}
+	
+	public static function getProductExchange($idProduct){
+		$args = array(
+			'posts_per_page'   => -1,
+			'meta_value'       => "a:1:{i:0;s:2:\"".$idProduct."\";}",
+			'post_type'        => 'echange',
+			'post_status'      => 'publish'
+		);
+		$exchanges = array();
+		foreach(get_posts($args) as $exchange){
+			if(wp_get_post_terms($exchange->ID, 'exchange_type')[0]->slug == 'donner'){
+				$exchanges['give'][] = $exchange;
+			}else{
+				$exchanges['take'][] = $exchange;
+			}
+		}
+		return $exchanges;
+	}
+
+	public static function getUserExchange($idProduct, $user_id = null){
+		if($user_id === null)
+			$user_id = get_current_user_id();
+		
+		$args = array(
+			'posts_per_page'   => -1,
+			'meta_value'       => "a:1:{i:0;s:2:\"".$idProduct."\";}",
+			'post_type'        => 'echange',
+			'post_status'      => 'publish',
+			'post_author'	   => $user_id
+		);
+		
+		return get_posts($args);
+	}
+	
+	public static function prepareExchange($idProduct, $type){
+		$user_id = get_current_user_id();
+		$exchange = self::getUserExchange($idProduct);
+		
+		if(is_object($exchange)){
+			wp_set_post_terms( $exchange->ID, $type, 'exchange_type');
+		}else{
+			$productTitle = get_the_title($idProduct);
+			$post   	  = array('post_author' => $user_id, 'post_content' => $request['comment'], 'post_type' => 'echange','post_status' => 'publish', 'post_title' => $productTitle.'_'.$user_id);
+			
+			$idExchange = wp_insert_post($post, $user_id);
+			wp_set_post_terms( $idExchange, $type, 'exchange_type');
+			update_field('field_593a461c598a5', $idProduct, $idExchange);
+		}
+		return self::redirect($_SERVER['REQUEST_URI']);
+	}
 }

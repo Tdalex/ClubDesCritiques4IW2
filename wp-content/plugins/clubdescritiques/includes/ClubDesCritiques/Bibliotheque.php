@@ -43,6 +43,29 @@ class Bibliotheque
             )
         );
 		
+		// post_type = echange
+        register_post_type(
+            'Echange',
+            array(
+                'labels' => array(
+                    'name' => __('Echanges', 'clubdescritiques'),
+                    'singular_name' => __('Echange', 'clubdescritiques'),
+                    'all_items' => __('Tous les echanges', 'clubdescritiques'),
+                    'add_new_item' => __("Ajout d'un echange", 'clubdescritiques'),
+                    'search_items' => __('Recherche dans les echanges', 'clubdescritiques'),
+                    'not_found' => __('Aucun echange trouve.', 'clubdescritiques')
+                ),
+                'public' => true,
+                'show_ui' => true, // passer à false pour ne pas y accéder en BO, mais sera accessible en front
+                'show_in_nav_menus' => false,
+                'show_in_admin_bar' => false,
+                'supports' => array('title', 'author'),
+                'can_export' => true,
+                'show_in_rest'  => true,
+                'custom_metadata' => true,
+            )
+        );
+		
 		// post_type = commentaire
         register_post_type(
             'Commentaire',
@@ -136,6 +159,26 @@ class Bibliotheque
             'show_in_rest'          => true
         );
         register_taxonomy('bibliotheque_genre', array('bibliotheque'), $args);
+		
+		// taxonomy = type
+        $args = array(
+            'labels' => array(
+                'name' => __('types', 'taxonomy general name'),
+                'singular_name' => __('type', 'taxonomy general name'),
+                'all_items' => __('all types', 'aubertetduval'),
+                'add_new_item' => __('Add type', 'aubertetduval'),
+                'search_items' => __('Search in type', 'aubertetduval'),
+                'not_found' => __('No type found.', 'aubertetduval')
+            ),
+            'public'                => false,
+            'hierarchical'          => false,
+            'show_ui'               => true,
+            'show_in_nav_menus'     => false,
+            'show_admin_column'     => true,
+            'query_var'             => true,
+            'show_in_rest'          => true
+        );
+        register_taxonomy('exchange_type', array('echange'), $args);
 		
 		 // taxonomy = format
         $args = array(

@@ -18,6 +18,16 @@ if(!is_object($product) || $product->post_type != 'bibliotheque'){
     get_template_part( 404 ); exit();
 }
 
+if(isset($_POST['type']) && $_POST['type'] == 'comment'){
+	Utilisateur::postComment($product_ID, $_POST);
+}elseif(isset($_POST['type']) && $_POST['type'] == 'deleteComment'){
+	Utilisateur::deleteComment($product_ID);
+}elseif(isset($_POST['type']) && $_POST['type'] == 'give'){
+	Utilisateur::prepareExchange($product_ID, 'give');
+}elseif(isset($_POST['type']) && $_POST['type'] == 'take'){
+	Utilisateur::prepareExchange($product_ID, 'take');	
+}
+
 //product
 $author = get_field('author', $product_ID)[0];
 $published_date = get_field('published_date', $product_ID);
@@ -27,6 +37,9 @@ $description    = get_field('description', $product_ID);
 $original_title = get_field('original_title', $product_ID);
 $image = get_field('image', $product_ID);
 
+
+//exchanges
+$exchanges = Utilisateur::getProductExchange($product_ID);
 
 //auteur
 $sexe      = get_field('sexe', $author->ID);
@@ -45,11 +58,7 @@ if($userId = get_current_user_id()){
     $userNote = Utilisateur::getNotation($product_ID, $userId);
 }
 
-if(isset($_POST['type']) && $_POST['type'] == 'comment'){
-		Utilisateur::postComment($product_ID, $_POST);
-}elseif(isset($_POST['type']) && $_POST['type'] == 'deleteComment'){
-		Utilisateur::deleteComment($product_ID);
-}
+
 
 $comments    = Utilisateur::getProductComments($product_ID);
 $averageNote = Utilisateur::getAverageNote($product_ID);
@@ -78,6 +87,7 @@ get_header();
 
 <div class="container">
 	<div class="row">
+
 		<div class="col-md-3">
 		<?php if(!$image){ ?> 
 			<img class="img-responsive" style='height:300px; length:300px;' src="https://pictures.abebooks.com/isbn/9782070543588-fr.jpg"> 
@@ -85,7 +95,16 @@ get_header();
 			<img class="img-responsive" style='height:300px; length:300px;' src="<?php echo $image; ?>"></img>
 		<?php } ?>
 		</div>
-
+		
+		<?php if(is_user_logged_in()){ ?>
+			<div class="col-md-3">
+				<form method='POST' action=''>
+					<button type='submit' value='give' name='type'>donner</button>
+					<button type='submit' value='take' name='type'>recevoir</button>
+				</form>
+			</div>
+		<?php } ?>
+		
 		<div class="col-md-9">
 			<div class="row">
 				<h1 class="title"><?php echo $product->post_title; ?></h1>
@@ -110,42 +129,8 @@ get_header();
 			<div class="row description">
 			<?php echo $description;?>
 			</div>
-
-
-<!-- 
-	système de notation
-				<?php if ($averageNote['total'] > 0){ ?>
-					<p>Moyenne des notes: <?php echo $averageNote['average']; ?>/5</p>
-					<p>Nombre total de notes: <?php echo $averageNote['total']; ?></p>
-				<?php }else{ ?>
-					<p>Aucune note</p>
-				<?php } 
-
-				if(get_current_user_id()){ ?>
-				<p>Votre note:</p> 
-				<form action="" method='POST'>
-					<p>
-						<select name='userNote' id="userNote">
-							<?php for($i=0;$i<=5;$i++){ ?>
-								<?php if($i==$userNote){ ?>
-									<option selected value="<?php echo $i; ?>"><?php echo $i; ?></option> 
-								<?php }else{ ?>
-									<option value="<?php echo $i; ?>"><?php echo $i; ?></option> 
-								<?php } ?>
-							<?php } ?>
-						</select>/5
-					</p>
-					<button type='submit'>Changer ma note</button>
-				</form>
-				<?php } ?> -->
 		</div>
 	</div>
-
-		
-<!-- 		<div><?php echo $birthdate->format('j/m/Y') . ' --- ' . $deathdate->format('j/m/Y')?></div>
-		<div><?php echo $descriptionAuthor;?></div>
-		<div><?php echo $sexe;?></div>
-		<div><?php echo $description;?></div> -->
 
 	<div class="row">
 		<h2 class="cat_h2">Autres suggestions</h2>
@@ -193,6 +178,8 @@ get_header();
 		</form>
 	</div>
 	<?php } ?>
+	<br>
+	<h2>Commentaires</h2>
 	<div class="row">
 		<?php foreach($comments as $comment){ ?>
 			<?php $commentAuthor = get_user_by('ID', $comment->post_author); ?>
@@ -202,6 +189,33 @@ get_header();
 			</div>
 		<?php } ?>
 	</div>
+	
+	
+	<br>
+	<?php if (isset($exchanges['give']) || isset($exchanges['take'])){ ?>
+	<h2>Ces personnes souhaitent echanger</h2>
+	<?php if(isset($exchanges['take'])){ ?>
+		<h3>Recevoir</h3>
+		<div class="row">
+			<?php foreach($exchanges['take'] as $exchange){ ?>
+				<?php $exchangeAuthor = get_user_by('ID', $exchange->post_author); ?>
+				<div class="col-md-3 comments col-xs-6">
+					<h2><a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$exchangeAuthor->ID; ?>'><?php echo $exchangeAuthor->user_firstname .' '. $exchangeAuthor->user_lastname; ?></a></h2>
+				</div>
+			<?php } ?>
+		</div>
+	<?php }?>
+	<?php if (isset($exchanges['give'])){ ?>
+		<h3>Donner</h3>
+		<div class="row">
+			<?php foreach($exchanges['give'] as $exchange){ ?>
+				<?php $exchangeAuthor = get_user_by('ID', $exchange->post_author); ?>
+				<div class="col-md-3 comments col-xs-6">
+					<h2><a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$exchangeAuthor->ID; ?>'><?php echo $exchangeAuthor->user_firstname .' '. $exchangeAuthor->user_lastname; ?></a></h2>
+				</div>
+			<?php } ?>
+		</div>
+	<?php }}?>
 </div>
 
 <?php
