@@ -365,6 +365,7 @@ class Utilisateur{
 			'post_author'	   => $user_id
 		);
 		$exchange = get_posts($args);
+
 		if(isset($exchange[0])){
 			return $exchange[0];
 		}
@@ -395,21 +396,22 @@ class Utilisateur{
 	}
 	
 	public static function prepareExchange($idProduct, $type){
-		$user_id = get_current_user_id();
+		$user_id  = get_current_user_id();
 		$exchange = self::getUserExchange($idProduct);
+		
 		$term = get_term_by( 'slug', $type, 'exchange_type');
 		if(is_object($term)){
 			if(is_object($exchange)){
 				wp_set_object_terms( $exchange->ID, $term->term_id, 'exchange_type');
 			}else{
 				$productTitle = get_the_title($idProduct);
-				$post   	  = array('post_author' => $user_id, 'post_content' => $request['comment'], 'post_type' => 'echange','post_status' => 'publish', 'post_title' => $productTitle.'_'.$user_id);
+				$post   	  = array('post_author' => $user_id, 'post_type' => 'echange','post_status' => 'publish', 'post_title' => $productTitle.'_'.$user_id);
 				
 				$idExchange = wp_insert_post($post, $user_id);
+				update_field('field_59562915ed401', $idProduct, $idExchange);
 				wp_set_object_terms( $idExchange, $term->term_id, 'exchange_type');
 			}
 		}
-		return true;
 		return self::redirect($_SERVER['REQUEST_URI']);
 	}
 	
@@ -417,7 +419,7 @@ class Utilisateur{
 		if($userId === null)
 			$userId = get_current_user_id();
 			
-		$exchange = self::getUserExchange($productId, $userId);
+		$exchange = self::getUserExchange($productId);
 		if(is_object($exchange))
 			wp_delete_post($exchange->ID);
 		

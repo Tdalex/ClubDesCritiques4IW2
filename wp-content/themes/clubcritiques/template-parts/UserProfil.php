@@ -9,6 +9,7 @@ use ClubDesCritiques\Utilisateur as Utilisateur;
 $path       = array_filter(explode("/", $_SERVER['REQUEST_URI']));
 $user_id = end($path);
 $user    = get_user_by('ID', $user_id);
+$exchanges = Utilisateur::getAllUserExchange($user_id);
 
 //404 if not product
 if(!is_object($user)){
@@ -71,39 +72,59 @@ get_header();
 					<?php } ?>
 					</div>
 				</div>
-				</div>
+			</div>
 		</div>
 	</div>	
-<br>
+
+<?php if (isset($exchanges['give']) || isset($exchanges['take'])){ ?>
+	<div class="row separator">
+		<div class="col-md-9">
+			<hr />
+		</div>
+	</div>
 	<div class="row exchange">
 		<h2>Pour échanger</h2>
+		<div class="row">
+		<?php if(isset($exchanges['take'])){ ?>
+			<h3>Recevoir</h3>
+			<div class="row">
+				<?php foreach($exchanges['take'] as $exchange){ ?>
+					<?php $exchangeProduct = get_field('product', $exchange->ID)[0]; ?>
+					<div class="col-md-2 col-xs-6 ">
+							<a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$exchangeProduct->ID; ?>'></a>
+							<?php if(!get_field('image', $exchangeProduct->ID)){ ?> 
+								<img class="img-responsive" src="https://pictures.abebooks.com/isbn/9782070543588-fr.jpg"> 
+							<?php }else{ ?>
+								<img class="img-responsive" src="<?php echo get_field('image', $exchangeProduct->ID)	; ?>"></img>
+							<?php } ?>
+							<h3><?php echo $exchangeProduct->post_title; ?></h3>
+							<p><?php echo get_field('author',$exchangeProduct->ID)[0]->post_title; ?></p>
+						</a>
+					</div>
+				<?php } ?>
+			</div>
+		<?php }?>
+		<?php if (isset($exchanges['give'])){ ?>
+			<h3>Donner</h3>
+			<div class="row">
+				<?php foreach($exchanges['give'] as $exchange){ ?>
+					<?php $exchangeProduct = get_field('product', $exchange->ID)[0]; ?>
+					<div class="col-md-2 col-xs-6 ">
+							<a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$exchangeProduct->ID; ?>'></a>
+							<?php if(!get_field('image', $exchangeProduct->ID)){ ?> 
+								<img class="img-responsive" src="https://pictures.abebooks.com/isbn/9782070543588-fr.jpg"> 
+							<?php }else{ ?>
+								<img class="img-responsive" src="<?php echo get_field('image', $exchangeProduct->ID); ?>"></img>
+							<?php } ?>
+							<h3><?php echo $exchangeProduct->post_title; ?></h3>
+							<p><?php echo get_field('author',$exchangeProduct->ID)[0]->post_title; ?></p>
+						</a>
+					</div>
+				<?php } ?>
+			</div>
+		<?php }?>
 	</div>
-
-
-	<div class="row">
-
-		<div class="col-md-2 col-xs-6 ">
-			<a href=#>
-				<img class="img-responsive" src="http://lorempixel.com/400/400/" />
-				<h3>Théorie de l'information et du codage</h3>
-				<p>Olivier Rioul</p>
-			</a>
-		</div>
-		<div class="col-md-2 col-md-offset-1 col-xs-6">
-			<a href=#>
-				<img class="img-responsive" src="http://lorempixel.com/400/400/" />
-				<h3>Théorie de l'information et du codage</h3>
-				<p>Olivier Rioul</p>
-			</a>
-		</div>
-		<div class=" col-md-2 col-md-offset-1 col-xs-6">
-			<a href=#>
-				<img class="img-responsive" src="http://lorempixel.com/400/400/" />
-				<h3>Théorie de l'information et du codage</h3>
-				<p>Olivier Rioul</p>
-			</a>
-		</div>
-	</div>
+<?php } ?>
 
 	<div class="row separator">
 		<div class="col-md-9">

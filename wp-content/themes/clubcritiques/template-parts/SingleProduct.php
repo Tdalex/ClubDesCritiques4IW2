@@ -39,7 +39,6 @@ $description    = get_field('description', $product_ID);
 $original_title = get_field('original_title', $product_ID);
 $image = get_field('image', $product_ID);
 
-
 //exchanges
 $exchanges = Utilisateur::getProductExchange($product_ID);
 
