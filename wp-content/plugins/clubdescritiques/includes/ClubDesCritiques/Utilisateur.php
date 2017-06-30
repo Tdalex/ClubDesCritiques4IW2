@@ -412,4 +412,15 @@ class Utilisateur{
 		return true;
 		return self::redirect($_SERVER['REQUEST_URI']);
 	}
+	
+	public static function deleteExchange($productId, $userId = null){
+		if($userId === null)
+			$userId = get_current_user_id();
+			
+		$exchange = self::getUserExchange($productId, $userId);
+		if(is_object($exchange))
+			wp_delete_post($exchange->ID);
+		
+		return self::redirect($_SERVER['REQUEST_URI']);
+	}
 }

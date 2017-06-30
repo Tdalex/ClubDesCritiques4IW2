@@ -26,6 +26,8 @@ if(isset($_POST['type']) && $_POST['type'] == 'comment'){
 	Utilisateur::prepareExchange($product_ID, 'donner');
 }elseif(isset($_POST['type']) && $_POST['type'] == 'take'){
 	Utilisateur::prepareExchange($product_ID, 'recevoir');	
+}elseif(isset($_POST['type']) && $_POST['type'] == 'deleteExchange'){
+	Utilisateur::deleteExchange($product_ID);	
 }
 
 //product
@@ -101,6 +103,7 @@ get_header();
 				<form method='POST' action=''>
 					<button type='submit' value='give' name='type'>Donner</button>
 					<button type='submit' value='take' name='type'>Recevoir</button>
+					<button type='submit' value='deleteExchange' name='type'>Annuler</button>
 				</form>
 			</div>
 		<?php } ?>
