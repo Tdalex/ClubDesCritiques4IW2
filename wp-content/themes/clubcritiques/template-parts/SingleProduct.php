@@ -23,9 +23,9 @@ if(isset($_POST['type']) && $_POST['type'] == 'comment'){
 }elseif(isset($_POST['type']) && $_POST['type'] == 'deleteComment'){
 	Utilisateur::deleteComment($product_ID);
 }elseif(isset($_POST['type']) && $_POST['type'] == 'give'){
-	Utilisateur::prepareExchange($product_ID, 'give');
+	Utilisateur::prepareExchange($product_ID, 'donner');
 }elseif(isset($_POST['type']) && $_POST['type'] == 'take'){
-	Utilisateur::prepareExchange($product_ID, 'take');	
+	Utilisateur::prepareExchange($product_ID, 'recevoir');	
 }
 
 //product
@@ -99,8 +99,8 @@ get_header();
 		<?php if(is_user_logged_in()){ ?>
 			<div class="col-md-3">
 				<form method='POST' action=''>
-					<button type='submit' value='give' name='type'>donner</button>
-					<button type='submit' value='take' name='type'>recevoir</button>
+					<button type='submit' value='give' name='type'>Donner</button>
+					<button type='submit' value='take' name='type'>Recevoir</button>
 				</form>
 			</div>
 		<?php } ?>
@@ -127,7 +127,7 @@ get_header();
 			</div>
 
 			<div class="row description">
-			<?php echo $description;?>
+			<?php echo $description; ?>
 			</div>
 		</div>
 	</div>
