@@ -337,16 +337,5 @@ class Bibliotheque
 			return $posts;
 		return false;
 	}
-
-    public static function getNextChat(){
-        global $wpdb;
-
-        $query = "SELECT DISTINCT ". $wpdb->posts .".ID, ".$wpdb->posts .".post_title  FROM ". $wpdb->posts ." INNER JOIN ". $wpdb->postmeta ." as metaA ON (". $wpdb->posts .".ID = metaA.post_id) WHERE cast(metaA.meta_value as date) >= now() AND metaA.meta_key = 'start_date'";
-        $result = $wpdb->get_results($qurey);
-        if(!empty($result))
-            return $result;
-        
-        return false;
-    }
 }
 
