@@ -6,14 +6,19 @@
 use ClubDesCritiques\Bibliotheque as Bibliotheque;
 use ClubDesCritiques\Utilisateur as Utilisateur;
 
-// get product ID
-// $path       = array_filter(explode("/", $_SERVER['REQUEST_URI']));
-// $product_ID = end($path);
-$product_ID = 50;
-$product    = get_post($product_ID);
+$chatRoom  = get_post();
 
-//404 if not product
-if(!is_object($product) || $product->post_type != 'bibliotheque'){
+// $product = get_field('product', get_the_ID())[0];
+$product = get_post(50);
+
+//404 if chat room not now
+$startDate = get_field('start_date', get_the_ID());
+$startDate = new DateTime($startDate);
+$endDate   = get_field('end_date', get_the_ID());
+$endDate = new DateTime($endDate);
+$today = new DateTime();
+
+if ($today > $endDate or $today < $startDate) {
     global $wp_query;
     $wp_query->set_404();
     status_header( 404 );
@@ -21,21 +26,21 @@ if(!is_object($product) || $product->post_type != 'bibliotheque'){
 }
 
 //product
-$author = get_field('author', $product_ID)[0];
-$published_date = get_field('published_date', $product_ID);
+$author = get_field('author', $product->ID)[0];
+$published_date = get_field('published_date', $product->ID);
 $published_date = new DateTime($published_date);
 
-$description    = get_field('description', $product_ID);
-$original_title = get_field('original_title', $product_ID);
-$image = get_field('image', $product_ID);
+$description    = get_field('description', $product->ID);
+$original_title = get_field('original_title', $product->ID);
+$image = get_field('image', $product->ID);
 
 $userNote = 0;
 
 if($userId = get_current_user_id()){
-    $userNote = Utilisateur::getNotation($product_ID, $userId);
+    $userNote = Utilisateur::getNotation($product->ID, $userId);
 }
 
-$averageNote = Utilisateur::getAverageNote($product_ID);
+$averageNote = Utilisateur::getAverageNote($product->ID);
 
 get_header();
 ?>

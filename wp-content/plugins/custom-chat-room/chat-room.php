@@ -116,7 +116,7 @@ Class Chatroom {
 	 *
 	 * Stores the message in a recent messages file.
 	 *
-	 * Clears out cache of any messages older than 10 seconds.
+	 * Clears out cache of any messages older than 120 seconds.
 	 */
 	function ajax_send_message_handler() {
 		$current_user = wp_get_current_user();
@@ -144,7 +144,7 @@ Class Chatroom {
 		$messages = json_decode( $contents );
 		$last_message_id = 0; // Helps determine the new message's ID
 		foreach ( $messages as $key => $message ) {
-			if ( time() - $message->time > 10 ) {
+			if ( time() - $message->time > 120 ) {
 				$last_message_id = $message->id;
 				unset( $messages[$key] );
 			}
@@ -183,8 +183,6 @@ Class Chatroom {
 		fwrite( $handle, $content );
 	}
 
-
-
 	function get_log_filename( $chatroom_slug, $date = 'recent' ) {
 		$upload_dir = wp_upload_dir();
 		$log_filename = $upload_dir['basedir'] . '/chatter/' . $chatroom_slug . '-' . $date;
@@ -204,14 +202,14 @@ Class Chatroom {
 		if ( $post->post_type != 'chat-room' )
 			return $content;
 		if ( ! is_user_logged_in() )  {
-			?>You need to be logged in to participate in the chatroom.<?php
+			?>Veuillez vous connecter afin de rejoindre le salon.<?php
 			return;
 		}
 
 		?>
 		<div class="chat-container">
 		</div>
-		<textarea class="chat-text-entry"></textarea>
+		<textarea style="resize:none" class="chat-text-entry"></textarea>
 		<?php
 		return '';
 	}
