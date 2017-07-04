@@ -11,7 +11,10 @@
  */
 
 get_header(); ?>
-
+<?php if('chat-room' == get_post_type()){
+	include(get_stylesheet_directory().'/template-parts/ChatRoom.php');
+}else{
+?>
 <div class="wrap">
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
@@ -39,5 +42,6 @@ get_header(); ?>
 	</div><!-- #primary -->
 	<?php get_sidebar(); ?>
 </div><!-- .wrap -->
-
+<?php
+} ?>
 <?php get_footer();

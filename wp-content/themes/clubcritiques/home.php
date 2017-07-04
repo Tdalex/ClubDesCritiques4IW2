@@ -13,7 +13,7 @@ $args = array(
 	'order'            => 'DESC',
 	'post_type'        => 'bibliotheque',
 	'post_status'      => 'publish',
-	'suppress_filters' => true 
+	'suppress_filters' => true
 );
 $products = get_posts( $args );
 
@@ -36,7 +36,7 @@ get_header(); ?>
                     <h2 class="blog-post-title">Livres du moment</h2>
 					<?php foreach($products as $product){ ?>
 						<div class="col-xs-6 col-lg-4">
-							<?php if(!get_field('image', $product->ID)){ ?> 
+							<?php if(!get_field('image', $product->ID)){ ?>
 								<a href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>"><img src="https://pictures.abebooks.com/isbn/9782070543588-fr.jpg"></img></a>
 							<?php }else{ ?>
 								<a href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>"><img src="<?php echo get_field('image', $product->ID); ?>"></img></a>
@@ -50,7 +50,7 @@ get_header(); ?>
 
             <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
                 <div class="list-group">
-                    <?php include(get_stylesheet_directory().'/template-parts/blocs/sidebar.php'); ?>
+                    <?php include(get_stylesheet_directory().'/template-parts/blocs/Sidebar.php'); ?>
                 </div>
             </div><!--/.sidebar-offcanvas-->
         </div><!--/row-->
