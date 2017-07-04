@@ -17,6 +17,9 @@ $args = array(
 );
 $products = get_posts( $args );
 
+
+//next Chat
+$nextChat = Bibliotheque::getNextChat();
 ?>
 
 <?php
@@ -30,7 +33,14 @@ get_header(); ?>
 
                 <div class="wrap">
                     <h1 class="page-title"><?php echo get_the_title() ?></h1>
-                    <p class="lead blog-description"><?php echo get_the_content()?><p></div>
+                    <p class="lead blog-description"><?php echo get_the_content()?><p>
+                </div>
+
+                <div class="chatHeader">
+                    <h1 class="chat-title"><?php echo $nextChat->post_title ?></h1>
+                    <p class="lead blog-description"><?php echo get_the_content()?><p>
+                    <a href='<?php echo get_permalink($nextChat->ID)?>' >Rejoindre</a>
+                </div>
 
                 <div class="row">
                     <h2 class="blog-post-title">Livres du moment</h2>
