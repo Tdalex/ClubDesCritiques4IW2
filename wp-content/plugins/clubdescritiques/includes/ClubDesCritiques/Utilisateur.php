@@ -425,4 +425,55 @@ class Utilisateur{
 
 		return self::redirect($_SERVER['REQUEST_URI']);
 	}
+
+	public static function joinChatRoom($roomId, $userId = null){
+		if($userId === null)
+			$userId = get_current_user_id();
+
+		update_field('current_room', array($roomId), $userId);
+		return true;
+	}
+
+	public static function leaveChatRoom($roomId, $userId = null){
+		if($userId === null)
+			$userId = get_current_user_id();
+
+		update_field('last_room', array($roomId), $userId);
+		update_field('current_room', array(), $userId);
+		return true;
+	}
+
+	public static function roomAllNotes($roomId){
+		$notes = array();
+		$users = reset(
+		get_users(
+			array(
+				'meta_key' => 'current_room',
+				'meta_value' => array($roomId),
+				)
+			)
+		);
+		$product = get_field('product', $roomId);
+		foreach($users as $user){
+			$notes[] = getNotation($product->ID, $user->ID);
+		}
+
+		return $notes;
+	}
+
+	public static function createNewRoom($roomId){
+		$room = get_post($roomId);
+		$args = array(
+	        'post_author' => $room->post_author,
+	        'post_title' => $room->post_title.'_2',
+	        'post_status' => 'publish',
+	        'post_type' => 'chat_room',
+	        'post_parent' => $roomId,
+	    );
+		$id = wp_insert_post($args);
+
+		//populate ACF
+
+		return $id;
+	}
 }
