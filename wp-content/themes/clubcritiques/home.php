@@ -5,6 +5,7 @@
 
 use ClubDesCritiques\Bibliotheque as Bibliotheque;
 use ClubDesCritiques\Utilisateur as Utilisateur;
+use ClubDesCritiques\ChatRoom as ChatRoom;
 
 $args = array(
 	'posts_per_page'   => 6,
@@ -19,7 +20,7 @@ $products = get_posts( $args );
 
 
 //next Chat
-$nextChat = Bibliotheque::getNextChat();
+$nextChat = ChatRoom::getNextChat();
 ?>
 
 <?php
