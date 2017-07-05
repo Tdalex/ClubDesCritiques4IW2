@@ -30,16 +30,8 @@ class ChatRoom{
 		if($userId === null)
 			$userId = get_current_user_id();
 
+		setcookie("last_room", $roomId, time()+3600);
 		update_field('current_room', array($roomId), $userId);
-		return true;
-	}
-
-	public static function leaveChatRoom($roomId, $userId = null){
-		if($userId === null)
-			$userId = get_current_user_id();
-
-		update_field('last_room', array($roomId), $userId);
-		update_field('current_room', array(), $userId);
 		return true;
 	}
 
@@ -75,5 +67,45 @@ class ChatRoom{
 		//populate ACF
 
 		return $id;
+	}
+
+	public static function selectBestRoom($roomId, $userId = null){
+		if($userId === null)
+			$userId = get_current_user_id();
+
+		$room     	 = get_post($roomId);
+		$allRooms 	 = array();
+		$setRoom     = 0;
+		$bestAvgNote = 0;
+		$userNote    = Utilisateur::getNotation($product->ID, $userId);
+
+		if($room->post_parent != 0){
+			$allRooms[] = get_post($room->post_parent);
+			$roomId = $room->post_parent;
+		}
+
+		$product 	 = get_field('product', $roomId);
+		$allRooms[]  = get_children(array('post_parent' => $roomId));
+
+		foreach ($allRooms as $room){
+			if(get_field('max_user', $room) < count($allNotes = self::roomAllNotes($room->ID))){
+				$avgNote = (array_sum($allNotes) + $userNote)/(count($allNotes) + 1);
+				if(count($allNotes) < floor(get_field('max_user', $room)/4) && abs($avgNote - 2.5) < 2){
+					$bestAvgNote = array_sum($allNotes)/count($allNotes);
+					$setRoom 	 = $room->ID;
+					break;
+				}elseif(abs($bestAvgNote - 2.5) > abs($avgNote - 2.5) && abs($avgNote - 2.5) < 1.5) {
+					$bestAvgNote = array_sum($allNotes)/count($allNotes);
+					$setRoom 	 = $room->ID;
+				}
+			}
+		}
+
+		if($setRoom == 0){
+			$setRoom = self::createNewRoom($roomId);
+		}
+
+		self::joinChatRoom($setRoom);
+		return true;
 	}
 }
