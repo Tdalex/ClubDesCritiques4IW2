@@ -31,23 +31,32 @@ class ChatRoom{
 			$userId = get_current_user_id();
 
 		setcookie("last_room", $roomId, time()+3600);
-		update_field('current_room', array($roomId), $userId);
+		foreach($GLOBALS['chatroom'] as $chat => $value){
+			if($chat != $roomId && ){
+				unset($GLOBALS['chatroom'][$chat][$userId]);
+			}
+		}
+		$GLOBALS['chatroom'][$roomId][$userId] = time() + 300;
+		return true;
+	}
+
+	public static function cleanCurrentUsers(){
+		foreach($GLOBALS['chatroom'] as $chat => $value){
+			foreach($GLOBALS['chatroom'][$chat] as $user => $timeout){
+				if($timeout < time()){
+					unset($GLOBALS['chatroom'][$chat][$user]);
+				}
+			}
+		}
 		return true;
 	}
 
 	public static function roomAllNotes($roomId){
-		$notes = array();
-		$users = reset(
-		get_users(
-			array(
-				'meta_key' => 'current_room',
-				'meta_value' => array($roomId),
-				)
-			)
-		);
-		$product = get_field('product', $roomId);
-		foreach($users as $user){
-			$notes[] = Utilisateur::getNotation($product->ID, $user->ID);
+		$notes    = array();
+		$chatroom = $GLOBALS['chatroom'];
+		$product  = get_field('product', $roomId);
+		foreach($chatroom[$roomId] as $user => $value){
+			$notes[] = Utilisateur::getNotation($product->ID, $user);
 		}
 
 		return $notes;
@@ -57,19 +66,20 @@ class ChatRoom{
 		$room = get_post($roomId);
 		$args = array(
 	        'post_author' => $room->post_author,
-	        'post_title' => $room->post_title.'_2',
+	        'post_title'  => $room->post_title.'_2',
 	        'post_status' => 'publish',
-	        'post_type' => 'chat_room',
+	        'post_type'   => 'chat_room',
 	        'post_parent' => $roomId,
 	    );
 		$id = wp_insert_post($args);
 
-		//populate ACF
+		//TODO: populate ACF
 
 		return $id;
 	}
 
 	public static function selectBestRoom($roomId, $userId = null){
+		self::cleanCurrentUsers();
 		if($userId === null)
 			$userId = get_current_user_id();
 
