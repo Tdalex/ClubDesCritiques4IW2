@@ -55,26 +55,29 @@ class ChatRoom{
 		$notes    = array();
 		$chatroom = $GLOBALS['chatroom'];
 		$product  = get_field('product', $roomId);
-		foreach($chatroom[$roomId] as $user => $value){
-			$notes[] = Utilisateur::getNotation($product->ID, $user);
+		if(isset($chatroom[$roomId])){
+			foreach($chatroom[$roomId] as $user => $value){
+				$notes[] = Utilisateur::getNotation($product->ID, $user);
+			}
 		}
 
 		return $notes;
 	}
 
 	public static function createNewRoom($roomId){
-		$room = get_post($roomId);
+		$room 	    = get_post($roomId);
+		$roomNumber = count(get_children(array('post_parent' => $roomId))) + 1;
 		$args = array(
 	        'post_author' => $room->post_author,
-	        'post_title'  => $room->post_title.'_2',
+	        'post_title'  => $room->post_title.'_'.$roomNumber,
 	        'post_status' => 'publish',
 	        'post_type'   => 'chat_room',
 	        'post_parent' => $roomId,
 	    );
 		$id = wp_insert_post($args);
 
-		//TODO: populate ACF
-
+		update_field('start_date',get_field('start_date',$roomId), $id);
+		update_field('end_date',get_field('end_date',$roomId), $id);
 		return $id;
 	}
 
@@ -95,7 +98,9 @@ class ChatRoom{
 		}
 
 		$product 	 = get_field('product', $roomId);
-		$allRooms[]  = get_children(array('post_parent' => $roomId));
+		foreach(get_children(array('post_parent' => $roomId)) as $child){
+			$allRooms[] = $child;
+		}
 
 		foreach ($allRooms as $room){
 			if(get_field('max_user', $room) < count($allNotes = self::roomAllNotes($room->ID))){
