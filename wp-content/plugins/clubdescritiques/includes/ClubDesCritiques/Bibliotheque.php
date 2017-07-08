@@ -14,7 +14,7 @@ class Bibliotheque
     {
         global $wpdb;
 
-        
+
     }
 
     public static function initCustomTypes()
@@ -42,7 +42,7 @@ class Bibliotheque
                 'custom_metadata' => true,
             )
         );
-		
+
 		// post_type = echange
         register_post_type(
             'Echange',
@@ -65,7 +65,7 @@ class Bibliotheque
                 'custom_metadata' => true,
             )
         );
-		
+
 		// post_type = commentaire
         register_post_type(
             'Commentaire',
@@ -88,7 +88,7 @@ class Bibliotheque
                 'custom_metadata' => true,
             )
         );
-		
+
 		 // post_type = Authors
         register_post_type(
             'Auteurs',
@@ -111,7 +111,7 @@ class Bibliotheque
                 'custom_metadata' => true,
             )
         );
-		
+
 		 // post_type = notation
         register_post_type(
             'Notation',
@@ -159,7 +159,7 @@ class Bibliotheque
             'show_in_rest'          => true
         );
         register_taxonomy('bibliotheque_genre', array('bibliotheque'), $args);
-		
+
 		// taxonomy = type
         $args = array(
             'labels' => array(
@@ -179,7 +179,7 @@ class Bibliotheque
             'show_in_rest'          => true
         );
         register_taxonomy('exchange_type', array('echange'), $args);
-		
+
 		 // taxonomy = format
         $args = array(
             'labels' => array(
@@ -230,20 +230,20 @@ class Bibliotheque
         //set OFFSET
         if(isset($params['offset']) && !empty($params['offset']))
             $offset        = $params['offset'];
-	
+
         //set limit
         if(isset($params['limit']) && !empty($params['limit']))
             $limit         = $params['limit'];
 
         // filter by title, author or meta
-		if(isset($params['keywords']) && !empty($params['keywords'])){					
+		if(isset($params['keywords']) && !empty($params['keywords'])){
 			$search_query = 'SELECT ID FROM wp_posts WHERE post_type = "auteurs" AND post_title LIKE %s';
 			$like = '%'.$params['keywords'].'%';
 			$results = $wpdb->get_results($wpdb->prepare($search_query, $like), ARRAY_N);
 			foreach($results as $key => $array){
 				 $auteurId[] = 'a:1:{i:0;s:2:"'.$array[0].'";}';
 			}
-			
+
             $join         .= " INNER JOIN ". $wpdb->postmeta ." as metaA ON (". $wpdb->posts .".ID = metaA.post_id)";
             $needle        = array(' ','-','/');
             $keywords      = str_replace($needle, '%',$params['keywords']);
@@ -253,7 +253,7 @@ class Bibliotheque
 				$auteurId  = implode('\',\'', $auteurId);
 				$firstWhere .= " OR metaB.meta_value IN ('". $auteurId ."')";
 			}
-			$where[]   = $firstWhere .")";	
+			$where[]   = $firstWhere .")";
         }
         // filter by genre
         if(isset($params['genre']) && !empty($params['genre'])){
@@ -276,7 +276,7 @@ class Bibliotheque
             if(isset($params['format']))
                 $having[]  = " count(distinct taxB.term_taxonomy_id)=". count(explode(',',$params['format']));
         }
-		
+
         // filter by note
         if(isset($params['note']) && !empty($params['note'])){
             $join         .= " INNER JOIN ". $wpdb->postmeta ." as metaC ON (". $wpdb->posts .".ID = metaC.post_id)";
@@ -322,7 +322,7 @@ class Bibliotheque
         $response['products']    = array();
         return $response;
     }
-	
+
 	public static function getAuthorBiblio($authorId, $max = -1){
 		$args = array(
 			'posts_per_page'   => $max,
@@ -331,11 +331,11 @@ class Bibliotheque
 			'post_type'        => 'bibliotheque',
 			'post_status'      => 'publish',
 		);
-		
+
 		$posts = get_posts( $args );
 		if(!empty($posts))
 			return $posts;
 		return false;
-	} 
+	}
 }
 

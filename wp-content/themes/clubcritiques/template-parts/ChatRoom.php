@@ -5,18 +5,23 @@
 
 use ClubDesCritiques\Bibliotheque as Bibliotheque;
 use ClubDesCritiques\Utilisateur as Utilisateur;
+use ClubDesCritiques\ChatRoom as ChatRoom;
 
-$chatRoom  = get_post();
+$chatRoom = get_post();
 
-// $product = get_field('product', get_the_ID())[0];
-$product = get_post(50);
+ChatRoom::cleanCurrentUsers(get_the_ID());	
+if(!ChatRoom::isUserInRoom(get_the_ID())){
+	ChatRoom::selectBestRoom(get_the_ID());
+}else{
+	ChatRoom::joinChatRoom(get_the_ID());
+}
+
+$product = get_field('product', get_the_ID())[0];
 
 //404 if chat room not now
 $startDate = get_field('start_date', get_the_ID());
-$startDate = new DateTime($startDate);
 $endDate   = get_field('end_date', get_the_ID());
-$endDate = new DateTime($endDate);
-$today = new DateTime();
+$today     = date('Y-m-d H:i:s');
 
 if ($today > $endDate or $today < $startDate) {
     global $wp_query;

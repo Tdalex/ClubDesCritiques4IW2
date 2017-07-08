@@ -33,7 +33,7 @@ if(isset($_POST['type']) && $_POST['type'] == 'comment'){
 //product
 $author = get_field('author', $product_ID)[0];
 $published_date = get_field('published_date', $product_ID);
-$published_date = new DateTime($published_date);
+$published_date = date($published_date);
 
 $description    = get_field('description', $product_ID);
 $original_title = get_field('original_title', $product_ID);
@@ -48,18 +48,16 @@ $photo     = get_field('photo', $author->ID);
 $descriptionAuthor = get_field('description', $author->ID);
 
 $birthdate = get_field('birthdate', $author->ID);
-$birthdate = new DateTime($birthdate);
+$birthdate = date($birthdate);
 
 $deathdate = get_field('deathdate', $author->ID);
-$deathdate = new DateTime($deathdate);
+$deathdate = date($deathdate);
 
 $userNote = 0;
 
 if($userId = get_current_user_id()){
     $userNote = Utilisateur::getNotation($product_ID, $userId);
 }
-
-
 
 $comments    = Utilisateur::getProductComments($product_ID);
 $averageNote = Utilisateur::getAverageNote($product_ID);
@@ -114,7 +112,7 @@ get_header();
 
 			<div class="row author">		
 				<a href='<?php echo get_permalink(get_page_by_title('Auteur')).$author->ID; ?>'><?php echo $author->post_title;?></a>
-				<?php echo $published_date->format('j/m/Y'); ?>
+				<?php echo $published_date; ?>
 			</div>
 
 			<div class="row">

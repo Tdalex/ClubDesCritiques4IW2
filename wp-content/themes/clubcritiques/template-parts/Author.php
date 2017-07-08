@@ -23,13 +23,13 @@ $sexe      = get_field('sexe', $author_ID);
 $photo     = get_field('photo', $author_ID);
 $descriptionAuthor = get_field('description', $author_ID);
 $birthdate = get_field('birthdate', $author_ID);
-$birthdate = new DateTime($birthdate);
+$birthdate = date($birthdate);
 $deathdate = get_field('deathdate', $author_ID);
-$deathdate = new DateTime($deathdate);
+$deathdate = date($deathdate);
 ?>
 
 <div><?php echo $author->post_title;?></div>
-<div><?php echo $birthdate->format('j/m/Y') . ' --- ' . $deathdate->format('j/m/Y')?></div>
+<div><?php echo $birthdate. ' --- ' . $deathdate?></div>
 <img style='height:50px; length:50px;'src='<?php echo $photo;?>'></img>
 <div><?php echo $descriptionAuthor;?></div>
 <div><?php echo $sexe;?></div>
