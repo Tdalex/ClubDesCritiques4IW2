@@ -13,6 +13,7 @@
  */
  
 use ClubDesCritiques\Utilisateur as Utilisateur;
+use ClubDesCritiques\ChatRoom as ChatRoom;
 
 if(isset($_POST) && $_POST['type'] == 'register'){
 	echo Utilisateur::register($_POST);
@@ -46,11 +47,27 @@ if(isset($_POST) && $_POST['type'] == 'register'){
         <?php if (has_nav_menu('top')) : ?>
         <nav class="navbar navbar-default">
             <div class="container">
-                <a class="navbar-brand" href="#"><img id="logo_header" src="<?php echo get_parent_theme_file_uri( '/assets/images/logo.png' ); ?>" width="200" height="75" ></a>
+                <a class="navbar-brand" href="/"><img id="logo_header" src="<?php echo get_parent_theme_file_uri( '/assets/images/logo.png' ); ?>" width="200" height="75" ></a>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav navbar-right">
                         <?php get_template_part('template-parts/navigation/navigation', 'top'); ?>
                     </ul>
+					<ul class="nav navbar-nav navbar-right">
+						<?php //next Chat
+						$nextChat = ChatRoom::getNextChat();
+						if($nextChat){ 
+							$chatProduct = get_field('product', $nextChat->ID)[0]; 
+							if(!is_user_logged_in()){ ?>
+							<?php }elseif(false !== Utilisateur::getNotation($chatProduct->ID, get_current_user_id())){ ?>
+								<a href='<?php echo get_permalink($nextChat->ID)?>' >Rejoindre un salon</a><br>
+							<?php if($userRoom = ChatRoom::getUserRoom($nextChat->ID)){ ?>
+								<a href='<?php echo get_permalink($userRoom)?>?changeRoom=true' >Rejoindre votre dernier salon</a><br>
+							<?php }?>
+							<?php }else{ ?>
+								<a href='<?php echo get_permalink(get_page_by_title('Produit')).$chatProduct->ID;?>' >Veuillez noter le livre avant de rejoindre le salon</a><br>
+							<?php }?>
+						<?php } ?>
+					</ul>
                 </div>
             </div>
         </nav>

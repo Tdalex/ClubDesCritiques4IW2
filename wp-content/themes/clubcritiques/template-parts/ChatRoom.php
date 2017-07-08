@@ -14,7 +14,9 @@ if(!is_user_logged_in() || false === Utilisateur::getNotation($product->ID, get_
 }
 
 ChatRoom::cleanCurrentUsers(get_the_ID());	
-if(!ChatRoom::isUserInRoom(get_the_ID())){
+if(isset($_GET['changeRoom']) && $_GET['changeRoom'] === true){
+	ChatRoom::changeRoom(get_the_ID());
+}elseif(!ChatRoom::isUserInRoom(get_the_ID())){
 	ChatRoom::selectBestRoom(get_the_ID());
 }else{
 	ChatRoom::joinChatRoom(get_the_ID());
