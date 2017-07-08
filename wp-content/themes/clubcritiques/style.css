@@ -4418,3 +4418,11 @@ object {
 .title_margin {
 	margin-top: 2%;
 }
+
+.img-livre {
+	margin: auto;
+}
+
+.description_livre {
+	margin-top: 4%;
+}

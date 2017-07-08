@@ -89,21 +89,11 @@ get_header();
 
 		<div class="col-md-3">
 		<?php if(!$image){ ?> 
-			<img class="img-responsive" style='height:300px; length:300px;' src="https://pictures.abebooks.com/isbn/9782070543588-fr.jpg"> 
+			<img class="img-responsive img-livre" style='height:300px; length:300px;' src="https://pictures.abebooks.com/isbn/9782070543588-fr.jpg"> 
 		<?php }else{ ?>
-			<img class="img-responsive" style='height:300px; length:300px;' src="<?php echo $image; ?>"></img>
+			<img class="img-responsive img-livre" style='height:300px; length:300px;' src="<?php echo $image; ?>"></img>
 		<?php } ?>
 		</div>
-		
-		<?php if(is_user_logged_in()){ ?>
-			<div class="col-md-3">
-				<form method='POST' action=''>
-					<button type='submit' value='give' name='type'>Donner</button>
-					<button type='submit' value='take' name='type'>Recevoir</button>
-					<button type='submit' value='deleteExchange' name='type'>Annuler</button>
-				</form>
-			</div>
-		<?php } ?>
 		
 		<div class="col-md-9">
 			<div class="row">
@@ -130,6 +120,15 @@ get_header();
 			<?php echo $description; ?>
 			</div>
 		</div>
+				<?php if(is_user_logged_in()){ ?>
+			<div class="col-md-3">
+				<form method='POST' action=''>
+					<button type='submit' class="btn" value='give' name='type'>Donner</button>
+					<button type='submit' class="btn" value='take' name='type'>Recevoir</button>
+					<button type='submit' class="btn" value='deleteExchange' name='type'>Annuler</button>
+				</form>
+			</div>
+		<?php } ?>
 	</div>
 
 	<div class="row">

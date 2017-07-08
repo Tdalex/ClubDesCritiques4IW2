@@ -56,6 +56,21 @@ get_header();
 			<h1 class="title title_margin" >Salon : Titre (Auteur) - Nbr de participants</h1>
 		</div>
 	</div>
+
+	<div class="row description_livre">
+		<div class="col-md-3">
+			<?php if(!$image){ ?> 
+				<img class="img-responsive img-livre" style='height:300px; length:300px;' src="https://pictures.abebooks.com/isbn/9782070543588-fr.jpg"> 
+			<?php }else{ ?>
+				<img class="img-responsive img-livre" style='height:300px; length:300px;' src="<?php echo $image; ?>"></img>
+			<?php } ?>
+		</div>
+		<div class="col-md-9">
+			<div class="row description">
+			<p>Résumé du livre</p>
+			</div>
+		</div>
+	</div>
 <br>
 	<div class="row chatroom">
 		<div class='chat-box col-md-7'>
