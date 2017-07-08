@@ -8,6 +8,10 @@ use ClubDesCritiques\Utilisateur as Utilisateur;
 use ClubDesCritiques\ChatRoom as ChatRoom;
 
 $chatRoom = get_post();
+$product = get_field('product', get_the_ID())[0];
+if(!is_user_logged_in() || false === Utilisateur::getNotation($product->ID, get_current_user_id())){
+	Utilisateur::redirect('/');
+}
 
 ChatRoom::cleanCurrentUsers(get_the_ID());	
 if(!ChatRoom::isUserInRoom(get_the_ID())){
@@ -16,7 +20,6 @@ if(!ChatRoom::isUserInRoom(get_the_ID())){
 	ChatRoom::joinChatRoom(get_the_ID());
 }
 
-$product = get_field('product', get_the_ID())[0];
 
 //404 if chat room not now
 $startDate = get_field('start_date', get_the_ID());

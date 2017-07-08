@@ -21,7 +21,6 @@ $products = get_posts( $args );
 
 //next Chat
 $nextChat = ChatRoom::getNextChat();
-var_dump(Utilisateur::getNotation($chatProduct->ID, get_current_user_id()));
 ?>
 
 <?php

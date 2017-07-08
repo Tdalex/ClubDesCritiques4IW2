@@ -46,7 +46,7 @@ if(isset($_POST) && $_POST['type'] == 'register'){
         <?php if (has_nav_menu('top')) : ?>
         <nav class="navbar navbar-default">
             <div class="container">
-                <a class="navbar-brand" href="#"><img id="logo_header" src="wp-content/uploads/2017/07/ZLVnF3JJn_2M6X70SkklSb_LbiD8qg7hTLR_so1RF7k.png" width="200" height="75" ></a>
+                <a class="navbar-brand" href="#"><img id="logo_header" src="<?php echo get_parent_theme_file_uri( '/assets/images/logo.png' ); ?>" width="200" height="75" ></a>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav navbar-right">
                         <?php get_template_part('template-parts/navigation/navigation', 'top'); ?>
