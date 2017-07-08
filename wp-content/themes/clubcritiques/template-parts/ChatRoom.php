@@ -47,46 +47,48 @@ get_header();
 
 <div class="container">
 	<div class="row">
-
-		<div class="col-md-3">
-		<?php if(!$image){ ?>
-			<img class="img-responsive" style='height:300px; length:300px;' src="https://pictures.abebooks.com/isbn/9782070543588-fr.jpg">
-		<?php }else{ ?>
-			<img class="img-responsive" style='height:300px; length:300px;' src="<?php echo $image; ?>"></img>
-		<?php } ?>
-		</div>
-
-		<div class="col-md-9">
-			<div class="row">
-				<h1 class="title"><?php echo $product->post_title; ?></h1>
-			</div>
-
-			<div class="row author">
-				<a target='_blank' href='<?php echo get_permalink(get_page_by_title('Auteur')).$author->ID; ?>'><?php echo $author->post_title;?></a>
-				<?php echo $published_date->format('j/m/Y'); ?>
-			</div>
-
-			<div class="row">
-				<div class="rating"><!--
-				   --><a href="#5" title="Donner 5 étoiles">★</a><!--
-				   --><a href="#4" title="Donner 4 étoiles">★</a><!--
-				   --><a href="#3" title="Donner 3 étoiles">★</a><!--
-				   --><a href="#2" title="Donner 2 étoiles">★</a><!--
-				   --><a href="#1" title="Donner 1 étoile">★</a>
-				</div>
-				<span><?php echo $averageNote['total']; ?> notations</span>
-			</div>
-
-			<div class="row description">
-			<?php echo $description; ?>
-			</div>
+		<div class="col-md-12">
+			<h1 class="title title_margin" >Salon : Titre (Auteur) - Nbr de participants</h1>
 		</div>
 	</div>
 <br>
-	<div class='chat-box'>
-		<?php
-			the_content();
-		?>
+	<div class="row chatroom">
+		<div class='chat-box col-md-7'>
+			<?php
+				the_content();
+			?>
+		</div>
+
+		<div class='col-md-5'>
+			<table class="table table-striped table-salon">
+				<thead>
+			        <tr>
+			            <th>Liste des membres dans le salon</th>
+			            <th>Action</th>
+			        </tr>
+			    </thead>
+			    <tbody>
+			    	<tr>
+			    		<td>Nom Prénom 1</td>
+			    		<td>Signaler | Contacter</td>
+			    	</tr>
+			    	<tr>
+			    		<td>Nom Prénom 1</td>
+			    		<td>Signaler | Contacter</td>
+			    	</tr>
+
+			    	<tr>
+			    		<td>Nom Prénom 1</td>
+			    		<td>Signaler | Contacter</td>
+			    	</tr>
+
+			    	<tr>
+			    		<td>Nom Prénom 1</td>
+			    		<td>Signaler | Contacter</td>
+			    	</tr>
+			    </tbody>
+			</table>
+		</div>
 	</div>
 </div>
 

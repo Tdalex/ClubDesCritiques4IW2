@@ -4398,3 +4398,23 @@ object {
 #sidebar {
 	top: 70px;
 }
+
+.title_salons h1{
+	text-align: center;
+	font-size: 25px;
+	font-weight: bold;
+	margin-bottom: 8%;
+
+}
+
+.chatroom {
+	margin-top: 8%;
+}
+
+.table-salon {
+	border: 1px solid #bbb;
+}
+
+.title_margin {
+	margin-top: 2%;
+}

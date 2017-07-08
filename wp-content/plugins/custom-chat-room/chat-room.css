@@ -13,5 +13,5 @@ License: GPLv2
 	overflow: scroll;
 	overflow-x: hidden;
 	margin-bottom: 20px;
-	border-bottom: 1px solid #CCC;
+	border: 1px solid #CCC;
 }
