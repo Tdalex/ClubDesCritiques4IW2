@@ -8,7 +8,13 @@ use ClubDesCritiques\Utilisateur as Utilisateur;
 use ClubDesCritiques\ChatRoom as ChatRoom;
 
 $chatRoom = get_post();
-ChatRoom::selectBestRoom(get_the_ID());
+
+ChatRoom::cleanCurrentUsers(get_the_ID());	
+if(!ChatRoom::isUserInRoom(get_the_ID())){
+	ChatRoom::selectBestRoom(get_the_ID());
+}else{
+	ChatRoom::joinChatRoom(get_the_ID());
+}
 
 $product = get_field('product', get_the_ID())[0];
 
@@ -16,7 +22,6 @@ $product = get_field('product', get_the_ID())[0];
 $startDate = get_field('start_date', get_the_ID());
 $endDate   = get_field('end_date', get_the_ID());
 $today     = date('Y-m-d H:i:s');
-
 
 if ($today > $endDate or $today < $startDate) {
     global $wp_query;

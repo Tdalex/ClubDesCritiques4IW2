@@ -59,8 +59,6 @@ if($userId = get_current_user_id()){
     $userNote = Utilisateur::getNotation($product_ID, $userId);
 }
 
-
-
 $comments    = Utilisateur::getProductComments($product_ID);
 $averageNote = Utilisateur::getAverageNote($product_ID);
 

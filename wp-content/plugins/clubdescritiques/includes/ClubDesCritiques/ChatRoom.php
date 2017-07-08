@@ -124,49 +124,66 @@ class ChatRoom{
 		$userNote    = Utilisateur::getNotation($product->ID, $userId);
 		$parentId    = $roomId;
 		
-		self::cleanCurrentUsers($roomId);	
-		if(self::isUserInRoom($roomId)){
-			$setRoom = $room->ID;
-		}else{
-			if($room->post_parent != 0){
-				$parentId = $room->post_parent;
-				$allRooms[] = get_post($room->post_parent);
-			}else{			
-				$allRooms[] = $room;
-			}		
-			
-			foreach(get_children(array('post_parent' => $parentId)) as $child){
-				$allRooms[] = $child;
-			}
-			
-			foreach ($allRooms as $room){
-				self::cleanCurrentUsers($room->ID);	
-				if(get_field('max_user', $room) > count($allNotes = self::roomAllNotes($room->ID))){
-					$avgNote = (array_sum($allNotes) + $userNote)/(count($allNotes) + 1);
-					if(count($allNotes) == 0){
-						$setRoom 	 = $room->ID;
-						break;
-					}elseif(count($allNotes) < floor(get_field('max_user', $room)/4) && abs($avgNote - 2.5) < 2){
-						$setRoom 	 = $room->ID;
-						break;
-					}elseif(abs($bestAvgNote - 2.5) > abs($avgNote - 2.5) && abs($avgNote - 2.5) < 1.5) {
-						$bestAvgNote = array_sum($allNotes)/count($allNotes);
-						$setRoom 	 = $room->ID;
-					}
+		if($room->post_parent != 0){
+			$parentId = $room->post_parent;
+			$allRooms[] = get_post($room->post_parent);
+		}else{			
+			$allRooms[] = $room;
+		}		
+		
+		foreach(get_children(array('post_parent' => $parentId)) as $child){
+			$allRooms[] = $child;
+		}
+		
+		foreach ($allRooms as $room){
+			self::cleanCurrentUsers($room->ID);	
+			if(get_field('max_user', $room) > count($allNotes = self::roomAllNotes($room->ID))){
+				$avgNote = (array_sum($allNotes) + $userNote)/(count($allNotes) + 1);
+				if(count($allNotes) == 0){
+					$setRoom 	 = $room->ID;
+					break;
+				}elseif(count($allNotes) < floor(get_field('max_user', $room)/4) && abs($avgNote - 2.5) < 2){
+					$setRoom 	 = $room->ID;
+					break;
+				}elseif(abs($bestAvgNote - 2.5) > abs($avgNote - 2.5) && abs($avgNote - 2.5) < 1.5) {
+					$bestAvgNote = array_sum($allNotes)/count($allNotes);
+					$setRoom 	 = $room->ID;
 				}
 			}
-			
-			if($setRoom == 0){
-				$setRoom = self::createNewRoom($parentId);
-			}
+		}
+		
+		if($setRoom == 0){
+			$setRoom = self::createNewRoom($parentId);
 		}
 		
 		self::joinChatRoom($setRoom);
 		
-		if($setRoom != $roomID){
+		if($setRoom != $roomId){
+			return Utilisateur::redirect(get_permalink($roomId));
+			
 		}else{		
 			return true;
 		}
+	}
+	
+	public static function changeRoom($roomId, $userId = null){
+		if($userId === null)
+			$userId = get_current_user_id();
+
+		$currentUser = get_field('current_user', $roomId); 
+		$currentUserTmp = array();
+		if($currentUser){
+			$i = 0;
+			foreach($currentUser as $cu){
+				if($cu['user']['ID'] !== $userId){
+					$currentUserTmp[$i]['user'] = $cu['user']['ID'];
+					$currentUserTmp[$i]['user_timeout'] = $cu['user_timeout'];
+					$i++;
+				}		
+			}
+		}
+		update_field('field_5960de0ff4bab', $currentUserTmp, $roomId);
+		return self::selectBestRoom($roomId);
 	}
 	
 	public static function now(){
