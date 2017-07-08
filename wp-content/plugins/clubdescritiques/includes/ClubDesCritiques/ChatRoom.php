@@ -112,6 +112,35 @@ class ChatRoom{
 		update_field('end_date',get_field('end_date',$roomId), $id);
 		return $id;
 	}
+	
+	public static function getUserRoom($roomId, $userId = null){
+		if($userId === null)
+			$userId = get_current_user_id();
+		
+		$room     	 = get_post($roomId);
+		$allRooms 	 = array();
+		$parentId    = $roomId;
+		
+		if($room->post_parent != 0){
+			$parentId = $room->post_parent;
+			$allRooms[] = get_post($room->post_parent);
+		}else{			
+			$allRooms[] = $room;
+		}		
+		
+		foreach(get_children(array('post_parent' => $parentId)) as $child){
+			$allRooms[] = $child;
+		}
+		
+		foreach ($allRooms as $room){
+			$currentUser = get_field('current_user', $room->ID); 
+			self::cleanCurrentUsers($room->ID);	
+			if(self::isUserInRoom($room->ID)){
+				return $room->ID;
+			}
+		}
+		return false;
+	}
 
 	public static function selectBestRoom($roomId, $userId = null){
 		if($userId === null)
