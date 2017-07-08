@@ -38,9 +38,18 @@ get_header(); ?>
                 </div>
 
                 <div class="chatHeader">
-                    <h1 class="chat-title"><?php echo $nextChat->post_title ?></h1>
-                    <p class="lead blog-description"><?php echo get_the_content()?><p>
-                    <a href='<?php echo get_permalink($nextChat->ID)?>' >Rejoindre</a>
+					<?php if($nextChat){ 
+						$chatProduct = get_field('product', $nextChat->ID)[0]; ?>
+						<h1 class="chat-title"><?php echo $nextChat->post_title ?></h1>
+						<p class="lead blog-description">Prochain Chat sur <a href="<?php echo get_permalink(get_page_by_title('Produit')).$chatProduct->ID; ?>"><?php echo $chatProduct->post_title; ?></a></p>
+						<p class="lead blog-description"><?php echo get_field('description', $nextChat->ID); ?></p>
+						<a href='<?php echo get_permalink($nextChat->ID)?>' >Rejoindre un salon</a><br>
+						<?php if(isset($_COOKIE['last_room'])){ ?>
+							<a href='<?php echo get_permalink($_COOKIE['last_room'])?>' >Rejoindre votre dernier salon</a><br>
+						<?php }?>
+					<?php }else{ ?>
+						<h1 class="chat-title">Aucun salon programmé pour le moment</h1><br>
+					<?php } ?>
                 </div>
 
                 <div class="row">

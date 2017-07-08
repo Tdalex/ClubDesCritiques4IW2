@@ -18,10 +18,11 @@ class ChatRoom{
     public static function getNextChat(){
         global $wpdb;
 
-        $query = "SELECT DISTINCT ". $wpdb->posts .".ID, ".$wpdb->posts .".post_title  FROM ". $wpdb->posts ." INNER JOIN ". $wpdb->postmeta ." as metaA ON (". $wpdb->posts .".ID = metaA.post_id) WHERE cast(metaA.meta_value as date) >= now() AND metaA.meta_key = 'start_date'";
-        $result = $wpdb->get_results($qurey);
+        $query = "SELECT ". $wpdb->posts .".ID, ".$wpdb->posts .".post_title  FROM ". $wpdb->posts ." INNER JOIN ". $wpdb->postmeta ." as metaA ON (". $wpdb->posts .".ID = metaA.post_id) WHERE cast(metaA.meta_value as datetime) >= now() AND metaA.meta_key = 'end_date' order by cast(metaA.meta_value as date) ASC";
+
+		$result = $wpdb->get_results($query);
         if(!empty($result))
-            return $result;
+            return $result[0];
 
         return false;
     }
@@ -29,38 +30,69 @@ class ChatRoom{
 	public static function joinChatRoom($roomId, $userId = null){
 		if($userId === null)
 			$userId = get_current_user_id();
-
-		setcookie("last_room", $roomId, time()+3600);
-		foreach($GLOBALS['chatroom'] as $chat => $value){
-			if($chat != $roomId && ){
-				unset($GLOBALS['chatroom'][$chat][$userId]);
+		
+		$currentUser = get_field('current_user', $roomId); 
+		$done = false;
+		if(!empty($currentUser)){
+			foreach($currentUser as $key => $cu){		
+				$currentUser[$key]['user'] = $cu['user']['ID'];
+				if($cu['user']['ID'] == $userId){
+					$currentUser[$key]['user_timeout'] = self::timeOut(5);
+					$done = true;
+				}		
 			}
 		}
-		$GLOBALS['chatroom'][$roomId][$userId] = time() + 300;
+		if(!$done){
+			$key++;
+			$currentUser[$key]['user'] = $userId;
+			$currentUser[$key]['user_timeout'] = self::timeOut(5);
+		}
+		update_field('field_5960de0ff4bab', $currentUser, $roomId); 
 		return true;
 	}
 
-	public static function cleanCurrentUsers(){
-		foreach($GLOBALS['chatroom'] as $chat => $value){
-			foreach($GLOBALS['chatroom'][$chat] as $user => $timeout){
-				if($timeout < time()){
-					unset($GLOBALS['chatroom'][$chat][$user]);
-				}
+	public static function cleanCurrentUsers($roomId){
+		$currentUser = get_field('current_user', $roomId); 
+		$currentUserTmp = array();
+		if($currentUser){
+			$i = 0;
+			foreach($currentUser as $cu){
+				if($cu['user_timeout'] > self::now()){
+					$currentUserTmp[$i]['user'] = $cu['user']['ID'];
+					$currentUserTmp[$i]['user_timeout'] = $cu['user_timeout'];
+					$i++;
+				}		
 			}
 		}
+		update_field('field_5960de0ff4bab', $currentUserTmp, $roomId);
 		return true;
+	}
+	
+	public static function isUserInRoom($roomId, $userId = null){
+		if($userId === null)
+			$userId = get_current_user_id();
+		
+		$currentUser = get_field('current_user', $roomId); 
+		if($currentUser){
+			foreach($currentUser as $cu){
+				if($cu['user']['ID'] == $userId){
+					return true;
+				}		
+			}
+		}
+		return false;
 	}
 
 	public static function roomAllNotes($roomId){
 		$notes    = array();
-		$chatroom = $GLOBALS['chatroom'];
-		$product  = get_field('product', $roomId);
-		if(isset($chatroom[$roomId])){
-			foreach($chatroom[$roomId] as $user => $value){
-				$notes[] = Utilisateur::getNotation($product->ID, $user);
+		$chatroom = get_field('current_user', $roomId);
+		if($chatroom){
+			$product  = get_field('product', $roomId)[0];
+			foreach($chatroom as $c){
+				$notes[] = Utilisateur::getNotation($product->ID, $c['user']['ID']);
 			}
 		}
-
+		
 		return $notes;
 	}
 
@@ -82,7 +114,6 @@ class ChatRoom{
 	}
 
 	public static function selectBestRoom($roomId, $userId = null){
-		self::cleanCurrentUsers();
 		if($userId === null)
 			$userId = get_current_user_id();
 
@@ -91,36 +122,66 @@ class ChatRoom{
 		$setRoom     = 0;
 		$bestAvgNote = 0;
 		$userNote    = Utilisateur::getNotation($product->ID, $userId);
-
-		if($room->post_parent != 0){
-			$allRooms[] = get_post($room->post_parent);
-			$roomId = $room->post_parent;
-		}
-
-		$product 	 = get_field('product', $roomId);
-		foreach(get_children(array('post_parent' => $roomId)) as $child){
-			$allRooms[] = $child;
-		}
-
-		foreach ($allRooms as $room){
-			if(get_field('max_user', $room) < count($allNotes = self::roomAllNotes($room->ID))){
-				$avgNote = (array_sum($allNotes) + $userNote)/(count($allNotes) + 1);
-				if(count($allNotes) < floor(get_field('max_user', $room)/4) && abs($avgNote - 2.5) < 2){
-					$bestAvgNote = array_sum($allNotes)/count($allNotes);
-					$setRoom 	 = $room->ID;
-					break;
-				}elseif(abs($bestAvgNote - 2.5) > abs($avgNote - 2.5) && abs($avgNote - 2.5) < 1.5) {
-					$bestAvgNote = array_sum($allNotes)/count($allNotes);
-					$setRoom 	 = $room->ID;
+		$parentId    = $roomId;
+		
+		self::cleanCurrentUsers($roomId);	
+		if(self::isUserInRoom($roomId)){
+			$setRoom = $room->ID;
+		}else{
+			if($room->post_parent != 0){
+				$parentId = $room->post_parent;
+				$allRooms[] = get_post($room->post_parent);
+			}else{			
+				$allRooms[] = $room;
+			}		
+			
+			foreach(get_children(array('post_parent' => $parentId)) as $child){
+				$allRooms[] = $child;
+			}
+			
+			foreach ($allRooms as $room){
+				self::cleanCurrentUsers($room->ID);	
+				if(get_field('max_user', $room) > count($allNotes = self::roomAllNotes($room->ID))){
+					$avgNote = (array_sum($allNotes) + $userNote)/(count($allNotes) + 1);
+					if(count($allNotes) == 0){
+						$setRoom 	 = $room->ID;
+						break;
+					}elseif(count($allNotes) < floor(get_field('max_user', $room)/4) && abs($avgNote - 2.5) < 2){
+						$setRoom 	 = $room->ID;
+						break;
+					}elseif(abs($bestAvgNote - 2.5) > abs($avgNote - 2.5) && abs($avgNote - 2.5) < 1.5) {
+						$bestAvgNote = array_sum($allNotes)/count($allNotes);
+						$setRoom 	 = $room->ID;
+					}
 				}
 			}
+			
+			if($setRoom == 0){
+				$setRoom = self::createNewRoom($parentId);
+			}
 		}
-
-		if($setRoom == 0){
-			$setRoom = self::createNewRoom($roomId);
-		}
-
+		
 		self::joinChatRoom($setRoom);
-		return true;
+		
+		if($setRoom != $roomID){
+		}else{		
+			return true;
+		}
+	}
+	
+	public static function now(){
+		$tz = 'Europe/Paris';
+		$timestamp = time();
+		$dt = new \DateTime("now", new \DateTimeZone($tz)); 
+		$dt->setTimestamp($timestamp);
+		return $dt->format('Y-m-d H:i:s');
+	}
+	
+	public static function timeOut($timeout = 5){
+		$tz = 'Europe/Paris';
+		$timestamp = time();
+		$dt = new \DateTime("now", new \DateTimeZone($tz)); 
+		$dt->modify('+'.$timeout.' minutes');
+		return $dt->format('Y-m-d H:i:s');
 	}
 }

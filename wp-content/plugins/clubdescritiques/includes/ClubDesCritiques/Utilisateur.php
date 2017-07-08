@@ -223,7 +223,7 @@ class Utilisateur{
 		if(!empty($notation)){
 			return get_field('note', $notation[0]->ID);
 		}else{
-			return 'aucune note donn�e';
+			return 'aucune note donnée';
 		}
 	}
 
