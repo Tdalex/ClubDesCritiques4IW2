@@ -1548,7 +1548,7 @@ nav {
 .hero {
     color: white;
     background-color: rgba(0, 0, 0, 0.5) !important;
-    background: url("http://club-des-critiques.loc/wp-content/uploads/2017/07/bibliotheque.jpg") no-repeat;
+    background: url("assets/images/bibliotheque.jpg") no-repeat;
     background-size: cover;
     background-position: bottom;
     /*padding-bottom: 200px; */
