@@ -26,16 +26,21 @@ $nextChat = ChatRoom::getNextChat();
 <?php
 get_header(); ?>
 
-    <div class="container">
+<section>
+<div class="hero">
+            <h1 class="page-title">La puissance du bouche à oreille</h1>
+            <p class="lead blog-description"><?php echo get_the_content() ?><p>
+            <div class="btn btn-primary">Learn more about us</div>
+            <div class="btn btn-primary">Contact us</div>
+            </div>
+</section>
+
+    <div class="container" id="page">
 
         <div class="row row-offcanvas row-offcanvas-right">
 
             <div class="col-xs-12 col-sm-9">
 
-                <div class="wrap">
-                    <h1 class="page-title"><?php echo get_the_title() ?></h1>
-                    <p class="lead blog-description"><?php echo get_the_content()?><p>
-                </div>
 
                 <div class="chatHeader">
 					<?php if($nextChat){ 
@@ -61,7 +66,7 @@ get_header(); ?>
 							<?php }else{ ?>
 								<a href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>"><img src="<?php echo get_field('image', $product->ID); ?>"></img></a>
 							<?php } ?>
-							<p class="title_book"><?php echo $product->post_title; ?></p>
+							<p class="title_book"><a href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>"><?php echo $product->post_title; ?></a></p>
 							<p><a class="btn btn-default" href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>" role="button">plus d'infos &raquo;</a></p>
 						</div><!--/.col-xs-6.col-lg-4-->
 					<?php } ?>

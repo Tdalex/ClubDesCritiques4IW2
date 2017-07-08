@@ -38,21 +38,33 @@ if(isset($_POST) && $_POST['type'] == 'register'){
 </head>
 
 <body <?php body_class(); ?>>
-<div id="page" class="site">
-	<a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', 'clubcritiques' ); ?></a>
+<div class="site header-nightsky">
+    <a class="skip-link screen-reader-text" href="#content"><?php _e('Skip to content', 'clubcritiques'); ?></a>
 
-	<header id="masthead" class="site-header" role="banner">
+    <header id="masthead" class="site-header" role="banner">
 
+        <?php if (has_nav_menu('top')) : ?>
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <a class="navbar-brand" href="#"><img id="logo_header" src="wp-content/uploads/2017/07/ZLVnF3JJn_2M6X70SkklSb_LbiD8qg7hTLR_so1RF7k.png" width="200" height="75" ></a>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav navbar-right">
+                        <?php get_template_part('template-parts/navigation/navigation', 'top'); ?>
+                    </ul>
+                </div>
+            </div>
+        </nav>
 
-		<?php if ( has_nav_menu( 'top' ) ) : ?>
-			<div class="navigation-top">
-				<div class="wrap">
-					<?php get_template_part( 'template-parts/navigation/navigation', 'top' ); ?>
-				</div><!-- .wrap -->
-			</div><!-- .navigation-top -->
-		<?php endif; ?>
+        <!-- <div class="hero">
+            <h1 class="page-title">La puissance du bouche à oreille</h1>
+            <p class="lead blog-description"><?php echo $post_homepage->post_content ?><p>
+            <div class="btn btn-primary">Learn more about us</div>
+            <div class="btn btn-primary">Contact us</div>
+            </div> -->
+</div>
+<?php endif; ?>
 
-	</header><!-- #masthead -->
+</header><!-- #masthead -->
 
 	<?php
 	// If a regular post or page, and not the front page, show the featured image.
