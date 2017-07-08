@@ -21,6 +21,7 @@ $products = get_posts( $args );
 
 //next Chat
 $nextChat = ChatRoom::getNextChat();
+var_dump(Utilisateur::getNotation($chatProduct->ID, get_current_user_id()));
 ?>
 
 <?php
@@ -43,9 +44,15 @@ get_header(); ?>
 						<h1 class="chat-title"><?php echo $nextChat->post_title ?></h1>
 						<p class="lead blog-description">Prochain Chat sur <a href="<?php echo get_permalink(get_page_by_title('Produit')).$chatProduct->ID; ?>"><?php echo $chatProduct->post_title; ?></a></p>
 						<p class="lead blog-description"><?php echo get_field('description', $nextChat->ID); ?></p>
-						<a href='<?php echo get_permalink($nextChat->ID)?>' >Rejoindre un salon</a><br>
-						<?php if(isset($_COOKIE['last_room'])){ ?>
-							<a href='<?php echo get_permalink($_COOKIE['last_room'])?>' >Rejoindre votre dernier salon</a><br>
+						<?php if(!is_user_logged_in()){ ?>
+							<p class="lead blog-description">Veuillez vous connecter avant de rejoindre le salon</p>
+						<?php }elseif(false !== Utilisateur::getNotation($chatProduct->ID, get_current_user_id())){ ?>
+							<a href='<?php echo get_permalink($nextChat->ID)?>' >Rejoindre un salon</a><br>
+							<?php if($userRoom = ChatRoom::getUserRoom($nextChat->ID)){ ?>
+								<a href='<?php echo get_permalink($userRoom)?>?changeRoom=true' >Rejoindre votre dernier salon</a><br>
+							<?php }?>
+						<?php }else{ ?>
+							<a href='<?php echo get_permalink(get_page_by_title('Produit')).$chatProduct->ID;?>' >Veuillez noter le livre avant de rejoindre le salon</a><br>
 						<?php }?>
 					<?php }else{ ?>
 						<h1 class="chat-title">Aucun salon programmé pour le moment</h1><br>
