@@ -51,12 +51,12 @@ get_header(); ?>
 						<?php if(!is_user_logged_in()){ ?>
 							<p class="lead blog-description">Veuillez vous connecter avant de rejoindre le salon</p>
 						<?php }elseif(false !== Utilisateur::getNotation($chatProduct->ID, get_current_user_id())){ ?>
-							<a href='<?php echo get_permalink($nextChat->ID)?>' >Rejoindre un salon</a><br>
+							<a href='<?php echo get_permalink($nextChat->ID)?>?changeRoom=true' >Rejoindre un salon</a><br>
 							<?php if($userRoom = ChatRoom::getUserRoom($nextChat->ID)){ ?>
-								<a href='<?php echo get_permalink($userRoom)?>?changeRoom=true' >Rejoindre votre dernier salon</a><br>
+								<a href='<?php echo get_permalink($userRoom)?>' >Rejoindre votre dernier salon</a><br>
 							<?php }?>
 						<?php }else{ ?>
-							<a href='<?php echo get_permalink(get_page_by_title('Produit')).$chatProduct->ID;?>' >Veuillez noter le livre avant de rejoindre le salon</a><br>
+							<a href='<?php echo get_permalink(get_page_by_title('Produit')).$chatProduct->ID;?>' >Veuillez noter le livre avant de rejoindre un salon</a><br>
 						<?php }?>
 					<?php }else{ ?>
 						<h1 class="chat-title">Aucun salon programmé pour le moment</h1><br>

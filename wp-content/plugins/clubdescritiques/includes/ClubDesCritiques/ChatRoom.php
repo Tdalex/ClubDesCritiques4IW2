@@ -103,13 +103,15 @@ class ChatRoom{
 	        'post_author' => $room->post_author,
 	        'post_title'  => $room->post_title.'_'.$roomNumber,
 	        'post_status' => 'publish',
-	        'post_type'   => 'chat_room',
+	        'post_type'   => 'chat-room',
 	        'post_parent' => $roomId,
 	    );
 		$id = wp_insert_post($args);
-
-		update_field('start_date',get_field('start_date',$roomId), $id);
-		update_field('end_date',get_field('end_date',$roomId), $id);
+		update_field('field_5960d25530cec',get_field('max_user',$roomId), $id);
+		update_field('field_5960d14eb8a9c',get_field('start_date',$roomId), $id);
+		update_field('field_5960d1e3b8a9d',get_field('end_date',$roomId), $id);
+		update_field('field_5960d1f1b8a9e',get_field('product',$roomId), $id);
+		update_field('field_5961f6bb438aa',$roomNumber++, $id);
 		return $id;
 	}
 	
@@ -184,11 +186,10 @@ class ChatRoom{
 		if($setRoom == 0){
 			$setRoom = self::createNewRoom($parentId);
 		}
-		
 		self::joinChatRoom($setRoom);
 		
 		if($setRoom != $roomId){
-			return Utilisateur::redirect(get_permalink($roomId));
+			return Utilisateur::redirect(get_permalink($setRoom));
 			
 		}else{		
 			return true;
@@ -212,7 +213,8 @@ class ChatRoom{
 			}
 		}
 		update_field('field_5960de0ff4bab', $currentUserTmp, $roomId);
-		return self::selectBestRoom($roomId);
+		self::selectBestRoom($roomId);
+		return true;
 	}
 	
 	public static function now(){

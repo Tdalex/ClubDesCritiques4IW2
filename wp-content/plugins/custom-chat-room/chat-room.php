@@ -59,7 +59,7 @@ Class Chatroom {
 			'hierarchical' => true,
 			'menu_position' => null,
 			'show_in_nav_menus' => true,
-			'supports' => array( 'title' )
+			'supports' => array( 'title', 'page-attributes' )
 		);
 		register_post_type( 'chat-room', $args );
 	}

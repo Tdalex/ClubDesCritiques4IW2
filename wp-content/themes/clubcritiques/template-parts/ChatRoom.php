@@ -9,12 +9,17 @@ use ClubDesCritiques\ChatRoom as ChatRoom;
 
 $chatRoom = get_post();
 $product = get_field('product', get_the_ID())[0];
+
+$startDate = get_field('start_date', get_the_ID());
+$endDate   = get_field('end_date', get_the_ID());
+$today     = date('Y-m-d H:i:s');
+
 if(!is_user_logged_in() || false === Utilisateur::getNotation($product->ID, get_current_user_id())){
 	Utilisateur::redirect('/');
 }
 
 ChatRoom::cleanCurrentUsers(get_the_ID());	
-if(isset($_GET['changeRoom']) && $_GET['changeRoom'] === true){
+if(isset($_GET['changeRoom']) && $_GET['changeRoom'] == true){
 	ChatRoom::changeRoom(get_the_ID());
 }elseif(!ChatRoom::isUserInRoom(get_the_ID())){
 	ChatRoom::selectBestRoom(get_the_ID());
@@ -22,12 +27,11 @@ if(isset($_GET['changeRoom']) && $_GET['changeRoom'] === true){
 	ChatRoom::joinChatRoom(get_the_ID());
 }
 
-
-//404 if chat room not now
 $startDate = get_field('start_date', get_the_ID());
 $endDate   = get_field('end_date', get_the_ID());
 $today     = date('Y-m-d H:i:s');
 
+//404 if chat room not now
 if ($today > $endDate or $today < $startDate) {
     global $wp_query;
     $wp_query->set_404();
@@ -58,7 +62,7 @@ get_header();
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
-			<h1 class="title title_margin" >Salon : Titre (Auteur) - Nbr de participants</h1>
+			<h1 class="title title_margin" >Salon <?php echo get_field('room_number', get_the_ID())." : <a href='".get_permalink(get_page_by_title('Produit')).$product->ID."'>".$product->post_title."</a> (<a href='".get_permalink(get_page_by_title('Auteur')).$author->ID."'>".$author->post_title."</a>)"; ?></h1>
 		</div>
 	</div>
 <br>
