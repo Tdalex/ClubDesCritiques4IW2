@@ -1,5 +1,6 @@
 var last_update_received = 0;
 function chatroom_check_updates() {
+	console.log(chatroom_slug);
 	jQuery.post(
 		ajaxurl,
 		{
