@@ -1,6 +1,5 @@
 var last_update_received = 0;
 function chatroom_check_updates() {
-	console.log(chatroom_slug);
 	jQuery.post(
 		ajaxurl,
 		{
@@ -42,6 +41,9 @@ function chatroom_strip_slashes(str) {
 jQuery(document).ready( function() {
 	last_update_id = 0;
 	chatroom_check_updates();
+	user_join_room();
+	current_user_room();
+	user_kicked();
 	jQuery( 'textarea.chat-text-entry' ).keypress( function( event ) {
 		if ( event.charCode == 13 || event.keyCode == 13 ) {
 			chatroom_send_message();
@@ -64,4 +66,48 @@ function chatroom_send_message() {
 		}
 	);
 
+}
+
+function user_join_room() {
+	jQuery.post(
+		ajaxurl,
+		{
+			action: 'join_room',
+			roomId: chatroom_id,
+			userId: user_id,
+		},
+		function (response) {
+		}
+	);
+	setTimeout( "user_join_room()", 1000 );
+}
+
+function current_user_room() {
+	jQuery.post(
+		ajaxurl,
+		{
+			action: 'current_user',
+			roomId: chatroom_id,
+			userId: user_id,
+		},
+		function (response) {
+			jQuery('#current-user-table').html(response);
+		}
+	);
+	setTimeout( "current_user_room()", 1000 );
+}
+
+function user_kicked() {
+	jQuery.post(
+		ajaxurl,
+		{
+			action: 'kicked_from',
+			roomId: chatroom_id,
+			userId: user_id,
+		},
+		function (response) {
+			jQuery('#message').html(response);
+		}
+	);
+	setTimeout( "user_kicked()", 1000 );
 }

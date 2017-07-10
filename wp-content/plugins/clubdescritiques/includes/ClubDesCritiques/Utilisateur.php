@@ -40,7 +40,7 @@ class Utilisateur{
 			return 'email deja utilise';
 		}
 		$_SESSION['login_msg'] = 'un email vous a ete envoye';
-		return self::redirect($_SERVER['REQUEST_URI']);
+		return self::redirect(strtok($_SERVER["REQUEST_URI"],'?'));
 	}
 
 	public static function login($request){
@@ -66,7 +66,7 @@ class Utilisateur{
 					</form>";
 					return $activate;
 				}else{
-					return self::redirect($_SERVER['REQUEST_URI']);
+					return self::redirect(strtok($_SERVER["REQUEST_URI"],'?'));
 				}
 			}else{
 				return 'email ou mot de passe non valide';
@@ -113,7 +113,7 @@ class Utilisateur{
 		wp_set_auth_cookie($user->ID);
 		do_action( 'wp_login', $user->user_login );
 
-		return self::redirect($_SERVER['REQUEST_URI']);
+		return self::redirect(strtok($_SERVER["REQUEST_URI"],'?'));
 
 	}
 
@@ -169,7 +169,7 @@ class Utilisateur{
 			$idComment = wp_insert_post($post, $user_id);
 			update_field('field_593a461c598a5', $idProduct, $idComment);
 		}
-		return self::redirect($_SERVER['REQUEST_URI']);
+		return self::redirect(strtok($_SERVER["REQUEST_URI"],'?'));
 	}
 
 	public static function getProductComments($idProduct){
@@ -208,7 +208,7 @@ class Utilisateur{
 		$comment = self::getUserComment($productId, $userId);
 		if(is_object($comment))
 			wp_delete_post($comment->ID);
-		return self::redirect($_SERVER['REQUEST_URI']);
+		return self::redirect(strtok($_SERVER["REQUEST_URI"],'?'));
 	}
 
 	public static function getNotation($idProduct, $user_id){
@@ -332,7 +332,7 @@ class Utilisateur{
 			}
 			update_field('field_5954b2cf2206c', $myContactTemp , 'user_'.$user_id);
 		}
-		return self::redirect($_SERVER['REQUEST_URI']);
+		return self::redirect(strtok($_SERVER["REQUEST_URI"],'?'));
 	}
 
 	public static function getProductExchange($idProduct){
@@ -412,7 +412,7 @@ class Utilisateur{
 				wp_set_object_terms( $idExchange, $term->term_id, 'exchange_type');
 			}
 		}
-		return self::redirect($_SERVER['REQUEST_URI']);
+		return self::redirect(strtok($_SERVER["REQUEST_URI"],'?'));
 	}
 
 	public static function deleteExchange($productId, $userId = null){
@@ -423,7 +423,7 @@ class Utilisateur{
 		if(is_object($exchange))
 			wp_delete_post($exchange->ID);
 
-		return self::redirect($_SERVER['REQUEST_URI']);
+		return self::redirect(strtok($_SERVER["REQUEST_URI"],'?'));
 	}
 
 }
