@@ -54,6 +54,12 @@ $formats = get_terms( array(
 <div class="container">
 
 	<div class="row">
+		<?php if(isset($_SESSION['message'])){ ?>
+			<div class="alert alert-<?php echo $_SESSION['message']['type'] ?>">
+			  <?php echo $_SESSION['message']['text']; ?>
+			</div>	
+		<?php unset($_SESSION['message']);
+			} ?>
 
 		<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
 		<p>Nombre de Produits correspondant a votre recherche: <?php echo $countProducts; ?></p>

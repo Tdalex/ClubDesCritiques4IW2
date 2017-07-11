@@ -34,9 +34,13 @@ get_header(); ?>
             <div class="btn btn-primary">Contact us</div>
             </div>
 </section>
-
     <div class="container" id="page">
-
+		<?php if(isset($_SESSION['message'])){ ?>
+			<div class="alert alert-<?php echo $_SESSION['message']['type'] ?>">
+			  <?php echo $_SESSION['message']['text']; ?>
+			</div>	
+		<?php unset($_SESSION['message']);
+			} ?>
         <div class="row row-offcanvas row-offcanvas-right">
 
             <div class="col-xs-12 col-sm-9">

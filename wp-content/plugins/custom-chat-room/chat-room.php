@@ -249,7 +249,7 @@ Class Chatroom {
 				$user = get_user_by('ID', $cu['user']['ID']);
 				$user_meta   = get_userdata($cu['user']['ID']);
 				$cu_role   = $user_meta->roles[0]; 
-				$message .= "<tr><td>". strtoupper($user->user_lastname)." ".ucfirst(strtolower ($user->user_firstname))."</td>";
+				$message .= "<tr><td><a target='_blank' href='". get_permalink(get_page_by_title('utilisateur')).$user->id ."'> ". strtoupper($user->user_lastname)." ".ucfirst(strtolower ($user->user_firstname))."</a></td>";
 				if($user_role == 'administrator' && $cu_role != 'administrator'){
 					$message .= "<td><a href='". get_permalink($roomId).'?kick='. $cu['user']['ID'] ."'>expulser</a></td>";
 				}else{
@@ -269,7 +269,9 @@ Class Chatroom {
 		$message    = "";
 		
 		if($kickedFrom){
-			$message = '<p>Vous avez été expulsé du salon</p>';
+			$message = "<div class='alert alert-danger'>
+							Vous avez été expulsé du salon. <a href='/'>retour à l'accueil</a>
+						</div>";
 		}
 		echo $message;
 		die();

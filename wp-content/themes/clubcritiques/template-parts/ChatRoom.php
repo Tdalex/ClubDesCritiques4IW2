@@ -28,10 +28,12 @@ $user_meta  = get_userdata($userId);
 $user_role = $user_meta->roles[0]; 
 
 ChatRoom::cleanCurrentUsers(get_the_ID());
-
 if(isset($_GET['kick']) && !empty($_GET['kick']) && $user_role == 'administrator'){	
+$kickedUser = get_user_by('id',$_GET['kick']);
+$kickedName = strtoupper($kickedUser->user_lastname)." ".ucfirst(strtolower ($kickedUser->user_firstname));
 	ChatRoom::kickUser(get_the_ID(), $_GET['kick']);	
-	ChatRoom::joinChatRoom(get_the_ID());	
+	ChatRoom::joinChatRoom(get_the_ID());
+	$_SESSION['message'] = array('type' => 'info', 'text' => get_user_by('id', $kickedName. " a bien été expulsé du salon"));
 }elseif(isset($_GET['token']) && $_GET['token'] == $token){
 	ChatRoom::joinChatRoom(get_the_ID());	
 }elseif(isset($_GET['changeRoom']) && $_GET['changeRoom'] == true){
@@ -72,13 +74,18 @@ get_header();
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
-			<h1 class="title title_margin" >Salon <?php echo get_field('room_number', get_the_ID())." : <a href='".get_permalink(get_page_by_title('Produit')).$product->ID."'>".$product->post_title."</a> (<a href='".get_permalink(get_page_by_title('Auteur')).$author->ID."'>".$author->post_title."</a>)"; ?></h1>
+			<h1 class="title title_margin" >Salon <?php echo get_field('room_number', get_the_ID())." : <a target='_blank' href='".get_permalink(get_page_by_title('Produit')).$product->ID."'>".$product->post_title."</a> (<a target='_blank'  href='".get_permalink(get_page_by_title('Auteur')).$author->ID."'>".$author->post_title."</a>)"; ?></h1>
 		</div>
 	</div>
 <br>
 	<div class="row chatroom">
-		<div id='message'>
-		</div>
+		<?php if(isset($_SESSION['message'])){ ?>
+			<div class="alert alert-<?php echo $_SESSION['message']['type'] ?>">
+			  <?php echo $_SESSION['message']['text']; ?>
+			</div>	
+		<?php unset($_SESSION['message']);
+			} ?>
+		<div id='message'></div>
 		<div class='chat-box col-md-7'>
 			<?php
 				the_content();
