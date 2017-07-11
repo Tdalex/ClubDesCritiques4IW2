@@ -25,15 +25,17 @@ if(!is_user_logged_in() || false === Utilisateur::getNotation($product->ID, get_
 }
 $userId 	= get_current_user_id();
 $user_meta  = get_userdata($userId);
-$user_role = $user_meta->roles[0]; 
+$user_role  = $user_meta->roles[0]; 
 
 ChatRoom::cleanCurrentUsers(get_the_ID());
 if(isset($_GET['kick']) && !empty($_GET['kick']) && $user_role == 'administrator'){	
-$kickedUser = get_user_by('id',$_GET['kick']);
-$kickedName = strtoupper($kickedUser->user_lastname)." ".ucfirst(strtolower ($kickedUser->user_firstname));
-	ChatRoom::kickUser(get_the_ID(), $_GET['kick']);	
+	$kickedUser = get_user_by('id',$_GET['kick']);
+	$kickedName = strtoupper($kickedUser->user_lastname)." ".ucfirst(strtolower ($kickedUser->user_firstname));
+	$kicked = ChatRoom::kickUser(get_the_ID(), $_GET['kick']);	
 	ChatRoom::joinChatRoom(get_the_ID());
-	$_SESSION['message'] = array('type' => 'info', 'text' => get_user_by('id', $kickedName. " a bien été expulsé du salon"));
+	if($kicked === true){
+		$_SESSION['message'] = array('type' => 'info', 'text' => $kickedName. " a bien été expulsé du salon");
+	}
 }elseif(isset($_GET['token']) && $_GET['token'] == $token){
 	ChatRoom::joinChatRoom(get_the_ID());	
 }elseif(isset($_GET['changeRoom']) && $_GET['changeRoom'] == true){

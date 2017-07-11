@@ -75,7 +75,14 @@ class ChatRoom{
 	
 	public static function kickUser($roomId, $kickUserId){
 		$currentUser = get_field('current_user', $roomId); 
-		$currentUserTmp = array();
+		$currentUserTmp = array();	
+		
+		$user_meta  = get_userdata($kickUserId);
+		$kickedRole = $user_meta->roles[0];
+		if($kickedRole == 'administrator'){
+			return false;
+		}
+		
 		if($currentUser){
 			$i = 0;
 			foreach($currentUser as $cu){

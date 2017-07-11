@@ -231,6 +231,9 @@ Class Chatroom {
 	function ajax_join_room_handler(){
 		$userId = $_POST['userId'];
 		$roomId = $_POST['roomId'];
+		if(true === ChatRoom::isUserKicked($roomId, $userId)){
+			die();
+		}
 		chat::cleanCurrentUsers($roomId);
 		chat::joinChatRoom($roomId, $userId);
 		die();
@@ -242,7 +245,7 @@ Class Chatroom {
 		$currentUser = get_field('current_user', $roomId); 
 		$user_meta   = get_userdata($userId);
 		$user_role   = $user_meta->roles[0]; 
-		$message    = "";
+		$message     = "";
 		
 		if(!empty($currentUser)){
 			foreach($currentUser as $cu){					
