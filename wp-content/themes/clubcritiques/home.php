@@ -26,16 +26,25 @@ $nextChat = ChatRoom::getNextChat();
 <?php
 get_header(); ?>
 
-    <div class="container">
-
+<section>
+<div class="hero">
+            <h1 class="page-title">La puissance du bouche à oreille</h1>
+            <p class="lead blog-description"><?php echo get_the_content() ?><p>
+            <div class="btn btn-primary">Learn more about us</div>
+            <div class="btn btn-primary">Contact us</div>
+            </div>
+</section>
+    <div class="container" id="page">
+		<?php if(isset($_SESSION['message'])){ ?>
+			<div class="alert alert-<?php echo $_SESSION['message']['type'] ?>">
+			  <?php echo $_SESSION['message']['text']; ?>
+			</div>	
+		<?php unset($_SESSION['message']);
+			} ?>
         <div class="row row-offcanvas row-offcanvas-right">
 
             <div class="col-xs-12 col-sm-9">
 
-                <div class="wrap">
-                    <h1 class="page-title"><?php echo get_the_title() ?></h1>
-                    <p class="lead blog-description"><?php echo get_the_content()?><p>
-                </div>
 
                 <div class="chatHeader">
 					<?php if($nextChat){ 
@@ -43,9 +52,17 @@ get_header(); ?>
 						<h1 class="chat-title"><?php echo $nextChat->post_title ?></h1>
 						<p class="lead blog-description">Prochain Chat sur <a href="<?php echo get_permalink(get_page_by_title('Produit')).$chatProduct->ID; ?>"><?php echo $chatProduct->post_title; ?></a></p>
 						<p class="lead blog-description"><?php echo get_field('description', $nextChat->ID); ?></p>
-						<a href='<?php echo get_permalink($nextChat->ID)?>' >Rejoindre un salon</a><br>
-						<?php if(isset($_COOKIE['last_room'])){ ?>
-							<a href='<?php echo get_permalink($_COOKIE['last_room'])?>' >Rejoindre votre dernier salon</a><br>
+						<?php if(!is_user_logged_in()){ ?>
+							<p class="lead blog-description">Veuillez vous connecter avant de rejoindre le salon</p>
+						<?php }elseif(ChatRoom::isUserKicked($nextChat->ID, get_current_user_id())){ ?>
+								<p>Vous avez été expulsé du salon</p>
+							<?php }elseif(false !== Utilisateur::getNotation($chatProduct->ID, get_current_user_id())){ ?>
+							<a href='<?php echo get_permalink($nextChat->ID)?>?changeRoom=true' >Rejoindre un salon</a><br>
+							<?php if($userRoom = ChatRoom::getUserRoom($nextChat->ID)){ ?>
+								<a href='<?php echo get_permalink($userRoom)?>' >Rejoindre votre dernier salon</a><br>
+							<?php }?>
+						<?php }else{ ?>
+							<a href='<?php echo get_permalink(get_page_by_title('Produit')).$chatProduct->ID;?>' >Veuillez noter le livre avant de rejoindre un salon</a><br>
 						<?php }?>
 					<?php }else{ ?>
 						<h1 class="chat-title">Aucun salon programmé pour le moment</h1><br>
@@ -61,7 +78,7 @@ get_header(); ?>
 							<?php }else{ ?>
 								<a href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>"><img src="<?php echo get_field('image', $product->ID); ?>"></img></a>
 							<?php } ?>
-							<p class="title_book"><?php echo $product->post_title; ?></p>
+							<p class="title_book"><a href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>"><?php echo $product->post_title; ?></a></p>
 							<p><a class="btn btn-default" href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>" role="button">plus d'infos &raquo;</a></p>
 						</div><!--/.col-xs-6.col-lg-4-->
 					<?php } ?>

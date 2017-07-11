@@ -37,6 +37,12 @@ get_header();
 	<div class="row title_profil">
 		<h1><?php echo get_the_title();  ?></h1>
 	</div>
+	<?php if(isset($_SESSION['message'])){ ?>
+		<div class="alert alert-<?php echo $_SESSION['message']['type'] ?>">
+		  <?php echo $_SESSION['message']['text']; ?>
+		</div>	
+	<?php unset($_SESSION['message']);
+		} ?>
 	<div class="row content_profil">
 		<div class="col-md-3 col-xs-12">
 			<img src="<?php echo get_field('photo', 'user_'.$user->ID); ?>">
@@ -62,16 +68,18 @@ get_header();
 							<a href="#contact"><button>Contacter</button></a>
 					</div><br>
 				<?php } ?>
-				<div class="row">
-					<h2>Liste contact</h2>
-					<div class="menu_flottant">
-					<?php foreach(get_field('contact', 'user_'.$user->ID) as $contact){ ?>
-						<ul>
-							<a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$contact['ID']; ?>'><li><?php echo $contact['user_firstname']. ' ' .$contact['user_lastname'];;?></li></a>
-						</ul>
-					<?php } ?>
+				<?php if(get_field('contact', 'user_'.$user->ID)){ ?>
+					<div class="row">
+						<h2>Liste contact</h2>
+						<div class="menu_flottant">
+						<?php foreach(get_field('contact', 'user_'.$user->ID) as $contact){ ?>
+							<ul>
+								<a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$contact['ID']; ?>'><li><?php echo $contact['user_firstname']. ' ' .$contact['user_lastname'];;?></li></a>
+							</ul>
+						<?php } ?>
+						</div>
 					</div>
-				</div>
+				<?php } ?>
 			</div>
 		</div>
 	</div>	

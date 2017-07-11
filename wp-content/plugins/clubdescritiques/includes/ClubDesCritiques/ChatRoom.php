@@ -10,6 +10,11 @@ namespace ClubDesCritiques;
 use ClubDesCritiques\Utilisateur as Utilisateur;
 
 class ChatRoom{
+	function __construct() {		
+		// add_action( 'wp_ajax_check_updates', array( $this, 'ajax_check_updates_handler' ) );
+		add_action( 'wp_ajax_join_room', array( $this, 'ajax_join_room_handler' ) );
+	}
+	
     public static function activate()
     {
         global $wpdb;
@@ -57,7 +62,7 @@ class ChatRoom{
 		if($currentUser){
 			$i = 0;
 			foreach($currentUser as $cu){
-				if($cu['user_timeout'] > self::now()){
+				if(isset($cu['user']['ID']) && $cu['user_timeout'] > self::now()){
 					$currentUserTmp[$i]['user'] = $cu['user']['ID'];
 					$currentUserTmp[$i]['user_timeout'] = $cu['user_timeout'];
 					$i++;
@@ -68,6 +73,53 @@ class ChatRoom{
 		return true;
 	}
 	
+	public static function kickUser($roomId, $kickUserId){
+		$currentUser = get_field('current_user', $roomId); 
+		$currentUserTmp = array();	
+		
+		$user_meta  = get_userdata($kickUserId);
+		$kickedRole = $user_meta->roles[0];
+		if($kickedRole == 'administrator'){
+			return false;
+		}
+		
+		if($currentUser){
+			$i = 0;
+			foreach($currentUser as $cu){
+				if(isset($cu['user']['ID']) && $cu['user']['ID'] != $kickUserId){
+					$currentUserTmp[$i]['user'] = $cu['user']['ID'];
+					$currentUserTmp[$i]['user_timeout'] = $cu['user_timeout'];
+					$i++;
+				}		
+			}
+		}
+		update_field('field_5960de0ff4bab', $currentUserTmp, $roomId);
+		
+		$parentId = $roomId;		
+		if($room->post_parent != 0){
+			$parentId = $room->post_parent;
+		}
+		
+		$kickedFrom = get_field('kicked_from', 'user_'.$kickUserId);
+		$kickedFromTmp = array();
+		$done = false;
+		if($kickedFrom){
+			$i = 0;
+			foreach($kickedFrom as $kf){
+				$kickedFromTmp[$i] = $kf->ID;
+				if($kf->ID == $parentId){
+					$done = true;
+				}	
+				$i++;	
+			}
+		}
+		if(!$done){
+			$kickedFromTmp[] = $parentId;
+		}
+		update_field('field_59634a06080f6',$kickedFromTmp, 'user_'.$kickUserId);
+		return true;
+	}
+	
 	public static function isUserInRoom($roomId, $userId = null){
 		if($userId === null)
 			$userId = get_current_user_id();
@@ -75,14 +127,33 @@ class ChatRoom{
 		$currentUser = get_field('current_user', $roomId); 
 		if($currentUser){
 			foreach($currentUser as $cu){
-				if($cu['user']['ID'] == $userId){
+				if(isset($cu['user']['ID']) && $cu['user']['ID'] == $userId){
 					return true;
 				}		
 			}
 		}
 		return false;
 	}
-
+	
+	public static function isUserKicked($roomId, $userId = null){
+		if($userId === null)
+			$userId = get_current_user_id();
+		
+		$parentId = $roomId;		
+		if($room->post_parent != 0){
+			$parentId = $room->post_parent;
+		}
+		
+		$kickedFrom = get_field('kicked_from', 'user_'.$userId);
+		if($kickedFrom){
+			foreach($kickedFrom as $kf){
+				if($kf->ID == $parentId){
+					return true;
+				}	
+			}
+		}
+		return false;
+	}
 	public static function roomAllNotes($roomId){
 		$notes    = array();
 		$chatroom = get_field('current_user', $roomId);
@@ -103,14 +174,46 @@ class ChatRoom{
 	        'post_author' => $room->post_author,
 	        'post_title'  => $room->post_title.'_'.$roomNumber,
 	        'post_status' => 'publish',
-	        'post_type'   => 'chat_room',
+	        'post_type'   => 'chat-room',
 	        'post_parent' => $roomId,
 	    );
 		$id = wp_insert_post($args);
-
-		update_field('start_date',get_field('start_date',$roomId), $id);
-		update_field('end_date',get_field('end_date',$roomId), $id);
+		$token = wp_generate_password( 8, false );
+		update_field('field_5960d25530cec',get_field('max_user',$roomId), $id);
+		update_field('field_5960d14eb8a9c',get_field('start_date',$roomId), $id);
+		update_field('field_5960d1e3b8a9d',get_field('end_date',$roomId), $id);
+		update_field('field_5960d1f1b8a9e',get_field('product',$roomId), $id);
+		update_field('field_5963361fc991f',$token, $id);
+		update_field('field_5961f6bb438aa',$roomNumber++, $id);
 		return $id;
+	}
+	
+	public static function getUserRoom($roomId, $userId = null){
+		if($userId === null)
+			$userId = get_current_user_id();
+		$room     	 = get_post($roomId);
+		$allRooms 	 = array();
+		$parentId    = $roomId;
+		
+		if($room->post_parent != 0){
+			$parentId = $room->post_parent;
+			$allRooms[] = get_post($room->post_parent);
+		}else{			
+			$allRooms[] = $room;
+		}		
+		
+		foreach(get_children(array('post_parent' => $parentId)) as $child){
+			$allRooms[] = $child;
+		}
+		
+		foreach ($allRooms as $room){
+			$currentUser = get_field('current_user', $room->ID); 
+			self::cleanCurrentUsers($room->ID);	
+			if(self::isUserInRoom($room->ID)){
+				return $room->ID;
+			}
+		}
+		return false;
 	}
 
 	public static function selectBestRoom($roomId, $userId = null){
@@ -155,11 +258,10 @@ class ChatRoom{
 		if($setRoom == 0){
 			$setRoom = self::createNewRoom($parentId);
 		}
-		
 		self::joinChatRoom($setRoom);
 		
 		if($setRoom != $roomId){
-			return Utilisateur::redirect(get_permalink($roomId));
+			return Utilisateur::redirect(get_permalink($setRoom));
 			
 		}else{		
 			return true;
@@ -183,7 +285,8 @@ class ChatRoom{
 			}
 		}
 		update_field('field_5960de0ff4bab', $currentUserTmp, $roomId);
-		return self::selectBestRoom($roomId);
+		self::selectBestRoom($roomId);
+		return true;
 	}
 	
 	public static function now(){

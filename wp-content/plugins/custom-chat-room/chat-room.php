@@ -9,6 +9,8 @@ Author URI: http://webdevstudios.com/
 License: GPLv2 or later
 */
 
+use ClubDesCritiques\ChatRoom as chat;
+
 Class Chatroom {
 	function __construct() {
 		register_activation_hook( __FILE__, array( $this, 'activation_hook' ) );
@@ -19,6 +21,9 @@ Class Chatroom {
 		add_action( 'wp_head', array( $this, 'define_javascript_variables' ) );
 		add_action( 'wp_ajax_check_updates', array( $this, 'ajax_check_updates_handler' ) );
 		add_action( 'wp_ajax_send_message', array( $this, 'ajax_send_message_handler' ) );
+		add_action( 'wp_ajax_join_room', array( $this, 'ajax_join_room_handler' ) );
+		add_action( 'wp_ajax_kicked_from', array( $this, 'ajax_kicked_user_handler' ) );
+		add_action( 'wp_ajax_current_user', array( $this, 'ajax_current_user_handler' ) );
 		add_filter( 'the_content', array( $this, 'the_content_filter' ) );
 	}
 
@@ -59,7 +64,7 @@ Class Chatroom {
 			'hierarchical' => true,
 			'menu_position' => null,
 			'show_in_nav_menus' => true,
-			'supports' => array( 'title' )
+			'supports' => array( 'title', 'page-attributes' )
 		);
 		register_post_type( 'chat-room', $args );
 	}
@@ -86,17 +91,21 @@ Class Chatroom {
 
 		// TODO create warnings if the user can't create a file, and suggest putting FTP creds in wp-config
 	}
+	
 	function define_javascript_variables() {
 		global $post;
 		if ( empty( $post->post_type ) || $post->post_type != 'chat-room' )
 			return; ?>
 		<script>
 		var ajaxurl = '<?php echo admin_url( 'admin-ajax.php' ); ?>';
-		var chatroom_slug = '<?echo $post->post_name; ?>';
+		var chatroom_slug = '<?php echo $post->post_name; ?>';
+		var chatroom_id = '<?php echo $post->ID; ?>';
+		var user_id = '<?php echo get_current_user_id(); ?>';
 		</script>
 		<?php
 
 	}
+	
 	function ajax_check_updates_handler() {
 		$upload_dir = wp_upload_dir();
 		$log_filename = $this->get_log_filename( sanitize_text_field( $_POST['chatroom_slug'] ) );
@@ -116,7 +125,7 @@ Class Chatroom {
 	 *
 	 * Stores the message in a recent messages file.
 	 *
-	 * Clears out cache of any messages older than 120 seconds.
+	 * Clears out cache of any messages older than 10 seconds.
 	 */
 	function ajax_send_message_handler() {
 		$current_user = wp_get_current_user();
@@ -125,7 +134,11 @@ Class Chatroom {
 	}
 
 	function save_message( $chatroom_slug, $user_id, $content ) {
+		global $post;
 		$user = get_userdata( $user_id );
+		if(true === ChatRoom::isUserKicked($post->ID, $user_id())){
+			die();
+		}
 
 		if ( ! $user_text_color = get_user_meta( $user_id, 'user_color', true ) ) {
 	    	// Set random color for each user
@@ -144,7 +157,7 @@ Class Chatroom {
 		$messages = json_decode( $contents );
 		$last_message_id = 0; // Helps determine the new message's ID
 		foreach ( $messages as $key => $message ) {
-			if ( time() - $message->time > 120 ) {
+			if ( time() - $message->time > 10 ) {
 				$last_message_id = $message->id;
 				unset( $messages[$key] );
 			}
@@ -178,6 +191,7 @@ Class Chatroom {
 		);
 		$this->write_log_file( $log_filename, json_encode( $messages ) );
 	}
+	
 	function write_log_file( $log_filename, $content ) {
 		$handle = fopen( $log_filename, 'w' );
 		fwrite( $handle, $content );
@@ -213,7 +227,58 @@ Class Chatroom {
 		<?php
 		return '';
 	}
-
+	
+	function ajax_join_room_handler(){
+		$userId = $_POST['userId'];
+		$roomId = $_POST['roomId'];
+		if(true === ChatRoom::isUserKicked($roomId, $userId)){
+			die();
+		}
+		chat::cleanCurrentUsers($roomId);
+		chat::joinChatRoom($roomId, $userId);
+		die();
+	}
+	
+	function ajax_current_user_handler(){
+		$userId	     = $_POST['userId'];
+		$roomId 	 = $_POST['roomId'];
+		$currentUser = get_field('current_user', $roomId); 
+		$user_meta   = get_userdata($userId);
+		$user_role   = $user_meta->roles[0]; 
+		$message     = "";
+		
+		if(!empty($currentUser)){
+			foreach($currentUser as $cu){					
+				$user = get_user_by('ID', $cu['user']['ID']);
+				$user_meta   = get_userdata($cu['user']['ID']);
+				$cu_role   = $user_meta->roles[0]; 
+				$message .= "<tr><td><a target='_blank' href='". get_permalink(get_page_by_title('utilisateur')).$user->id ."'> ". strtoupper($user->user_lastname)." ".ucfirst(strtolower ($user->user_firstname))."</a></td>";
+				if($user_role == 'administrator' && $cu_role != 'administrator'){
+					$message .= "<td><a href='". get_permalink($roomId).'?kick='. $cu['user']['ID'] ."'>expulser</a></td>";
+				}else{
+					$message .= "<td></td>";
+				}
+				$message .= "</tr>";
+			}
+		}
+		echo $message;
+		die();
+	}
+	
+	function ajax_kicked_user_handler(){
+		$userId	     = $_POST['userId'];
+		$roomId 	 = $_POST['roomId'];
+		$kickedFrom  = chat::isUserKicked($roomId, $userId);
+		$message    = "";
+		
+		if($kickedFrom){
+			$message = "<div class='alert alert-danger'>
+							Vous avez été expulsé du salon. <a href='/'>retour à l'accueil</a>
+						</div>";
+		}
+		echo $message;
+		die();
+	}
 }
 
 $chatroom = new Chatroom();

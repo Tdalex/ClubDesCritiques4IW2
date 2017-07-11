@@ -8,21 +8,49 @@ use ClubDesCritiques\Utilisateur as Utilisateur;
 use ClubDesCritiques\ChatRoom as ChatRoom;
 
 $chatRoom = get_post();
+$product = get_field('product', get_the_ID())[0];
 
-ChatRoom::cleanCurrentUsers(get_the_ID());	
-if(!ChatRoom::isUserInRoom(get_the_ID())){
+$token = get_field('invitation_token', get_the_ID());
+if(!$token){
+	$token = wp_generate_password( 8, false );
+	update_field('field_5963361fc991f',$token, get_the_ID());
+}
+
+$startDate = get_field('start_date', get_the_ID());
+$endDate   = get_field('end_date', get_the_ID());
+$today     = date('Y-m-d H:i:s');
+
+if(!is_user_logged_in() || false === Utilisateur::getNotation($product->ID, get_current_user_id()) || true === ChatRoom::isUserKicked(get_the_ID(), get_current_user_id())){
+	Utilisateur::redirect('/');
+}
+$userId 	= get_current_user_id();
+$user_meta  = get_userdata($userId);
+$user_role  = $user_meta->roles[0]; 
+
+ChatRoom::cleanCurrentUsers(get_the_ID());
+if(isset($_GET['kick']) && !empty($_GET['kick']) && $user_role == 'administrator'){	
+	$kickedUser = get_user_by('id',$_GET['kick']);
+	$kickedName = strtoupper($kickedUser->user_lastname)." ".ucfirst(strtolower ($kickedUser->user_firstname));
+	$kicked = ChatRoom::kickUser(get_the_ID(), $_GET['kick']);	
+	ChatRoom::joinChatRoom(get_the_ID());
+	if($kicked === true){
+		$_SESSION['message'] = array('type' => 'info', 'text' => $kickedName. " a bien été expulsé du salon");
+	}
+}elseif(isset($_GET['token']) && $_GET['token'] == $token){
+	ChatRoom::joinChatRoom(get_the_ID());	
+}elseif(isset($_GET['changeRoom']) && $_GET['changeRoom'] == true){
+	ChatRoom::changeRoom(get_the_ID());
+}elseif(!ChatRoom::isUserInRoom(get_the_ID())){
 	ChatRoom::selectBestRoom(get_the_ID());
 }else{
 	ChatRoom::joinChatRoom(get_the_ID());
 }
 
-$product = get_field('product', get_the_ID())[0];
-
-//404 if chat room not now
 $startDate = get_field('start_date', get_the_ID());
 $endDate   = get_field('end_date', get_the_ID());
 $today     = date('Y-m-d H:i:s');
 
+//404 if chat room not now
 if ($today > $endDate or $today < $startDate) {
     global $wp_query;
     $wp_query->set_404();
@@ -39,12 +67,7 @@ $description    = get_field('description', $product->ID);
 $original_title = get_field('original_title', $product->ID);
 $image = get_field('image', $product->ID);
 
-$userNote = 0;
-
-if($userId = get_current_user_id()){
-    $userNote = Utilisateur::getNotation($product->ID, $userId);
-}
-
+$userNote = Utilisateur::getNotation($product->ID, $userId);
 $averageNote = Utilisateur::getAverageNote($product->ID);
 
 get_header();
@@ -53,7 +76,7 @@ get_header();
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
-			<h1 class="title title_margin" >Salon : Titre (Auteur) - Nbr de participants</h1>
+			<h1 class="title title_margin" >Salon <?php echo get_field('room_number', get_the_ID())." : <a target='_blank' href='".get_permalink(get_page_by_title('Produit')).$product->ID."'>".$product->post_title."</a> (<a target='_blank'  href='".get_permalink(get_page_by_title('Auteur')).$author->ID."'>".$author->post_title."</a>)"; ?></h1>
 		</div>
 	</div>
 
@@ -73,12 +96,25 @@ get_header();
 	</div>
 <br>
 	<div class="row chatroom">
+		<?php if(isset($_SESSION['message'])){ ?>
+			<div class="alert alert-<?php echo $_SESSION['message']['type'] ?>">
+			  <?php echo $_SESSION['message']['text']; ?>
+			</div>	
+		<?php unset($_SESSION['message']);
+			} ?>
+		<div id='message'></div>
 		<div class='chat-box col-md-7'>
 			<?php
 				the_content();
 			?>
 		</div>
-
+		<?php if('administrator' == $user_role){ ?>
+		<div class='col-md-5'>
+			<h3>lien d'invitation</h3>
+			<p><?php echo get_permalink().'?token='.$token ?></p>
+		</div>
+		<?php } ?>
+		
 		<div class='col-md-5'>
 			<table class="table table-striped table-salon">
 				<thead>
@@ -87,25 +123,7 @@ get_header();
 			            <th>Action</th>
 			        </tr>
 			    </thead>
-			    <tbody>
-			    	<tr>
-			    		<td>Nom Prénom 1</td>
-			    		<td>Signaler | Contacter</td>
-			    	</tr>
-			    	<tr>
-			    		<td>Nom Prénom 1</td>
-			    		<td>Signaler | Contacter</td>
-			    	</tr>
-
-			    	<tr>
-			    		<td>Nom Prénom 1</td>
-			    		<td>Signaler | Contacter</td>
-			    	</tr>
-
-			    	<tr>
-			    		<td>Nom Prénom 1</td>
-			    		<td>Signaler | Contacter</td>
-			    	</tr>
+			    <tbody id='current-user-table'>
 			    </tbody>
 			</table>
 		</div>

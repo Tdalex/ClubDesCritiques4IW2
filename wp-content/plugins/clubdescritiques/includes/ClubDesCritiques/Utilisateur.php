@@ -32,15 +32,17 @@ class Utilisateur{
 		if(!$user){
 			$password  = wp_generate_password(8, false);
 			$user      = wp_create_user($request['email'], $password, $request['email']);
+			wp_update_user(array('ID' => $user->ID, 'first_name' => $request['firstname'], 'last_name' => $request['lastname']));
 			$object    = 'Bienvenue à Club Des Critiques';
 			$message   = 'Bienvenue à Club Des Critiques ' . $request['email'] . ', <br> Afin de valider votre compte, veuillez <a href="'. home_url() .'">vous connecter</a> avec ce mot de passe: <br><br> ' . $password . ' <br><br> il vous sera ensuite demandé de le modifier.<br><br><br> Cordialement, <br> Le club des critiques';
 			$headers[] = 'From: '. NO_REPLY;
 			wp_mail($request['email'], $object, $message, $headers);
 		}else{
-			return 'email deja utilise';
+			$_SESSION['message'] = array('type' => 'danger', 'text' => 'email deja utilise');
+			return false;
 		}
-		$_SESSION['login_msg'] = 'un email vous a ete envoye';
-		return self::redirect($_SERVER['REQUEST_URI']);
+		$_SESSION['message'] = array('type' => 'success', 'text' => 'un email vous a ete envoye');
+		return self::redirect(strtok($_SERVER["REQUEST_URI"],'?'));
 	}
 
 	public static function login($request){
@@ -64,15 +66,18 @@ class Utilisateur{
 						confirm password:<input type='password' name='newPasswordCheck'></input><br>
 						<button type='submit'>modifier  mot de passe</button>
 					</form>";
-					return $activate;
+					$_SESSION['activate'] = $activate;
+					return true;
 				}else{
-					return self::redirect($_SERVER['REQUEST_URI']);
+					return self::redirect(strtok($_SERVER["REQUEST_URI"],'?'));
 				}
 			}else{
-				return 'email ou mot de passe non valide';
+				$_SESSION['message'] = array('type' => 'danger', 'text' => 'email ou mot de passe non valide');
+				return false;
 			}
 		}else{
-			return 'email ou mot de passe non valide';
+			$_SESSION['message'] = array('type' => 'danger', 'text' => 'email ou mot de passe non valide');
+			return false;
 		}
 	}
 
@@ -81,26 +86,19 @@ class Utilisateur{
 		$user = wp_get_current_user();
 
 		if(strlen($request['newPassword'])<6){
-			echo 'Veuillez entrer un mot de passe plus long';
+			$_SESSION['message'] = array('type' => 'danger', 'text' => 'Veuillez entrer un mot de passe plus long');
 			$error = true;
 		}
 
 		if($request['newPassword'] != $request['newPasswordCheck']){
-			echo 'Veuillez valider la vérification de mot de passe';
+			$_SESSION['message'] = array('type' => 'danger', 'text' => 'Veuillez valider la vérification de mot de passe');
 			$error = true;
 		}
 
 		if($error){
-			$activate = "
-			<form action='' method='POST'>
-				<input type='hidden' name='type' value='activate'></input>
-				password:<input type='password' name='newPassword'></input><br>
-				confirm password:<input type='password' name='newPasswordCheck'></input><br>
-				<button type='submit'>modifier  mot de passe</button>
-			</form>";
-			return $activate;
+			return false;
 		}
-
+		unset($_SESSION['activate']);
 		wp_set_password($request['newPassword'], $user->ID);
 		//field 'activated'
 		update_field('field_5938214cbbae4', array("true"), 'user_'.$user->ID);
@@ -113,7 +111,7 @@ class Utilisateur{
 		wp_set_auth_cookie($user->ID);
 		do_action( 'wp_login', $user->user_login );
 
-		return self::redirect($_SERVER['REQUEST_URI']);
+		return self::redirect(strtok($_SERVER["REQUEST_URI"],'?'));
 
 	}
 
@@ -131,15 +129,12 @@ class Utilisateur{
 					$headers[] = 'From: '. NO_REPLY;
 					wp_mail($user->user_email , $object, $message, $headers);
 				}else{
-					echo 'Veuillez valider la vérification de mot de passe';
+					$_SESSION['message'] = array('type' => 'danger', 'text' => 'Veuillez valider la vérification de mot de passe');
 				}
 			}else{
-				echo 'Veuillez entrer un mot de passe plus long';
+				$_SESSION['message'] = array('type' => 'danger', 'text' => 'Veuillez entrer un mot de passe plus long');
 			}
 		}
-		// if(!empty($_FILES['photo']){
-			// update_field('photo', $_FILES['photo'], 'user_'.$user->ID)
-		// }
 		unset($request['password']);
 		unset($request['passwordCheck']);
 		$request = array_filter($request);
@@ -169,7 +164,7 @@ class Utilisateur{
 			$idComment = wp_insert_post($post, $user_id);
 			update_field('field_593a461c598a5', $idProduct, $idComment);
 		}
-		return self::redirect($_SERVER['REQUEST_URI']);
+		return self::redirect(strtok($_SERVER["REQUEST_URI"],'?'));
 	}
 
 	public static function getProductComments($idProduct){
@@ -186,17 +181,24 @@ class Utilisateur{
 	public static function getUserComment($idProduct, $user_id = null){
 		if($user_id === null)
 			$user_id = get_current_user_id();
-
+		$comment = array();
+		
 		$args = array(
 			'posts_per_page'   => -1,
 			'meta_value'       => "a:1:{i:0;s:2:\"".$idProduct."\";}",
 			'post_type'        => 'commentaire',
 			'post_status'      => 'publish',
-			'post_author'	   => $user_id
 		);
-		$comment = get_posts($args);
-		if(isset($comment[0])){
-			return $comment[0];
+		
+		foreach( get_posts($args) as $c){
+			if($c->post_author == $user_id){
+				$comment = $c;
+				break;
+			}
+		}
+		
+		if(!empty($comment)){
+			return $comment;
 		}
 		return array();
 	}
@@ -206,9 +208,14 @@ class Utilisateur{
 			$userId = get_current_user_id();
 
 		$comment = self::getUserComment($productId, $userId);
-		if(is_object($comment))
+		if(is_object($comment)){
 			wp_delete_post($comment->ID);
-		return self::redirect($_SERVER['REQUEST_URI']);
+			$_SESSION['message'] = array('type' => 'success', 'text' => 'Votre commentaire a bien été supprimé');
+		}else{
+			$_SESSION['message'] = array('type' => 'danger', 'text' => 'une erreur est survenue');
+		}
+		
+		return self::redirect(strtok($_SERVER["REQUEST_URI"],'?'));
 	}
 
 	public static function getNotation($idProduct, $user_id){
@@ -223,7 +230,7 @@ class Utilisateur{
 		if(!empty($notation)){
 			return get_field('note', $notation[0]->ID);
 		}else{
-			return 'aucune note donnée';
+			return false;
 		}
 	}
 
@@ -295,6 +302,8 @@ class Utilisateur{
 		$friendContact = get_field('contact', 'user_'.$idContact) ? get_field('contact', 'user_'.$idContact) : array();
 		$myContact = get_field('contact', 'user_'.$user_id) ? get_field('contact', 'user_'.$user_id) : array();
 		$already = false;
+		$contactUser = get_user_by('id',$idContact);
+		$contactName = strtoupper($contactUser->user_lastname)." ".ucfirst(strtolower ($contactUser->user_firstname));
 		if($type == 'add'){
 			foreach($friendContact as $fc){
 				$friendContactTemp[] = $fc['ID'];
@@ -318,6 +327,7 @@ class Utilisateur{
 				$myContactTemp[] = $idContact;
 				update_field('field_5954b2cf2206c', $myContactTemp , 'user_'.$user_id);
 			}
+			$_SESSION['message'] = array('type' => 'success', 'text' => $contactName.' a bien été ajouté à votre liste des contacts');
 		}else{
 			foreach($friendContact as $key => $fc){
 				if($user_id != $fc['ID']){
@@ -331,8 +341,9 @@ class Utilisateur{
 				}
 			}
 			update_field('field_5954b2cf2206c', $myContactTemp , 'user_'.$user_id);
+			$_SESSION['message'] = array('type' => 'success', 'text' => $contactName.' a bien été supprimé à votre liste des contacts');
 		}
-		return self::redirect($_SERVER['REQUEST_URI']);
+		return self::redirect(strtok($_SERVER["REQUEST_URI"],'?'));
 	}
 
 	public static function getProductExchange($idProduct){
@@ -412,7 +423,8 @@ class Utilisateur{
 				wp_set_object_terms( $idExchange, $term->term_id, 'exchange_type');
 			}
 		}
-		return self::redirect($_SERVER['REQUEST_URI']);
+		$_SESSION['message'] = array('type' => 'success', 'text' => "L'oeuvre a été ajouté à votre liste d'echange");
+		return self::redirect(strtok($_SERVER["REQUEST_URI"],'?'));
 	}
 
 	public static function deleteExchange($productId, $userId = null){
@@ -422,8 +434,9 @@ class Utilisateur{
 		$exchange = self::getUserExchange($productId);
 		if(is_object($exchange))
 			wp_delete_post($exchange->ID);
-
-		return self::redirect($_SERVER['REQUEST_URI']);
+		
+		$_SESSION['message'] = array('type' => 'success', 'text' => "L'oeuvre a été enlevé de votre liste d'echange");
+		return self::redirect(strtok($_SERVER["REQUEST_URI"],'?'));
 	}
 
 }

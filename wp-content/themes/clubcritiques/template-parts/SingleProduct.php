@@ -86,7 +86,12 @@ get_header();
 
 <div class="container">
 	<div class="row">
-
+	<?php if(isset($_SESSION['message'])){ ?>
+		<div class="alert alert-<?php echo $_SESSION['message']['type'] ?>">
+		  <?php echo $_SESSION['message']['text']; ?>
+		</div>	
+	<?php unset($_SESSION['message']);
+		} ?>
 		<div class="col-md-3">
 		<?php if(!$image){ ?> 
 			<img class="img-responsive img-livre" style='height:300px; length:300px;' src="https://pictures.abebooks.com/isbn/9782070543588-fr.jpg"> 
@@ -182,10 +187,12 @@ get_header();
 	<div class="row">
 		<?php foreach($comments as $comment){ ?>
 			<?php $commentAuthor = get_user_by('ID', $comment->post_author); ?>
-			<div class="col-md-3 comments col-xs-6">
-				<h2><a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$commentAuthor->ID; ?>'><?php echo $commentAuthor->user_firstname .' '. $commentAuthor->user_lastname; ?></a> <span><?php echo Utilisateur::getNotation($product_ID, $commentAuthor->ID); ?>/5</span></h2>
-				<?php  echo $comment->post_content; ?>
-			</div>
+			<div class="row">
+				<div class="col-md-3 comments col-xs-6">
+					<h2><a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$commentAuthor->ID; ?>'><?php echo $commentAuthor->user_firstname .' '. $commentAuthor->user_lastname; ?></a> <span><?php echo Utilisateur::getNotation($product_ID, $commentAuthor->ID); ?>/5</span></h2>
+					<?php  echo $comment->post_content; ?>
+				</div>
+			</div><br>
 		<?php } ?>
 	</div>
 	
