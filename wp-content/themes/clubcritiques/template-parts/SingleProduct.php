@@ -55,8 +55,11 @@ $deathdate = date($deathdate);
 
 $userNote = 0;
 
+$userExchange = array();
 if($userId = get_current_user_id()){
     $userNote = Utilisateur::getNotation($product_ID, $userId);
+	$userExchange = Utilisateur::getUserExchange($product_ID, $userId);
+	$exchangeType = wp_get_post_terms($userExchange->ID, 'exchange_type')[0]->slug;
 }
 
 $comments    = Utilisateur::getProductComments($product_ID);
@@ -103,12 +106,18 @@ get_header();
 				</div>
 				
 				<div class="row btn-echanges">
-				<?php if(is_user_logged_in()){ ?>
+					<?php if(is_user_logged_in()){ ?>
 						<div class="col-md-12">
 							<form method='POST' action=''>
-								<button type='submit' class="btn" value='give' name='type'>Donner</button>
-								<button type='submit' class="btn" value='take' name='type'>Recevoir</button>
-								<button type='submit' class="btn" value='deleteExchange' name='type'>Annuler</button>
+								<?php if(empty($userExchange) || $exchangeType == 'recevoir'){ ?>
+									<button type='submit' class="btn" value='give' name='type'>Donner</button>
+								<?php } ?>
+								<?php if(empty($userExchange) || $exchangeType == 'donner'){ ?>
+									<button type='submit' class="btn" value='take' name='type'>Recevoir</button>
+								<?php } ?>
+								<?php if(!empty($userExchange)){ ?>
+									<button type='submit' class="btn" value='deleteExchange' name='type'>Annuler</button>
+								<?php } ?>
 							</form>
 						</div>
 					<?php } ?>
