@@ -102,13 +102,18 @@ $formats = get_terms( array(
 		<div class="col-sm-8">
 		<?php foreach($products as $product){ ?>
 			<div class="col-xs-6 col-lg-4">
+				<a href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>">
 				<?php if(!get_field('image', $product->ID)){ ?> 
 					<img src="https://pictures.abebooks.com/isbn/9782070543588-fr.jpg"> 
                 <?php }else{ ?>
-					<img src="<?php echo get_field('image', $product->ID); ?>"></img>
+					<img src="<?php echo get_field('image', $product->ID); ?>">
 				<?php } ?>
+				</img></a>
 				<span class="title_book"><?php echo $product->post_title; ?></span>
-				<span class="author_book"><?php echo get_field('author',$product->ID)[0]->post_title; ?></span><br>
+				
+				<a href="<?php echo get_permalink(get_page_by_title('Auteur')).get_field('author',$product->ID)[0]->ID; ?>">
+					<span class="author_book"><?php echo get_field('author',$product->ID)[0]->post_title; ?></span>
+				</a><br>
 				<?php  $averageNote = Utilisateur::getAverageNote($product->ID);
 				if ( $averageNote['total'] > 0){ ?>
 					<span class="notation_book"><?php echo $averageNote['average']; ?>/5</span>

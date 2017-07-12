@@ -70,7 +70,8 @@ get_header();
 			<ul>
 				<?php
 				foreach(Bibliotheque::getAuthorBiblio($author_ID) as $biblio)
-				{ ?>
+				{ 
+				$image = get_field('image', $biblio->ID); ?>
 				<li class="row single_book col-md-9">
 
 					<div class="col-md-3">
@@ -78,7 +79,7 @@ get_header();
 							<?php if(!$image){ ?> 
 								<img class="img-responsive img-livre" src="https://pictures.abebooks.com/isbn/9782070543588-fr.jpg"> 
 							<?php }else{ ?>
-								<img class="img-responsive img-livre" src="<?php echo get_field('image', $sp->ID); ?>"></img>
+								<img class="img-responsive img-livre" src="<?php echo $image ?>"></img>
 							<?php } ?>
 					</div>
 					<div class="col-md-9">
@@ -88,7 +89,7 @@ get_header();
 						</a>
 							<div class="row description">
 							<p>
-								[description] Retrace les événement et les coulisses de l'Anschluss lorsque la Wehrmacht entre triomphalement en Autriche et s'interroge sur les fondements des premiers... <a href='<?php echo get_permalink(get_page_by_title('Produit')).$biblio->ID; ?>'>[lire la suite]</a>
+								<?php echo get_field('description', $biblio->ID); ?>
 							</p>
 							</div>
 					</div>
