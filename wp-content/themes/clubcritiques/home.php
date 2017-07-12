@@ -27,13 +27,90 @@ $nextChat = ChatRoom::getNextChat();
 get_header(); ?>
 
 <section>
+
 <div class="hero">
             <h1 class="page-title">La puissance du bouche à oreille</h1>
-            <p class="lead blog-description"><?php echo get_the_content() ?><p>
-            <div class="btn btn-primary">Learn more about us</div>
-            <div class="btn btn-primary">Contact us</div>
-            </div>
+            <h2 class="lead blog-description"><?php echo get_the_content() ?><h2>
+            <div class="container">
+
+            <?php if(!is_user_logged_in()){ ?>
+
+            <div class="col-xs-6 col-sm-6">
+
+	<form action="" method="POST" class="login">
+	<p>Connectez vous</p>
+		 <input type='hidden' name='type' value='login'></input>
+		email:<input type='text' name='email' placeholder="email"></input><br>
+		password:<input type='password' name='password' placeholder="mot de passe"></input><br>
+		<button type='submit'>se connecter</button>
+	</form>
+		</div>
+	
+		<div class="col-xs-6 col-sm-6">
+		<p>Inscrivez vous</p>
+	<form action="" method="POST">
+		<input type='hidden' name='type' value='register'></input>
+		Email:<input required='required' type='text' name='email' placeholder="email"></input><br>
+		Prénom:<input required='required' type='text' name='firstname' placeholder="prenom"></input><br>
+		Nom de famille:<input required='required' type='text' name='lastname' placeholder="nom"></input><br>
+		<button type='submit'>S'inscrire</button>
+	</form>
+	</div>
+	
+<?php } else { ?>
+		<form action="" method="POST" class="logout">
+		<input type='hidden' name='type' value='logout'></input>
+		<button type='submit'>se deconnecter</button>
+	</form>	
+<?php } ?>
+
+</div> <!-- Container -->
+       </div>
 </section>
+
+<section>
+
+<div class="more_info">
+        <div class="container">
+        	<div class="row">
+        		<ul class="card">
+			<li class="hint-column hint-action">
+				<span class="hint-action-icon discover"></span>
+				<span class="hint-action-title">Découvrez</span>
+				<p class="hint-action-description">
+					Nous organisons votre bouche à oreille culturel. Découvrez des livres qui correspondent à vos goûts.
+				</p>
+			</li>
+		</ul>
+
+		<ul class="card">
+			<li class="hint-column hint-action">
+				<span class="hint-action-icon rate"></span>
+				<span class="hint-action-title">NOTEZ</span>
+				<p class="hint-action-description">
+					Evaluez les livres que vous avez lus. Classez-les selon vos critères ou donnez votre avis détaillé dans une critique.
+				</p>
+			</li>
+		</ul>
+
+		<ul class="card">
+			<li class="hint-column hint-action">
+				<span class="hint-action-icon share"></span>
+				<span class="hint-action-title">PARTAGEZ</span>
+				<p class="hint-action-description">
+					Faites découvrir vos coups de coeur et vos coups de gueule à vos amis, conseillez leur ce qu'ils pourront aimer.
+
+
+				</p>
+			</li>
+		</ul>
+        	</div>
+        </div>    
+</div>
+
+</section>
+
+
     <div class="container" id="page">
 		<?php if(isset($_SESSION['message'])){ ?>
 			<div class="alert alert-<?php echo $_SESSION['message']['type'] ?>">
@@ -43,7 +120,7 @@ get_header(); ?>
 			} ?>
         <div class="row row-offcanvas row-offcanvas-right">
 
-            <div class="col-xs-12 col-sm-9">
+            <div class="col-xs-12 col-sm-12">
 
 
                 <div class="chatHeader">
@@ -72,7 +149,7 @@ get_header(); ?>
                 <div class="row">
                     <h2 class="blog-post-title">Livres du moment</h2>
 					<?php foreach($products as $product){ ?>
-						<div class="col-xs-6 col-lg-4">
+						<div class="col-xs-6 col-lg-2">
 							<?php if(!get_field('image', $product->ID)){ ?>
 								<a href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>"><img src="https://pictures.abebooks.com/isbn/9782070543588-fr.jpg"></img></a>
 							<?php }else{ ?>
@@ -85,6 +162,8 @@ get_header(); ?>
                 </div><!--/row-->
             </div><!--/.col-xs-12.col-sm-9-->
 
+
+<!--
             <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
                 <div class="list-group">
                     <?php include(get_stylesheet_directory().'/template-parts/blocs/Sidebar.php'); ?>
@@ -94,7 +173,7 @@ get_header(); ?>
 
         <div class="contact-section">
 			<h2>Contact Us</h2>
-			<p>Feel free to shout us by feeling the contact form or visiting our social network sites like Fackebook,Whatsapp,Twitter.</p>
+			<p class="description_contact">Feel free to shout us by feeling the contact form or visiting our social network sites like Fackebook,Whatsapp,Twitter.</p>
 			<div class="row">
 				<div class="col-md-8 col-md-offset-2">
 					<form class="form-horizontal">
