@@ -135,21 +135,8 @@ get_header();
 					</div>
 
 					<div class="row">
-						<div class="rating"><!--
-						   --><a href="#5" title="Donner 5 étoiles">★</a><!--
-						   --><a href="#4" title="Donner 4 étoiles">★</a><!--
-						   --><a href="#3" title="Donner 3 étoiles">★</a><!--
-						   --><a href="#2" title="Donner 2 étoiles">★</a><!--
-						   --><a href="#1" title="Donner 1 étoile">★</a>
-						</div>
-						
-					</div>
-
-					<div class="row">
 						<?php
-						$note = 4;
-
-						switch ($note) {
+						switch ($averageNote['average']) {
 							case '1':
 								echo "<span class='star_rating'>
 										<span class='note_star'>★</span>★★★★
@@ -183,9 +170,13 @@ get_header();
 								break;
 						}
 
-
-						?>
-						<span><?php echo $averageNote['total']; ?> notes</span>
+						if($averageNote['total'] > 1){
+							echo "<span>".$averageNote['total']." notes</span>";
+						}
+						else{
+							echo "<span>".$averageNote['total']." note</span>";
+						}?>
+						
 					</div>
 
 					<div class="row description">
@@ -227,9 +218,9 @@ get_header();
 				<div class="row div_comment">
 					<div class="col-md-11 comments">
 						<div class="col-md-2 ">
-			              <a href="#">
+			              <a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$commentAuthor->ID; ?>'>
 							<?php if(!get_field('image', $sp->ID)){ ?> 
-								<img src="<?php echo get_parent_theme_file_uri( '/assets/images/avatar_defaut.png' ); ?>" class="avatar img-responsive" alt="avatar" />
+								<img src="<?php echo get_parent_theme_file_uri( '/assets/images/avatar_defaut.png' ); ?>" class="avatar_sp img-responsive" alt="avatar" />
 							<?php }else{ ?>
 								<img class="img-responsive"  src="<?php echo get_field('image', $sp->ID); ?>"></img>
 							<?php } ?>
@@ -296,7 +287,7 @@ get_header();
 		<div class="container">
 			<div class="col-md-2">
 				<?php if(!get_field('image', $sp->ID)){ ?> 
-							<img src="<?php echo get_parent_theme_file_uri( '/assets/images/avatar_defaut.png' ); ?>" class="avatar img-responsive" alt="avatar" />
+							<img src="<?php echo get_parent_theme_file_uri( '/assets/images/avatar_defaut.png' ); ?>" class="avatar_sp img-responsive" alt="avatar" />
 						<?php }else{ ?>
 							<img class="img-responsive"  src="<?php echo get_field('image', $sp->ID); ?>"></img>
 				<?php } ?>
@@ -306,71 +297,93 @@ get_header();
 			
 			<div class="row">
 				<form method='POST' action=''>
-					Note: <select name='userNote' id="userNote">
-						<?php for($i=0;$i<=5;$i++){ ?>
-							<?php if($i==$userNote){ ?>
-								<option selected value="<?php echo $i; ?>"><?php echo $i; ?></option> 
-							<?php }else{ ?>
-								<option value="<?php echo $i; ?>"><?php echo $i; ?></option> 
-							<?php } ?>
-						<?php } ?>
-					</select>/5
-					<?php if( Utilisateur::getUserComment($product_ID)){
-					$userComment = Utilisateur::getUserComment($product_ID); ?>
-					<textarea name='comment' class="send_commentaire" placeholder="Ajouter un commentaire..."><?php echo strip_tags($userComment->post_content); ?></textarea>
+			    <div class="rate">
+			        <input type="radio" id="star5" name="userNote" value="5" <?php if(Utilisateur::getNotation($product_ID, $commentAuthor->ID)==5){echo"checked";}?>/><label for="star5" title="text">5 stars</label>
+			        <input type="radio" id="star4" name="userNote" value="4" <?php if(Utilisateur::getNotation($product_ID, $commentAuthor->ID)==4){echo"checked";}?>/><label for="star4" title="text">4 stars</label>
+			        <input type="radio" id="star3" name="userNote" value="3" <?php if(Utilisateur::getNotation($product_ID, $commentAuthor->ID)==3){echo"checked";}?>/><label for="star3" title="text">3 stars</label>
+			        <input type="radio" id="star2" name="userNote" value="2" <?php if(Utilisateur::getNotation($product_ID, $commentAuthor->ID)==2){echo"checked";}?>/><label for="star2" title="text">2 stars</label>
+			        <input type="radio" id="star1" name="userNote" value="1" <?php if(Utilisateur::getNotation($product_ID, $commentAuthor->ID)==1){echo"checked";}?>/><label for="star1" title="text">1 star</label>
+			    </div>
+
+				<?php if( Utilisateur::getUserComment($product_ID)){
+				$userComment = Utilisateur::getUserComment($product_ID); ?>
+				<textarea name='comment' class="send_commentaire" placeholder="Ajouter un commentaire..."><?php echo strip_tags($userComment->post_content); ?></textarea>
+				
+				<div class="row">
 					<div class="col-md-2 col-md-offset-8 btn_submit">
 						<button type='submit' value='deleteComment' class="btn" name='type'>supprimer</button>
 					</div>
 					<?php }else{ ?>
 					<textarea name='comment'></textarea>
 					<?php } ?>
-					<div class="col-md-2">
+					<div class="col-md-2 btn_submit">
 						<button type='submit' value='comment' class="btn" name='type'>commenter</button>
 					</div>
-					
-					
+				</div>
 				</form>
 			</div>
 			<?php } ?>				
 
 			</div>
-
 		</div>
 	</div>
-
+</div>
+	
 		
-
-
-	<div class="container">
-		<?php if (isset($exchanges['give']) || isset($exchanges['take'])){ ?>
-		<h2>Ces personnes souhaitent echanger</h2>
-		<?php if(isset($exchanges['take'])){ ?>
-			<h3>Recevoir</h3>
-			<div class="row">
-				<?php foreach($exchanges['take'] as $exchange){ ?>
-					<?php $exchangeAuthor = get_user_by('ID', $exchange->post_author); ?>
-					<div class="col-md-3 comments col-xs-6">
-						<h2><a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$exchangeAuthor->ID; ?>'><?php echo $exchangeAuthor->user_firstname .' '. $exchangeAuthor->user_lastname; ?></a></h2>
+<?php if (isset($exchanges['give']) || isset($exchanges['take'])){ ?>
+<div class="bg_page row" id="troc">
+	<h1 class="h1_troc">L'ESPACE TROC</h1>
+	<p class="col-md-10 col-md-offset-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores officia aut vel facilis ducimus doloremque harum, dicta laborum repellat exercitationem id adipisci culpa, commodi quisquam quis nobis fuga libero eligendi!
+	</p>
+</div>
+<div class="container">
+	<?php if(isset($exchanges['take'])){ ?>
+		<h2 class="troc_h2 col-md-5 col-md-offset-3">Ces utilisateurs souhaitent recevoir ce livre :</h2>
+			<?php foreach($exchanges['take'] as $exchange){ ?>
+				<div class="user_troc">
+					<div class="col-md-2 col-md-offset-3 img_troc">
+		              <a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$commentAuthor->ID; ?>'>
+						<?php if(!get_field('image', $sp->ID)){ ?> 
+							<img src="<?php echo get_parent_theme_file_uri( '/assets/images/avatar_defaut.png' ); ?>" 
+							class="avatar_sp avatar_echange img-responsive" alt="avatar" />
+						<?php }else{ ?>
+							<img class="img-responsive"  src="<?php echo get_field('image', $sp->ID); ?>"></img>
+						<?php } ?>
+		              </a>
 					</div>
-				<?php } ?>
-			</div>
-		<?php }?>
-		<?php if (isset($exchanges['give'])){ ?>
-			<h3>Donner</h3>
-			<div class="row">
-				<?php foreach($exchanges['give'] as $exchange){ ?>
-					<?php $exchangeAuthor = get_user_by('ID', $exchange->post_author); ?>
-					<div class="col-md-3 comments col-xs-6">
-						<h2><a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$exchangeAuthor->ID; ?>'><?php echo $exchangeAuthor->user_firstname .' '. $exchangeAuthor->user_lastname; ?></a></h2>
+					<div class="col-md-3 name_troc">
+						<?php $exchangeAuthor = get_user_by('ID', $exchange->post_author); ?>
+							<h2><a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$exchangeAuthor->ID; ?>'>
+								<?php echo ucfirst(strtolower($exchangeAuthor->user_firstname)) .' '. ucfirst(strtolower($exchangeAuthor->user_lastname)); ?>
+								</a></h2>	
 					</div>
-				<?php } ?>
-			</div>
-		<?php }}?>
-	</div>
+				</div>
+			<?php } ?>
+	<?php }?>
 
-	</div>	
-
-		
+	<?php if (isset($exchanges['give'])){ ?>
+		<h2 class="troc_h2 col-md-5 col-md-offset-3">Ces utilisateurs souhaitent échanger ce livre :</h2>
+			<?php foreach($exchanges['give'] as $exchange){ ?>
+				<?php $exchangeAuthor = get_user_by('ID', $exchange->post_author); ?>
+				<div class="user_troc">
+					<div class="col-md-2 col-md-offset-3 img_troc">
+						<a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$exchangeAuthor->ID; ?>'>
+						<?php if(!get_field('image', $sp->ID)){ ?> 
+							<img src="<?php echo get_parent_theme_file_uri( '/assets/images/avatar_defaut.png' ); ?>" 
+							class="avatar_sp avatar_echange img-responsive" alt="avatar" />
+						<?php }else{ ?>
+							<img class="img-responsive"  src="<?php echo get_field('image', $sp->ID); ?>"></img>
+						<?php } ?>							
+						</a>
+					</div>
+					<div class="col-md-3 name_troc">
+						<h2><a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$exchangeAuthor->ID; ?>'>
+							<?php echo $exchangeAuthor->user_firstname .' '. $exchangeAuthor->user_lastname; ?>
+						</a></h2>
+					</div>
+				</div>
+			<?php } ?>
+<?php }}?>
 </div>
 
 <?php
