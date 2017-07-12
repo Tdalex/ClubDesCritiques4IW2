@@ -99,7 +99,7 @@ get_header();
 				<div class="col-md-3">
 				<div class="row">
 					<?php if(!$image){ ?> 
-						<img class="img-responsive img-livre" src="https://pictures.abebooks.com/isbn/9782070543588-fr.jpg"> 
+						<img class="img-responsive img-livre" src="<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>"> 
 					<?php }else{ ?>
 						<img class="img-responsive img-livre" src="<?php echo $image; ?>"></img>
 					<?php } ?>
@@ -142,10 +142,54 @@ get_header();
 						   --><a href="#2" title="Donner 2 étoiles">★</a><!--
 						   --><a href="#1" title="Donner 1 étoile">★</a>
 						</div>
-						<span><?php echo $averageNote['total']; ?> notations</span>
+						
+					</div>
+
+					<div class="row">
+						<?php
+						$note = 4;
+
+						switch ($note) {
+							case '1':
+								echo "<span class='star_rating'>
+										<span class='note_star'>★</span>★★★★
+									  </span>";
+								break;
+							case '2':
+								echo "<span class='star_rating'>
+										<span class='note_star'>★★</span>★★★
+									  </span>";
+								break;
+							case '3':
+								echo "<span class='star_rating'>
+										<span class='note_star'>★★★</span>★★
+									  </span>";
+								break;
+							case '4':
+								echo "<span class='star_rating'>
+										<span class='note_star'>★★★★</span>★
+									  </span>";
+								break;
+							case '5':
+								echo "<span class='star_rating'>
+										<span class='note_star'>★★★★★</span>
+									  </span>";
+								break;
+							
+							default:
+								echo "<span class='star_rating'>
+										★★★★★
+									  </span>";
+								break;
+						}
+
+
+						?>
+						<span><?php echo $averageNote['total']; ?> notes</span>
 					</div>
 
 					<div class="row description">
+					<h2>Résumé:</h2>
 					<?php echo $description; ?>
 					</div>
 				</div>
@@ -162,7 +206,7 @@ get_header();
 			<div class="col-md-3 suggestions col-xs-6">
 				<a href="<?php echo get_permalink(get_page_by_title('Produit')).$sp->ID; ?>">
 					<?php if(!get_field('image', $sp->ID)){ ?> 
-						<img class="img-responsive"  src="https://pictures.abebooks.com/isbn/9782070543588-fr.jpg"> 
+						<img class="img-responsive"  src="<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>"> 
 					<?php }else{ ?>
 						<img class="img-responsive"  src="<?php echo get_field('image', $sp->ID); ?>"></img>
 					<?php } ?>
@@ -173,48 +217,131 @@ get_header();
 		<?php } ?>
 		</div>
 		
-		<?php if(is_user_logged_in()){ ?>
-		
-		<div class="row">
-			<form method='POST' action=''>
-				Note: <select name='userNote' id="userNote">
-					<?php for($i=0;$i<=5;$i++){ ?>
-						<?php if($i==$userNote){ ?>
-							<option selected value="<?php echo $i; ?>"><?php echo $i; ?></option> 
-						<?php }else{ ?>
-							<option value="<?php echo $i; ?>"><?php echo $i; ?></option> 
-						<?php } ?>
-					<?php } ?>
-				</select>/5<br>
-				Commentaire: 
-				<?php if( Utilisateur::getUserComment($product_ID)){
-				$userComment = Utilisateur::getUserComment($product_ID); ?>
-				<textarea name='comment'><?php echo strip_tags($userComment->post_content); ?></textarea>
-				<button type='submit' value='deleteComment' name='type'>supprimer</button>
-				<?php }else{ ?>
-				<textarea name='comment'></textarea>
-				<?php } ?>
-				<button type='submit' value='comment' name='type'>commenter</button>
-				
-			</form>
-		</div>
-		<?php } ?>
-		<br>
-		<h2>Commentaires</h2>
-		<div class="row">
+
+	<div class="container">
+		<h2 class="cat_h2">Commentaires</h2>
+
+		<div class="container">
 			<?php foreach($comments as $comment){ ?>
 				<?php $commentAuthor = get_user_by('ID', $comment->post_author); ?>
-				<div class="row">
-					<div class="col-md-3 comments col-xs-6">
-						<h2><a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$commentAuthor->ID; ?>'><?php echo $commentAuthor->user_firstname .' '. $commentAuthor->user_lastname; ?></a> <span><?php echo Utilisateur::getNotation($product_ID, $commentAuthor->ID); ?>/5</span></h2>
-						<?php  echo $comment->post_content; ?>
+				<div class="row div_comment">
+					<div class="col-md-11 comments">
+						<div class="col-md-2 ">
+			              <a href="#">
+							<?php if(!get_field('image', $sp->ID)){ ?> 
+								<img src="<?php echo get_parent_theme_file_uri( '/assets/images/avatar_defaut.png' ); ?>" class="avatar img-responsive" alt="avatar" />
+							<?php }else{ ?>
+								<img class="img-responsive"  src="<?php echo get_field('image', $sp->ID); ?>"></img>
+							<?php } ?>
+			              </a>
+						</div>
+						
+						<div class="col-md-10">
+							<div class="row">
+								<h2>
+									<div class="row">
+										<a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$commentAuthor->ID; ?>'><?php echo ucfirst(strtolower($commentAuthor->user_firstname)) .' '. ucfirst(strtolower($commentAuthor->user_lastname)); ?>
+										</a> 
+										<?php
+
+										switch (Utilisateur::getNotation($product_ID, $commentAuthor->ID)) {
+											case '1':
+												echo "<span class='star_rating_small'>
+														<span class='note_star'>★</span>★★★★
+													  </span>";
+												break;
+											case '2':
+												echo "<span class='star_rating_small'>
+														<span class='note_star'>★★</span>★★★
+													  </span>";
+												break;
+											case '3':
+												echo "<span class='star_rating_small'>
+														<span class='note_star'>★★★</span>★★
+													  </span>";
+												break;
+											case '4':
+												echo "<span class='star_rating_small'>
+														<span class='note_star'>★★★★</span>★
+													  </span>";
+												break;
+											case '5':
+												echo "<span class='star_rating_small'>
+														<span class='note_star'>★★★★★</span>
+													  </span>";
+												break;
+											
+											default:
+												echo "<span class='star_rating_small'>
+														★★★★★
+													  </span>";
+												break;
+										}
+										?>
+									</div>
+								</h2>
+							</div>
+							<div class="row commentaire_block">
+								<?php  echo $comment->post_content; ?>
+							</div>
+							
+						</div>
+						
 					</div>
-				</div><br>
+				</div>
 			<?php } ?>
 		</div>
+
+
+		<div class="container">
+			<div class="col-md-2">
+				<?php if(!get_field('image', $sp->ID)){ ?> 
+							<img src="<?php echo get_parent_theme_file_uri( '/assets/images/avatar_defaut.png' ); ?>" class="avatar img-responsive" alt="avatar" />
+						<?php }else{ ?>
+							<img class="img-responsive"  src="<?php echo get_field('image', $sp->ID); ?>"></img>
+				<?php } ?>
+			</div>
+			<div class="col-md-9">
+			<?php if(is_user_logged_in()){ ?>
+			
+			<div class="row">
+				<form method='POST' action=''>
+					Note: <select name='userNote' id="userNote">
+						<?php for($i=0;$i<=5;$i++){ ?>
+							<?php if($i==$userNote){ ?>
+								<option selected value="<?php echo $i; ?>"><?php echo $i; ?></option> 
+							<?php }else{ ?>
+								<option value="<?php echo $i; ?>"><?php echo $i; ?></option> 
+							<?php } ?>
+						<?php } ?>
+					</select>/5
+					<?php if( Utilisateur::getUserComment($product_ID)){
+					$userComment = Utilisateur::getUserComment($product_ID); ?>
+					<textarea name='comment' class="send_commentaire" placeholder="Ajouter un commentaire..."><?php echo strip_tags($userComment->post_content); ?></textarea>
+					<div class="col-md-2 col-md-offset-8 btn_submit">
+						<button type='submit' value='deleteComment' class="btn" name='type'>supprimer</button>
+					</div>
+					<?php }else{ ?>
+					<textarea name='comment'></textarea>
+					<?php } ?>
+					<div class="col-md-2">
+						<button type='submit' value='comment' class="btn" name='type'>commenter</button>
+					</div>
+					
+					
+				</form>
+			</div>
+			<?php } ?>				
+
+			</div>
+
+		</div>
+	</div>
+
 		
-		
-		<br>
+
+
+	<div class="container">
 		<?php if (isset($exchanges['give']) || isset($exchanges['take'])){ ?>
 		<h2>Ces personnes souhaitent echanger</h2>
 		<?php if(isset($exchanges['take'])){ ?>
@@ -240,6 +367,10 @@ get_header();
 			</div>
 		<?php }}?>
 	</div>
+
+	</div>	
+
+		
 </div>
 
 <?php

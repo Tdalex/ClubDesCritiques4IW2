@@ -52,7 +52,7 @@ Styles based on Normalize v5.0.0 @link https://github.com/necolas/normalize.css
 --------------------------------------------------------------*/
 
 html {
-	font-family: sans-serif;
+	font-family: 'Open Sans', sans-serif;
 	line-height: 1.15;
 	-ms-text-size-adjust: 100%;
 	-webkit-text-size-adjust: 100%;
@@ -4185,13 +4185,25 @@ object {
    cursor: pointer;
 }
 
-.description p{
-	font-size: 14px;
+.description {
+	background-color: #CEE8DF;
+	padding: 10px;
+}
+
+.description h2{
+	font-weight: bold !important;
+	padding-bottom: 2px;
+	border-bottom: 1px solid #ccc;
+}
+
+p{
+	font-size: 15px;
 	text-align: justify;
+	color: #4F4F4F;
 }
 
 .author {
-	font-size: 12px;
+	font-size: 18px;
 	font-style: italic;
 }
 
@@ -4360,7 +4372,13 @@ object {
 }
 
 button {
-	background-color: #FF792F;
+	background-color: #FF5B2B;
+	box-shadow: 0px 3px 0px 0px #CD6509;
+	color: #fff;
+}
+
+button:hover{
+	background-color: #FF983C;
 }
 
 .header_page {
@@ -4371,8 +4389,65 @@ button {
 
 .btn-echanges {
 	margin-top: 10%;
+	text-align: center;
 }
 
-.btn-echanges .btn {
-	border-radius: 20px;
+
+.star_rating {
+	
+	font-size: 3em;
+	color: #aaa;
+}
+
+.note_star {
+	color: orange;
+}
+
+
+.avatar { 
+	width: 80px; 
+	height: 80px; 
+	border: 3px solid #70BEB1;
+	border-radius: 50%;
+	margin: 5px; 
+	background-color: red;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+}
+
+.star_rating_small {
+	font-size: 25px;
+	color: #aaa;
+}
+
+.commentaire_block {
+	background-color: #CEE8DF;
+	border: none;
+	border-radius: 4px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, .15);
+	color: #25283C;
+	font-family: inherit;
+	font-size: 14px;
+	padding: 15px 20px;
+	outline: none;
+}
+
+.div_comment {
+	margin-bottom: 3%;
+}
+
+.send_commentaire {
+	background-color: white;
+	border: 1px solid #bbb;
+	border-radius: 4px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, .15);
+	color: #25283C;
+	font-family: inherit;
+	font-size: 14px;
+	padding: 15px 20px;
+	outline: none;
+	min-height: 150px;
+}
+
+.btn_submit {
+	margin: auto;
 }
