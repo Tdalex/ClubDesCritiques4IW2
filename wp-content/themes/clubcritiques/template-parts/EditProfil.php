@@ -37,7 +37,7 @@ get_header();
 					class="avatar_sp img-responsive" alt="avatar" />
 				<?php }else{ ?>
 					<img src="<?php echo get_field('photo', 'user_'.$user->ID);?>">
-				<?php } ?>
+				<?php } ?><br>
 				Changer de photo:<input type="file" name="photo" accept="image/*"></input>
 			</div>
 			<div class="col-md-6 col-xs-12">

@@ -184,7 +184,8 @@ class Utilisateur{
 			$headers[] = 'From: '. NO_REPLY;
 			wp_mail($lastEmail , $object, $message, $headers);
 		}
-		return wp_update_user($request);
+		wp_update_user($request);
+		return self::redirect(strtok($_SERVER["REQUEST_URI"],'?'));
 	}
 
 	public static function postComment($idProduct, $request){
