@@ -16,8 +16,6 @@
 	<form action="" method="POST">
 		<input type='hidden' name='type' value='register'></input>
 		Email:<input required='required' type='text' name='email'></input><br>
-		Prénom:<input required='required' type='text' name='firstname'></input><br>
-		Nom de famille:<input required='required' type='text' name='lastname'></input><br>
 		<button type='submit'>S'inscrire</button>
 	</form>
 <?php }elseif($_SESSION['activate']){ 

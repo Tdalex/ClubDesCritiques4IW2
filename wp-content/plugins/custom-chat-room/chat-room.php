@@ -125,7 +125,7 @@ Class Chatroom {
 	 *
 	 * Stores the message in a recent messages file.
 	 *
-	 * Clears out cache of any messages older than 10 seconds.
+	 * Clears out cache of any messages older than 300 seconds.
 	 */
 	function ajax_send_message_handler() {
 		$current_user = wp_get_current_user();
@@ -136,7 +136,8 @@ Class Chatroom {
 	function save_message( $chatroom_slug, $user_id, $content ) {
 		global $post;
 		$user = get_userdata( $user_id );
-		if(true === ChatRoom::isUserKicked($post->ID, $user_id())){
+		
+		if(true === chat::isUserKicked($post->ID, $user_id)){
 			die();
 		}
 
@@ -150,46 +151,48 @@ Class Chatroom {
 	    }
 
 		$content = esc_attr( $content );
-		// Save the message in recent messages file
+		if(strlen($content)>0){
+			// Save the message in recent messages file
+			$log_filename = $this->get_log_filename( $chatroom_slug );
+			$contents = $this->parse_messages_log_file( $log_filename );
+			$messages = json_decode( $contents );
+			$now = date('d/m H:i:s');
+			$last_message_id = 0; // Helps determine the new message's ID
+			foreach ( $messages as $key => $message ) {
+				if ( time() - $message->time > 300 ) {
+					$last_message_id = $message->id;
+					unset( $messages[$key] );
+				}
+				else {
+					break;
+				}
+			}
+			$messages = array_values( $messages );
+			if ( ! empty( $messages ) )
+				$last_message_id = end( $messages )->id;
+			$new_message_id = $last_message_id + 1;
+			$messages[] = array(
+				'id' => $new_message_id,
+				'time' => time(),
+				'sender' => $user_id,
+				'contents' => $content,
+				'html' => '<div class="chat-message-' . $new_message_id . '"><strong style="color: ' . $user_text_color . ';">' . strtoupper($user->user_lastname).' '.ucfirst(strtolower ($user->user_firstname)) . '</strong> ('.$now.'): ' . $content . '</div>',
+			);
+			$this->write_log_file( $log_filename, json_encode( $messages ) );
 
-		$log_filename = $this->get_log_filename( $chatroom_slug );
-		$contents = $this->parse_messages_log_file( $log_filename );
-		$messages = json_decode( $contents );
-		$last_message_id = 0; // Helps determine the new message's ID
-		foreach ( $messages as $key => $message ) {
-			if ( time() - $message->time > 10 ) {
-				$last_message_id = $message->id;
-				unset( $messages[$key] );
-			}
-			else {
-				break;
-			}
+			// Save the message in the daily log
+			$log_filename = $this->get_log_filename( $chatroom_slug, date( 'm-d-y', time() ) );
+			$contents = $this->parse_messages_log_file( $log_filename );
+			$messages = json_decode( $contents );
+			$messages[] = array(
+				'id' => $new_message_id,
+				'time' => time(),
+				'sender' => $user_id,
+				'contents' => $content,
+				'html' => '<div class="chat-message-' . $new_message_id .'"><strong style="color: ' . $user_text_color . ';">' . strtoupper($user->user_lastname).' '.ucfirst(strtolower ($user->user_firstname)) . '</strong> ('.$now.'): ' . $content . '</div>',
+			);
+			$this->write_log_file( $log_filename, json_encode( $messages ) );
 		}
-		$messages = array_values( $messages );
-		if ( ! empty( $messages ) )
-			$last_message_id = end( $messages )->id;
-		$new_message_id = $last_message_id + 1;
-		$messages[] = array(
-			'id' => $new_message_id,
-			'time' => time(),
-			'sender' => $user_id,
-			'contents' => $content,
-			'html' => '<div class="chat-message-' . $new_message_id . '"><strong style="color: ' . $user_text_color . ';">' . strtoupper($user->user_lastname).' '.ucfirst(strtolower ($user->user_firstname)) . '</strong>: ' . $content . '</div>',
-		);
-		$this->write_log_file( $log_filename, json_encode( $messages ) );
-
-		// Save the message in the daily log
-		$log_filename = $this->get_log_filename( $chatroom_slug, date( 'm-d-y', time() ) );
-		$contents = $this->parse_messages_log_file( $log_filename );
-		$messages = json_decode( $contents );
-		$messages[] = array(
-			'id' => $new_message_id,
-			'time' => time(),
-			'sender' => $user_id,
-			'contents' => $content,
-			'html' => '<div class="chat-message-' . $new_message_id .'"><strong style="color: ' . $user_text_color . ';">' . strtoupper($user->user_lastname).' '.ucfirst(strtolower ($user->user_firstname)) . '</strong>: ' . $content . '</div>',
-		);
-		$this->write_log_file( $log_filename, json_encode( $messages ) );
 	}
 	
 	function write_log_file( $log_filename, $content ) {
@@ -231,7 +234,7 @@ Class Chatroom {
 	function ajax_join_room_handler(){
 		$userId = $_POST['userId'];
 		$roomId = $_POST['roomId'];
-		if(true === ChatRoom::isUserKicked($roomId, $userId)){
+		if(true === chat::isUserKicked($roomId, $userId)){
 			die();
 		}
 		chat::cleanCurrentUsers($roomId);
@@ -269,7 +272,7 @@ Class Chatroom {
 		$userId	     = $_POST['userId'];
 		$roomId 	 = $_POST['roomId'];
 		$kickedFrom  = chat::isUserKicked($roomId, $userId);
-		$message    = "";
+		$message     = "";
 		
 		if($kickedFrom){
 			$message = "<div class='alert alert-danger'>
