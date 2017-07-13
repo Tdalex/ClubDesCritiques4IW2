@@ -32,7 +32,7 @@ class Utilisateur{
 		if(!$user){
 			$password  = wp_generate_password(8, false);
 			$user      = wp_create_user($request['email'], $password, $request['email']);
-			wp_update_user(array('ID' => $user->ID, 'first_name' => $request['firstname'], 'last_name' => $request['lastname']));
+			
 			$object    = 'Bienvenue à Club Des Critiques';
 			$message   = 'Bienvenue à Club Des Critiques ' . $request['email'] . ', <br> Afin de valider votre compte, veuillez <a href="'. home_url() .'">vous connecter</a> avec ce mot de passe: <br><br> ' . $password . ' <br><br> il vous sera ensuite demandé de le modifier.<br><br><br> Cordialement, <br> Le club des critiques';
 			$headers[] = 'From: '. NO_REPLY;
@@ -62,8 +62,10 @@ class Utilisateur{
 					$activate = "
 					<form action='' method='POST'>
 						<input type='hidden' name='type' value='activate'></input>
-						password:<input type='password' name='newPassword'></input><br>
-						confirm password:<input type='password' name='newPasswordCheck'></input><br>
+						Prénom:<input required='required' type='text' name='firstname'></input><br>
+						Nom de famille:<input required='required' type='text' name='lastname'></input><br>
+						Mot de passe:<input type='password' name='newPassword'></input><br>
+						Confirmation de mot de passe:<input type='password' name='newPasswordCheck'></input><br>
 						<button type='submit'>modifier  mot de passe</button>
 					</form>";
 					$_SESSION['activate'] = $activate;
@@ -99,6 +101,7 @@ class Utilisateur{
 			return false;
 		}
 		unset($_SESSION['activate']);
+		wp_update_user(array('ID' => $user->ID, 'first_name' => $request['firstname'], 'last_name' => $request['lastname']));
 		wp_set_password($request['newPassword'], $user->ID);
 		//field 'activated'
 		update_field('field_5938214cbbae4', array("true"), 'user_'.$user->ID);
@@ -478,5 +481,37 @@ class Utilisateur{
 		$_SESSION['message'] = array('type' => 'success', 'text' => "L'oeuvre a été enlevé de votre liste d'echange");
 		return self::redirect(strtok($_SERVER["REQUEST_URI"],'?'));
 	}
+	
+	public static function searchUser($search){
+		$search = explode(' ', $search);
+		$users = array();
+		foreach($search as $search_string){	
+			$args  =  array ( 
+				'meta_query' => array(
+					'relation' => 'OR',
+					array(
+						'key'     => 'first_name',
+						'value'   => $search_string,
+						'compare' => 'LIKE'
+					),
+					array(
+						'key'     => 'last_name',
+						'value'   => $search_string,
+						'compare' => 'LIKE'
+					)
+				)
+			);
+				
+			$wp_user_query = new \WP_User_Query($args);
+			$wp_user_query->query();
 
+			$results = $wp_user_query->get_results();
+			foreach($results as $r){
+				if(!in_array($r->data->ID, $users)){
+					$users[] = $r->data->ID;
+				}
+			}
+		}
+		return $users;
+	}
 }

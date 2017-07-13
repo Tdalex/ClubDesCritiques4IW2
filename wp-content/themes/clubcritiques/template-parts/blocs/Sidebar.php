@@ -11,13 +11,11 @@
 		Email:<input required='required' type='text' name='email'></input><br>
 		Mot de passe:<input required='required' type='password' name='password'></input><br>
 		<button type='submit'>Se connecter</button>
-	</form>
+	</form><br>
 
 	<form action="" method="POST">
 		<input type='hidden' name='type' value='register'></input>
 		Email:<input required='required' type='text' name='email'></input><br>
-		Prénom:<input required='required' type='text' name='firstname'></input><br>
-		Nom de famille:<input required='required' type='text' name='lastname'></input><br>
 		<button type='submit'>S'inscrire</button>
 	</form>
 <?php }elseif($_SESSION['activate']){ 

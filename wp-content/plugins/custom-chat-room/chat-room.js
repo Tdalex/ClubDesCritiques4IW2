@@ -79,7 +79,7 @@ function user_join_room() {
 		function (response) {
 		}
 	);
-	setTimeout( "user_join_room()", 1000 );
+	setTimeout( "user_join_room()", 60000 );
 }
 
 function current_user_room() {
@@ -94,7 +94,7 @@ function current_user_room() {
 			jQuery('#current-user-table').html(response);
 		}
 	);
-	setTimeout( "current_user_room()", 1000 );
+	setTimeout( "current_user_room()", 5000 );
 }
 
 function user_kicked() {
@@ -109,5 +109,5 @@ function user_kicked() {
 			jQuery('#message').html(response);
 		}
 	);
-	setTimeout( "user_kicked()", 1000 );
+	setTimeout( "user_kicked()", 5000 );
 }
