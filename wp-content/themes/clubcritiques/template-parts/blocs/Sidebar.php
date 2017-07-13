@@ -11,7 +11,7 @@
 		Email:<input required='required' type='text' name='email'></input><br>
 		Mot de passe:<input required='required' type='password' name='password'></input><br>
 		<button type='submit'>Se connecter</button>
-	</form>
+	</form><br>
 
 	<form action="" method="POST">
 		<input type='hidden' name='type' value='register'></input>
