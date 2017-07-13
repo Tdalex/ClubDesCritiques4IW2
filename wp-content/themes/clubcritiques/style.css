@@ -4518,7 +4518,6 @@ p{
 }
 
 .form_contact div label{
-	text-align: right;
 	font-size: 18px;
 	font-weight: normal;
 	margin: 0;
@@ -4565,6 +4564,7 @@ p{
 
 .submit_contact {
 	font-size: 12px !important;
+	width: 200px;
 }
 
 #sidebar {
@@ -4839,4 +4839,16 @@ button:hover{
 .btn_submit_com {
 	text-align: right;
 	margin-top: 1%;
+}
+
+.contact-user {
+	margin-top: 5%;
+}
+
+.contact_profil {
+	text-align: center;
+}
+
+.input-group-lg {
+	text-align: center;
 }

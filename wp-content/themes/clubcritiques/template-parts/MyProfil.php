@@ -15,6 +15,7 @@ $userMeta = get_user_meta( $user->ID );
 
 get_header(); 
 ?>
+
 <div class="container-fluid">
 	<div class="row header_page">
 		<div class="container">
@@ -86,14 +87,14 @@ get_header();
 					<?php foreach($exchanges['take'] as $exchange){ ?>
 						<?php $exchangeProduct = get_field('product', $exchange->ID)[0]; ?>
 						<div class="col-md-3 col-xs-6 suggestions">
-								<a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$exchangeProduct->ID; ?>'>
-									<div class="suggestions-img">
-										<?php if(!get_field('image', $exchangeProduct->ID)){ ?> 
-											<img class="img-responsive" src="<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>"> 
-										<?php }else{ ?>
-											<img class="img-responsive" src="<?php echo get_field('image', $exchangeProduct->ID)	; ?>"></img>
-										<?php } ?>
-									</div>
+							<a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$exchangeProduct->ID; ?>'>
+								<div class="suggestions-img">
+									<?php if(!get_field('image', $exchangeProduct->ID)){ ?> 
+										<img class="img-responsive" src="<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>"> 
+									<?php }else{ ?>
+										<img class="img-responsive" src="<?php echo get_field('image', $exchangeProduct->ID)	; ?>"></img>
+									<?php } ?>
+								</div>
 								<h3><?php echo $exchangeProduct->post_title; ?></h3>
 								<p><?php echo get_field('author',$exchangeProduct->ID)[0]->post_title; ?></p>
 							</a>
