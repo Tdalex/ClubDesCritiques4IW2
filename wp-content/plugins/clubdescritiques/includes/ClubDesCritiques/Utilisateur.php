@@ -481,5 +481,37 @@ class Utilisateur{
 		$_SESSION['message'] = array('type' => 'success', 'text' => "L'oeuvre a été enlevé de votre liste d'echange");
 		return self::redirect(strtok($_SERVER["REQUEST_URI"],'?'));
 	}
+	
+	public static function searchUser($search){
+		$search = explode(' ', $search);
+		$users = array();
+		foreach($search as $search_string){	
+			$args  =  array ( 
+				'meta_query' => array(
+					'relation' => 'OR',
+					array(
+						'key'     => 'first_name',
+						'value'   => $search_string,
+						'compare' => 'LIKE'
+					),
+					array(
+						'key'     => 'last_name',
+						'value'   => $search_string,
+						'compare' => 'LIKE'
+					)
+				)
+			);
+				
+			$wp_user_query = new \WP_User_Query($args);
+			$wp_user_query->query();
 
+			$results = $wp_user_query->get_results();
+			foreach($results as $r){
+				if(!in_array($r->data->ID, $users)){
+					$users[] = $r->data->ID;
+				}
+			}
+		}
+		return $users;
+	}
 }

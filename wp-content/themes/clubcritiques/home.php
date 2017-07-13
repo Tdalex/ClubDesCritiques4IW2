@@ -26,6 +26,7 @@ $endDate   = get_field('end_date',  $nextChat->ID);
 $today     = date('Y-m-d H:i:s');
 $start = strftime('%A %d %B à %Hh%M',strtotime($start));
 $end   = strftime('%A %d %B à %Hh%M',strtotime($endDate));
+
 ?>
 
 <?php
