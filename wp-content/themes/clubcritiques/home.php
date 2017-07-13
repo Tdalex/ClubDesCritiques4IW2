@@ -18,9 +18,14 @@ $args = array(
 );
 $products = get_posts( $args );
 
-
 //next Chat
-$nextChat = ChatRoom::getNextChat();
+setlocale (LC_TIME, 'fr_FR.utf8','fra'); 
+$nextChat  = ChatRoom::getNextChat();
+$startDate = get_field('start_date', $nextChat->ID);
+$endDate   = get_field('end_date',  $nextChat->ID);
+$today     = date('Y-m-d H:i:s');
+$start = strftime('%A %d %B à %Hh%M',strtotime($start));
+$end   = strftime('%A %d %B à %Hh%M',strtotime($endDate));
 ?>
 
 <?php
@@ -51,12 +56,15 @@ get_header(); ?>
 						$chatProduct = get_field('product', $nextChat->ID)[0]; ?>
 						<h1 class="chat-title"><?php echo $nextChat->post_title ?></h1>
 						<p class="lead blog-description">Prochain Chat sur <a href="<?php echo get_permalink(get_page_by_title('Produit')).$chatProduct->ID; ?>"><?php echo $chatProduct->post_title; ?></a></p>
-						<p class="lead blog-description"><?php echo get_field('description', $nextChat->ID); ?></p>
-						<?php if(!is_user_logged_in()){ ?>
+						<?php echo get_field('description', $nextChat->ID); ?>
+						<?php if ($today < $startDate) { ?>
+							<p class="lead blog-description">Le salon ouvrira le <?php echo $start; ?></p>
+						<?php }elseif(!is_user_logged_in()){ ?>
 							<p class="lead blog-description">Veuillez vous connecter avant de rejoindre le salon</p>
 						<?php }elseif(ChatRoom::isUserKicked($nextChat->ID, get_current_user_id())){ ?>
 								<p>Vous avez été expulsé du salon</p>
-							<?php }elseif(false !== Utilisateur::getNotation($chatProduct->ID, get_current_user_id())){ ?>
+						<?php }elseif(false !== Utilisateur::getNotation($chatProduct->ID, get_current_user_id())){ ?>
+							<p class="lead blog-description">Le salon fermera le <?php echo $end; ?></p>
 							<a href='<?php echo get_permalink($nextChat->ID)?>?changeRoom=true' >Rejoindre un salon</a><br>
 							<?php if($userRoom = ChatRoom::getUserRoom($nextChat->ID)){ ?>
 								<a href='<?php echo get_permalink($userRoom)?>' >Rejoindre votre dernier salon</a><br>

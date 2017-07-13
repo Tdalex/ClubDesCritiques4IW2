@@ -202,6 +202,8 @@ get_header();
 						<img class="img-responsive"  src="<?php echo get_field('image', $sp->ID); ?>"></img>
 					<?php } ?>
 					<h3><?php echo $sp->post_title; ?></h3>
+				</a>				
+				<a href="<?php echo get_permalink(get_page_by_title('Auteur')).get_field('author', $sp->ID)[0]->ID; ?>">
 					<p><?php echo get_field('author', $sp->ID)[0]->post_title; ?></p>
 				</a>
 			</div>
@@ -213,6 +215,37 @@ get_header();
 		<h2 class="cat_h2">Commentaires</h2>
 
 		<div class="container">
+			<div class="col-md-11 comments">
+			<?php if(is_user_logged_in()){ ?>		
+				<div class="row">
+					<form method='POST' action=''>
+					<div class="rate">
+						<input type="radio" id="star5" name="userNote" value="5" <?php if($userNote==5){echo"checked";}?>/><label for="star5" title="text">5 stars</label>
+						<input type="radio" id="star4" name="userNote" value="4" <?php if($userNote==4){echo"checked";}?>/><label for="star4" title="text">4 stars</label>
+						<input type="radio" id="star3" name="userNote" value="3" <?php if($userNote==3){echo"checked";}?>/><label for="star3" title="text">3 stars</label>
+						<input type="radio" id="star2" name="userNote" value="2" <?php if($userNote==2){echo"checked";}?>/><label for="star2" title="text">2 stars</label>
+						<input type="radio" id="star1" name="userNote" value="1" <?php if($userNote==1){echo"checked";}?>/><label for="star1" title="text">1 star</label>
+					</div>
+
+					<?php if( Utilisateur::getUserComment($product_ID)){
+					$userComment = Utilisateur::getUserComment($product_ID); ?>
+					<textarea name='comment' class="send_commentaire" placeholder="Ajouter un commentaire..."><?php echo strip_tags($userComment->post_content); ?></textarea>
+					
+					<div class="row">
+						<div class="col-md-2 col-md-offset-8 btn_submit">
+							<button type='submit' value='deleteComment' class="btn" name='type'>supprimer</button>
+						</div>
+						<?php }else{ ?>
+						<textarea name='comment'></textarea>
+						<?php } ?>
+						<div class="col-md-2 btn_submit">
+							<button type='submit' value='comment' class="btn" name='type'>commenter</button>
+						</div>
+					</div>
+					</form>
+				</div>
+			<?php } ?>				
+			</div>			
 			<?php foreach($comments as $comment){ ?>
 				<?php $commentAuthor = get_user_by('ID', $comment->post_author); ?>
 				<div class="row div_comment">
@@ -292,39 +325,7 @@ get_header();
 							<img class="img-responsive"  src="<?php echo get_field('image', $sp->ID); ?>"></img>
 				<?php } ?>
 			</div>
-			<div class="col-md-9">
-			<?php if(is_user_logged_in()){ ?>
 			
-			<div class="row">
-				<form method='POST' action=''>
-			    <div class="rate">
-			        <input type="radio" id="star5" name="userNote" value="5" <?php if(Utilisateur::getNotation($product_ID, $commentAuthor->ID)==5){echo"checked";}?>/><label for="star5" title="text">5 stars</label>
-			        <input type="radio" id="star4" name="userNote" value="4" <?php if(Utilisateur::getNotation($product_ID, $commentAuthor->ID)==4){echo"checked";}?>/><label for="star4" title="text">4 stars</label>
-			        <input type="radio" id="star3" name="userNote" value="3" <?php if(Utilisateur::getNotation($product_ID, $commentAuthor->ID)==3){echo"checked";}?>/><label for="star3" title="text">3 stars</label>
-			        <input type="radio" id="star2" name="userNote" value="2" <?php if(Utilisateur::getNotation($product_ID, $commentAuthor->ID)==2){echo"checked";}?>/><label for="star2" title="text">2 stars</label>
-			        <input type="radio" id="star1" name="userNote" value="1" <?php if(Utilisateur::getNotation($product_ID, $commentAuthor->ID)==1){echo"checked";}?>/><label for="star1" title="text">1 star</label>
-			    </div>
-
-				<?php if( Utilisateur::getUserComment($product_ID)){
-				$userComment = Utilisateur::getUserComment($product_ID); ?>
-				<textarea name='comment' class="send_commentaire" placeholder="Ajouter un commentaire..."><?php echo strip_tags($userComment->post_content); ?></textarea>
-				
-				<div class="row">
-					<div class="col-md-2 col-md-offset-8 btn_submit">
-						<button type='submit' value='deleteComment' class="btn" name='type'>supprimer</button>
-					</div>
-					<?php }else{ ?>
-					<textarea name='comment'></textarea>
-					<?php } ?>
-					<div class="col-md-2 btn_submit">
-						<button type='submit' value='comment' class="btn" name='type'>commenter</button>
-					</div>
-				</div>
-				</form>
-			</div>
-			<?php } ?>				
-
-			</div>
 		</div>
 	</div>
 </div>

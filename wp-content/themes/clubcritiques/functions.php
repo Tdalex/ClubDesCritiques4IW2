@@ -600,3 +600,5 @@ function my_login_logo() { ?>
     </style>
 <?php }
 add_action( 'login_enqueue_scripts', 'my_login_logo' );
+
+remove_action('template_redirect', 'redirect_canonical');

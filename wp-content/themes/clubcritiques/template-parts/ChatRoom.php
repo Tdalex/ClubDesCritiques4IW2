@@ -46,10 +46,6 @@ if(isset($_GET['kick']) && !empty($_GET['kick']) && $user_role == 'administrator
 	ChatRoom::joinChatRoom(get_the_ID());
 }
 
-$startDate = get_field('start_date', get_the_ID());
-$endDate   = get_field('end_date', get_the_ID());
-$today     = date('Y-m-d H:i:s');
-
 //404 if chat room not now
 if ($today > $endDate or $today < $startDate) {
     global $wp_query;
