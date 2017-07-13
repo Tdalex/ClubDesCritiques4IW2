@@ -104,7 +104,7 @@ $formats = get_terms( array(
 			<div class="col-xs-6 col-lg-4">
 				<a href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>">
 				<?php if(!get_field('image', $product->ID)){ ?> 
-					<img src="https://pictures.abebooks.com/isbn/9782070543588-fr.jpg"> 
+					<img src="<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>"> 
                 <?php }else{ ?>
 					<img src="<?php echo get_field('image', $product->ID); ?>">
 				<?php } ?>

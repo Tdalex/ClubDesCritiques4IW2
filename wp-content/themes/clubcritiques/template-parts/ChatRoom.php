@@ -79,7 +79,7 @@ get_header();
 	<div class="row description_livre">
 		<div class="col-md-3">
 			<?php if(!$image){ ?> 
-				<img class="img-responsive img-livre" style='height:300px; length:300px;' src="https://pictures.abebooks.com/isbn/9782070543588-fr.jpg"> 
+				<img class="img-responsive img-livre" style='height:300px; length:300px;' src="<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>"> 
 			<?php }else{ ?>
 				<img class="img-responsive img-livre" style='height:300px; length:300px;' src="<?php echo $image; ?>"></img>
 			<?php } ?>

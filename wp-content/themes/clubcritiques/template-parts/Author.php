@@ -35,7 +35,7 @@ get_header();
 	<div class="row">
 		<div class="col-md-3">
 			<?php if(!$image){ ?> 
-				<img class="img-responsive img-livre" style='height:300px; length:300px;' src="https://pictures.abebooks.com/isbn/9782070543588-fr.jpg"> 
+				<img class="img-responsive img-livre" style='height:300px; length:300px;' src="<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>"> 
 			<?php }else{ ?>
 				<img class="img-responsive img-livre" style='height:300px; length:300px;' src="<?php echo $photo; ?>"></img>
 			<?php } ?>
@@ -77,7 +77,7 @@ get_header();
 					<div class="col-md-3">
 						<a href='<?php echo get_permalink(get_page_by_title('Produit')).$biblio->ID; ?>'>
 							<?php if(!$image){ ?> 
-								<img class="img-responsive img-livre" src="https://pictures.abebooks.com/isbn/9782070543588-fr.jpg"> 
+								<img class="img-responsive img-livre" src="<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>"> 
 							<?php }else{ ?>
 								<img class="img-responsive img-livre" src="<?php echo $image ?>"></img>
 							<?php } ?>

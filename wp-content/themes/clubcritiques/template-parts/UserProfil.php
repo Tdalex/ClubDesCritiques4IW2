@@ -45,7 +45,12 @@ get_header();
 		} ?>
 	<div class="row content_profil">
 		<div class="col-md-3 col-xs-12">
-			<img src="<?php echo get_field('photo', 'user_'.$user->ID); ?>">
+			<?php if(!get_field('photo', 'user_'.$user->ID)){ ?> 
+				<img src="<?php echo get_parent_theme_file_uri( '/assets/images/avatar_defaut.png' ); ?>" 
+				class="avatar_sp img-responsive" alt="avatar" />
+			<?php }else{ ?>
+				<img src="<?php echo get_field('photo', 'user_'.$user->ID);?>">
+			<?php } ?>
 		</div>
 		<div class="col-md-6 col-xs-12">
 			<h2><?php echo strtoupper($user->user_lastname).' '.ucfirst(strtolower ($user->user_firstname));?></h2>
@@ -101,7 +106,7 @@ get_header();
 					<div class="col-md-2 col-xs-6 ">
 							<a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$exchangeProduct->ID; ?>'></a>
 							<?php if(!get_field('image', $exchangeProduct->ID)){ ?> 
-								<img class="img-responsive" src="https://pictures.abebooks.com/isbn/9782070543588-fr.jpg"> 
+								<img class="img-responsive" src="<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>"> 
 							<?php }else{ ?>
 								<img class="img-responsive" src="<?php echo get_field('image', $exchangeProduct->ID)	; ?>"></img>
 							<?php } ?>
@@ -120,7 +125,7 @@ get_header();
 					<div class="col-md-2 col-xs-6 ">
 							<a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$exchangeProduct->ID; ?>'></a>
 							<?php if(!get_field('image', $exchangeProduct->ID)){ ?> 
-								<img class="img-responsive" src="https://pictures.abebooks.com/isbn/9782070543588-fr.jpg"> 
+								<img class="img-responsive" src="<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>"> 
 							<?php }else{ ?>
 								<img class="img-responsive" src="<?php echo get_field('image', $exchangeProduct->ID); ?>"></img>
 							<?php } ?>

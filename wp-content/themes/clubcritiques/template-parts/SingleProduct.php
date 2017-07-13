@@ -308,10 +308,10 @@ get_header();
 					<div class="col-md-11 comments">
 						<div class="col-md-2 ">
 			              <a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$commentAuthor->ID; ?>'>
-							<?php if(!get_field('image', $sp->ID)){ ?> 
+							<?php if(!get_field('photo', 'user_'.$commentAuthor->ID)){ ?> 
 								<img src="<?php echo get_parent_theme_file_uri( '/assets/images/avatar_defaut.png' ); ?>" class="avatar_sp img-responsive" alt="avatar" />
 							<?php }else{ ?>
-								<img class="img-responsive"  src="<?php echo get_field('image', $sp->ID); ?>"></img>
+								<img class="img-responsive"  src="<?php echo get_field('photo', 'user_'.$commentAuthor->ID); ?>"></img>
 							<?php } ?>
 			              </a>
 						</div>
@@ -363,20 +363,14 @@ get_header();
 							</div>
 							<div class="row commentaire_block">
 								<?php  echo $comment->post_content; ?>
-							</div>
-							
-						</div>
-						
+							</div>							
+						</div>						
 					</div>
-				</div>
+				</div><br>
 			<?php } ?>
 		</div>
 	</div>
 </div>
-	
-		
-
-
 <?php
 get_footer(); 
 ?>
