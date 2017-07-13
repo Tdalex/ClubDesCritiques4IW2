@@ -4429,6 +4429,7 @@ object {
 .description {
 	background-color: #CEE8DF;
 	padding: 10px;
+    box-shadow: 2px 2px 10px #333;
 }
 
 .description h2{
@@ -4463,6 +4464,7 @@ p{
 
 .suggestions h3{
 	margin: 0;
+	font-size: 18px;
 	font-weight: 600;
 	text-align: center;
 }
@@ -4474,7 +4476,7 @@ p{
 
 .title_profil h1{
 	text-align: center;
-	font-size: 25px;
+	font-size: 35px;
 	font-weight: bold;
 	margin-bottom: 8%;
 
@@ -4495,7 +4497,7 @@ p{
 	font-weight: bold;
 	font-size: 25px;
 	margin-left: 1%;
-	margin-top: 5%;
+	margin-top: 3%;
 	margin-bottom: 2%;
 }
 
@@ -4526,16 +4528,24 @@ p{
 	font-size: 30px;
 }
 
+.content_myProfil h2{
+	font-size: 23px;
+}
+
+.content_myProfil p{
+	font-size: 18px;
+	margin-top: 2%;
+}
+
 .div_menu_right {
 	padding-left: 5%;
 }
 
-.menu_right {
-	position: fixed;
+.menu_right h2{
+	font-size: 23px;
 }
 
 .menu_flottant {
-	/*position: fixed;*/
 	padding-left: 5px;
 	border-left: solid;
 	border-width: 2px;
@@ -4544,7 +4554,8 @@ p{
 .menu_flottant ul li {
 	list-style: none;
 	margin: auto;
-	font-size: 13px;
+	font-size: 18px;
+	margin: 10px;
 
 }
 
@@ -4584,14 +4595,11 @@ p{
 	margin: auto;
 	height: 300px; 
 	width: 200px;
+	box-shadow: 2px 2px 10px #333;
 }
 
 .description_livre {
 	margin-top: 4%;
-}
-
-.contain {
-	margin-top: 5%;
 }
 
 .interligne_big {
@@ -4652,6 +4660,10 @@ button:hover{
 	border-radius: 50%;
 	margin: 5px;
 	box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+	background-repeat: no-repeat !important;
+    background-position: center top !important;
+    background-size: cover !important;
+    box-shadow: 0px 0px 10px #4b6762;
 }
 
 .star_rating_small {
@@ -4663,7 +4675,7 @@ button:hover{
 	background-color: #CEE8DF;
 	border: none;
 	border-radius: 4px;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, .15);
+	box-shadow: 0 1px 1px #aaa;
 	color: #25283C;
 	font-family: inherit;
 	font-size: 14px;
@@ -4679,7 +4691,7 @@ button:hover{
 	background-color: white;
 	border: 1px solid #bbb;
 	border-radius: 4px;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, .15);
+	box-shadow: 0 1px 1px #aaa;
 	color: #25283C;
 	font-family: inherit;
 	font-size: 14px;
@@ -4770,4 +4782,61 @@ button:hover{
 
 .exchanges {
 	margin-bottom: 3%;
+}
+
+.profil_img {
+	max-height: 300px;
+	border: 1px solid #888;
+	box-shadow: 2px 2px 10px #333;
+}
+
+.bg_page_profil {
+	margin-top: 3%;
+}
+
+.bg_page_profil h1{
+	text-align: center;
+	font-size: 35px;
+	font-weight: bold;
+}
+
+.bg_page_profil p {
+	text-align: center;
+	font-size: 20px;	
+}
+
+.suggestions-img {
+	height: 230px;
+	width: 150px;
+	margin: auto;
+}
+
+.suggestions-img img {
+    box-shadow: 2px 2px 10px #333;
+}
+
+.suggestions h3 {
+	padding-top: 2%;
+}
+
+.btn_delete {
+    margin: 0;
+    padding: 0;
+    line-height: 100%; /* Si ça fonctionne pas mets 0 */
+    border: 0;
+    background: none; /* ou transparent je sais plus... */
+    font: /* Définis le même font qu'un lien traditionnel */;
+    color: #aaa/* La même couleur... */;
+    text-decoration: underline; /* Normalement */
+    box-shadow: none;
+}
+
+.btn_delete:hover{
+	background: none;
+	color: #FF5B2B;
+}
+
+.btn_submit_com {
+	text-align: right;
+	margin-top: 1%;
 }
