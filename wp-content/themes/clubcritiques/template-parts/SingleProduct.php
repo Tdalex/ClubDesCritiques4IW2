@@ -209,7 +209,63 @@ get_header();
 			</div>
 		<?php } ?>
 		</div>
-		
+</div>
+
+<?php if (isset($exchanges['give']) || isset($exchanges['take'])){ ?>
+<div class="bg_page row" id="troc">
+	<h1 class="h1_troc">L'ESPACE TROC</h1>
+	<p class="col-md-10 col-md-offset-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores officia aut vel facilis ducimus doloremque harum, dicta laborum repellat exercitationem id adipisci culpa, commodi quisquam quis nobis fuga libero eligendi!
+	</p>
+</div>
+<div class="container exchanges">
+	<?php if(isset($exchanges['take'])){ ?>
+		<h2 class="troc_h2 col-md-5 col-md-offset-3">Ces utilisateurs souhaitent recevoir ce livre :</h2>
+			<?php foreach($exchanges['take'] as $exchange){ ?>
+				<div class="user_troc">
+					<div class="col-md-2 col-md-offset-3 img_troc">
+		              <a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$commentAuthor->ID; ?>'>
+						<?php if(!get_field('image', $sp->ID)){ ?> 
+							<img src="<?php echo get_parent_theme_file_uri( '/assets/images/avatar_defaut.png' ); ?>" 
+							class="avatar_sp avatar_echange img-responsive" alt="avatar" />
+						<?php }else{ ?>
+							<img class="img-responsive"  src="<?php echo get_field('image', $sp->ID); ?>"></img>
+						<?php } ?>
+		              </a>
+					</div>
+					<div class="col-md-3 name_troc">
+						<?php $exchangeAuthor = get_user_by('ID', $exchange->post_author); ?>
+							<h2><a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$exchangeAuthor->ID; ?>'>
+								<?php echo ucfirst(strtolower($exchangeAuthor->user_firstname)) .' '. ucfirst(strtolower($exchangeAuthor->user_lastname)); ?>
+								</a></h2>	
+					</div>
+				</div>
+			<?php } ?>
+	<?php }?>
+
+	<?php if (isset($exchanges['give'])){ ?>
+		<h2 class="troc_h2 col-md-5 col-md-offset-3">Ces utilisateurs souhaitent échanger ce livre :</h2>
+			<?php foreach($exchanges['give'] as $exchange){ ?>
+				<?php $exchangeAuthor = get_user_by('ID', $exchange->post_author); ?>
+				<div class="user_troc">
+					<div class="col-md-2 col-md-offset-3 img_troc">
+						<a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$exchangeAuthor->ID; ?>'>
+						<?php if(!get_field('image', $sp->ID)){ ?> 
+							<img src="<?php echo get_parent_theme_file_uri( '/assets/images/avatar_defaut.png' ); ?>" 
+							class="avatar_sp avatar_echange img-responsive" alt="avatar" />
+						<?php }else{ ?>
+							<img class="img-responsive"  src="<?php echo get_field('image', $sp->ID); ?>"></img>
+						<?php } ?>							
+						</a>
+					</div>
+					<div class="col-md-3 name_troc">
+						<h2><a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$exchangeAuthor->ID; ?>'>
+							<?php echo $exchangeAuthor->user_firstname .' '. $exchangeAuthor->user_lastname; ?>
+						</a></h2>
+					</div>
+				</div>
+			<?php } ?>
+<?php }}?>
+</div>		
 
 	<div class="container">
 		<h2 class="cat_h2">Commentaires</h2>
@@ -315,77 +371,11 @@ get_header();
 				</div>
 			<?php } ?>
 		</div>
-
-
-		<div class="container">
-			<div class="col-md-2">
-				<?php if(!get_field('image', $sp->ID)){ ?> 
-							<img src="<?php echo get_parent_theme_file_uri( '/assets/images/avatar_defaut.png' ); ?>" class="avatar_sp img-responsive" alt="avatar" />
-						<?php }else{ ?>
-							<img class="img-responsive"  src="<?php echo get_field('image', $sp->ID); ?>"></img>
-				<?php } ?>
-			</div>
-			
-		</div>
 	</div>
 </div>
 	
 		
-<?php if (isset($exchanges['give']) || isset($exchanges['take'])){ ?>
-<div class="bg_page row" id="troc">
-	<h1 class="h1_troc">L'ESPACE TROC</h1>
-	<p class="col-md-10 col-md-offset-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores officia aut vel facilis ducimus doloremque harum, dicta laborum repellat exercitationem id adipisci culpa, commodi quisquam quis nobis fuga libero eligendi!
-	</p>
-</div>
-<div class="container">
-	<?php if(isset($exchanges['take'])){ ?>
-		<h2 class="troc_h2 col-md-5 col-md-offset-3">Ces utilisateurs souhaitent recevoir ce livre :</h2>
-			<?php foreach($exchanges['take'] as $exchange){ ?>
-				<div class="user_troc">
-					<div class="col-md-2 col-md-offset-3 img_troc">
-		              <a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$commentAuthor->ID; ?>'>
-						<?php if(!get_field('image', $sp->ID)){ ?> 
-							<img src="<?php echo get_parent_theme_file_uri( '/assets/images/avatar_defaut.png' ); ?>" 
-							class="avatar_sp avatar_echange img-responsive" alt="avatar" />
-						<?php }else{ ?>
-							<img class="img-responsive"  src="<?php echo get_field('image', $sp->ID); ?>"></img>
-						<?php } ?>
-		              </a>
-					</div>
-					<div class="col-md-3 name_troc">
-						<?php $exchangeAuthor = get_user_by('ID', $exchange->post_author); ?>
-							<h2><a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$exchangeAuthor->ID; ?>'>
-								<?php echo ucfirst(strtolower($exchangeAuthor->user_firstname)) .' '. ucfirst(strtolower($exchangeAuthor->user_lastname)); ?>
-								</a></h2>	
-					</div>
-				</div>
-			<?php } ?>
-	<?php }?>
 
-	<?php if (isset($exchanges['give'])){ ?>
-		<h2 class="troc_h2 col-md-5 col-md-offset-3">Ces utilisateurs souhaitent échanger ce livre :</h2>
-			<?php foreach($exchanges['give'] as $exchange){ ?>
-				<?php $exchangeAuthor = get_user_by('ID', $exchange->post_author); ?>
-				<div class="user_troc">
-					<div class="col-md-2 col-md-offset-3 img_troc">
-						<a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$exchangeAuthor->ID; ?>'>
-						<?php if(!get_field('image', $sp->ID)){ ?> 
-							<img src="<?php echo get_parent_theme_file_uri( '/assets/images/avatar_defaut.png' ); ?>" 
-							class="avatar_sp avatar_echange img-responsive" alt="avatar" />
-						<?php }else{ ?>
-							<img class="img-responsive"  src="<?php echo get_field('image', $sp->ID); ?>"></img>
-						<?php } ?>							
-						</a>
-					</div>
-					<div class="col-md-3 name_troc">
-						<h2><a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$exchangeAuthor->ID; ?>'>
-							<?php echo $exchangeAuthor->user_firstname .' '. $exchangeAuthor->user_lastname; ?>
-						</a></h2>
-					</div>
-				</div>
-			<?php } ?>
-<?php }}?>
-</div>
 
 <?php
 get_footer(); 
