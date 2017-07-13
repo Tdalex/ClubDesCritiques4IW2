@@ -115,10 +115,48 @@ class Utilisateur{
 
 	}
 
-	public static function modifyUserInfo($request){
+	public static function modifyUserInfo($request, $file = array()){
 		$user = wp_get_current_user();
 		$request['ID'] = $user->ID;
 		$lastEmail = $user->user_email;
+		
+		//change photo
+		if(!empty($file) && isset($file['photo'])){
+			$photo = $file['photo'];
+			
+			if ( ! function_exists( 'wp_handle_upload' ) ) {
+				require_once( ABSPATH . 'wp-admin/includes/file.php' );
+			}
+
+			$upload_overrides = array( 'test_form' => false );
+			$movefile = wp_handle_upload( $photo, $upload_overrides );
+
+			if ( $movefile && ! isset( $movefile['error'] ) ) {
+				$filename = $movefile['file'];
+
+				$wp_upload_dir = wp_upload_dir();
+				$attachment = array(
+					'guid'           => $wp_upload_dir['url'] . '/' . basename( $filename ), 
+					'post_mime_type' => $movefile['type'],
+					'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $filename ) ),
+					'post_content'   => '',
+					'post_status'    => 'inherit'
+				);
+
+				$attach_id = wp_insert_attachment( $attachment, $filename);
+
+				require_once( ABSPATH . 'wp-admin/includes/image.php' );
+
+				$attach_data = wp_generate_attachment_metadata( $attach_id, $filename );
+				wp_update_attachment_metadata( $attach_id, $attach_data );
+;
+				update_field('field_5954b1a910314', $attach_id, 'user_'.$user->ID);
+			} else {
+				$_SESSION['message'] = array('type' => 'danger', 'text' => "Une erreur est survenue pendant le téléchargement de l'image");
+			}
+		}
+		
+		
 		//change password
 		if(!empty($request['password'])){
 			if(strlen($request['password'])>=6){
@@ -136,6 +174,7 @@ class Utilisateur{
 			}
 		}
 		unset($request['password']);
+		unset($request['photo']);
 		unset($request['passwordCheck']);
 		$request = array_filter($request);
 
