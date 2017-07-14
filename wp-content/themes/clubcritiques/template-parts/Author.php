@@ -30,41 +30,36 @@ $deathdate = date($deathdate);
 get_header(); 
 ?>
 
-<div class="container contain">
-
-	<div class="row">
-		<div class="col-md-3">
-			<?php if(!$image){ ?> 
-				<img class="img-responsive img-livre" style='height:300px; length:300px;' src="<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>"> 
-			<?php }else{ ?>
-				<img class="img-responsive img-livre" style='height:300px; length:300px;' src="<?php echo $photo; ?>"></img>
-			<?php } ?>
-		</div>
-
-		<div class="col-md-9">
-			<div class="row">
-				<h1 class="title"><?php echo $author->post_title;?></h1>
+<div class="container-fluid">
+	<div class="row header_page">
+		<div class="container">
+			<div class="row content_profil">
+				<div class="col-md-3">
+					<?php if(!$image){ ?> 
+						<img src="<?php echo get_parent_theme_file_uri( '/assets/images/avatar_defaut.png' ); ?>" 
+						class=" img-responsive profil_img" alt="photo profil" />
+					<?php }else{ ?>
+						<img src="<?php echo $photo; ?>" class="profil_img" alt="photo profil">
+					<?php } ?>
+				</div>
+				<div class="col-md-6 col-xs-12 content_myProfil">
+					<h2><?php echo $author->post_title;?></h2>
+					<div class="author interligne_big">
+						<?php echo $birthdate. ' - ' . $deathdate?>
+					</div>
+					<div class="description interligne_small">
+						<?php echo $descriptionAuthor;?>
+					</div>
+				</div>
+				<div><?php echo $description;?></div>
 			</div>
 		</div>
-
-		<div class="col-md-9">
-			<div class="row author interligne_big">
-				<?php echo $birthdate. ' - ' . $deathdate?>
-			</div>
-		</div>
-
-		<div class="col-md-9">
-			<div class="row description interligne_small">
-				<?php echo $descriptionAuthor;?>
-			</div>
-		</div>
-
-		<div><?php echo $description;?></div>
 	</div>
 
-	<div class="row">
+	
+	<div class="container">
 		<div class="row">
-			<h2 class="cat_h2">Bibliographie</h2>
+			<h2 class="cat_h2 ">Bibliographie</h2>
 		</div>
 		<div class="row book_author">
 			<ul>
@@ -77,12 +72,12 @@ get_header();
 					<div class="col-md-3">
 						<a href='<?php echo get_permalink(get_page_by_title('Produit')).$biblio->ID; ?>'>
 							<?php if(!$image){ ?> 
-								<img class="img-responsive img-livre" src="<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>"> 
+								<img class="img-responsive img_biblio" src="<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>"> 
 							<?php }else{ ?>
-								<img class="img-responsive img-livre" src="<?php echo $image ?>"></img>
+								<img class="img-responsive img_biblio" src="<?php echo $image ?>"></img>
 							<?php } ?>
 					</div>
-					<div class="col-md-9">
+					<div class="col-md-9 biblio_content">
 							<div class="row">
 								<h3><?php echo $biblio->post_title;?></h3>	
 							</div>
