@@ -184,7 +184,7 @@ get_header(); ?>
 				<?php foreach($products as $product){ ?>
 					<div class="col-xs-6 col-lg-2">
 						<?php if(!get_field('image', $product->ID)){ ?>
-							<a href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>"><img src="https://pictures.abebooks.com/isbn/9782070543588-fr.jpg"></img></a>
+							<a href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>"><img src="<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>"></img></a>
 						<?php }else{ ?>
 							<a href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>"><img src="<?php echo get_field('image', $product->ID); ?>"></img></a>
 						<?php } ?>
