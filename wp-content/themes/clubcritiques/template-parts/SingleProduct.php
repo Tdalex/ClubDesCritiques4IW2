@@ -135,48 +135,32 @@ get_header();
 					</div>
 
 					<div class="row">
+					<?php if ( $averageNote['total'] > 0){ ?>
+						<span class='star_rating'>
 						<?php
-						switch ($averageNote['average']) {
-							case '1':
-								echo "<span class='star_rating'>
-										<span class='note_star'>★</span>★★★★
-									  </span>";
-								break;
-							case '2':
-								echo "<span class='star_rating'>
-										<span class='note_star'>★★</span>★★★
-									  </span>";
-								break;
-							case '3':
-								echo "<span class='star_rating'>
-										<span class='note_star'>★★★</span>★★
-									  </span>";
-								break;
-							case '4':
-								echo "<span class='star_rating'>
-										<span class='note_star'>★★★★</span>★
-									  </span>";
-								break;
-							case '5':
-								echo "<span class='star_rating'>
-										<span class='note_star'>★★★★★</span>
-									  </span>";
-								break;
-							
-							default:
-								echo "<span class='star_rating'>
-										★★★★★
-									  </span>";
-								break;
-						}
-
+						if($averageNote['average'] >= 0.5 && $averageNote['average'] < 1.5){
+							echo "<span class='note_star'>★</span>★★★★</span>";
+						}elseif($averageNote['average'] >= 1.5 && $averageNote['average'] < 2.5){
+							echo "<span class='note_star'>★★</span>★★★</span>";
+						}elseif($averageNote['average'] >= 2.5 && $averageNote['average'] < 3.5){
+							echo "<span class='note_star'>★★★</span>★★</span>";
+						}elseif($averageNote['average'] >= 3.5 && $averageNote['average'] < 4.5){
+							echo "<span class='note_star'>★★★★</span>★</span>";						
+						}elseif($averageNote['average'] >= 4.5){
+							echo "<span class='note_star'>★</span>★★★★</span>";
+						}else{
+							echo '★★★★★</span>';
+						} 
+						
 						if($averageNote['total'] > 1){
 							echo "<span>".$averageNote['total']." notes</span>";
 						}
 						else{
 							echo "<span>".$averageNote['total']." note</span>";
 						}?>
-						
+					<?php }else{ ?>
+						<span>Aucune note</span>
+					<?php } ?>
 					</div>
 
 					<div class="row description">

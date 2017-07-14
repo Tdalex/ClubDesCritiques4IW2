@@ -66,8 +66,6 @@ get_header(); ?>
 	<form action="" method="POST">
 		<input type='hidden' name='type' value='register'></input>
 		Email:<input required='required' type='text' name='email' placeholder="email"></input><br>
-		Prénom:<input required='required' type='text' name='firstname' placeholder="prenom"></input><br>
-		Nom de famille:<input required='required' type='text' name='lastname' placeholder="nom"></input><br>
 		<button type='submit'>S'inscrire</button>
 	</form>
 	</div>
@@ -136,36 +134,38 @@ get_header(); ?>
 <section>
 
 <div class="next-chat">
-        <div class="container">
-        	<div class="row row-offcanvas row-offcanvas-right">
-
+    <div class="container">
+        <div class="row row-offcanvas row-offcanvas-right">
             <div class="col-xs-12 col-sm-12">
-
-
                 <div class="chatHeader">
 					<?php if($nextChat){ 
 						$chatProduct = get_field('product', $nextChat->ID)[0]; ?>
-						<h1 class="chat-title"><?php echo $nextChat->post_title ?></h1>
-						<p class="lead blog-description">Prochain Chat sur <a class="chat-link" href="<?php echo get_permalink(get_page_by_title('Produit')).$chatProduct->ID; ?>"><?php echo $chatProduct->post_title; ?></a></p>
-						<p class="lead blog-description"><?php echo get_field('description', $nextChat->ID); ?></p>
-						<?php if(!is_user_logged_in()){ ?>
-							<p class="lead blog-description">Veuillez vous connecter avant de rejoindre le salon</p>
-						<?php }elseif(ChatRoom::isUserKicked($nextChat->ID, get_current_user_id())){ ?>
-								<p>Vous avez été expulsé du salon</p>
-							<?php }elseif(false !== Utilisateur::getNotation($chatProduct->ID, get_current_user_id())){ ?>
-							<a class="join-room" href='<?php echo get_permalink($nextChat->ID)?>?changeRoom=true' >Rejoindre un salon</a><br>
-							<?php if($userRoom = ChatRoom::getUserRoom($nextChat->ID)){ ?>
-								<a href='<?php echo get_permalink($userRoom)?>' >Rejoindre votre dernier salon</a><br>
-							<?php }?>
-						<?php }else{ ?>
-							<a href='<?php echo get_permalink(get_page_by_title('Produit')).$chatProduct->ID;?>' >Veuillez noter le livre avant de rejoindre un salon</a><br>
-						<?php }?>
+							<?php if ($today < $startDate) { ?> 
+								<p class="lead blog-description">Le salon ouvrira le <?php echo $start; ?></p> 
+							<?php }else{ ?> 
+								<h1 class="chat-title"><?php echo $nextChat->post_title ?></h1>
+								<p class="lead blog-description">Prochain Chat sur <a class="chat-link" href="<?php echo get_permalink(get_page_by_title('Produit')).$chatProduct->ID; ?>"><?php echo $chatProduct->post_title; ?></a></p>
+								<?php echo get_field('description', $nextChat->ID); ?>								
+								<p class="lead blog-description">Le salon fermera le <?php echo $end; ?></p> 
+								<?php if(!is_user_logged_in()){ ?>
+									<p class="lead blog-description">Veuillez vous connecter avant de rejoindre le salon</p>
+								<?php }elseif(ChatRoom::isUserKicked($nextChat->ID, get_current_user_id())){ ?>
+										<p>Vous avez été expulsé du salon</p>
+								<?php }elseif(false !== Utilisateur::getNotation($chatProduct->ID, get_current_user_id())){ ?>
+									<a class="join-room" href='<?php echo get_permalink($nextChat->ID)?>?changeRoom=true' >Rejoindre un salon</a><br>
+									<?php if($userRoom = ChatRoom::getUserRoom($nextChat->ID)){ ?>
+										<a class="join-room" href='<?php echo get_permalink($userRoom)?>' >Rejoindre votre dernier salon</a><br>
+									<?php } ?>
+								<?php }else{ ?>
+									<a href='<?php echo get_permalink(get_page_by_title('Produit')).$chatProduct->ID;?>' >Veuillez noter le livre avant de rejoindre un salon</a><br>
+								<?php } ?>
+							<?php } ?>
 					<?php }else{ ?>
 						<h1 class="chat-title">Aucun salon programmé pour le moment</h1><br>
 					<?php } ?>
                 </div>
-                </div>
-        </div>    
+           </div>
+    </div>    
 </div>
 
 </section>
@@ -177,28 +177,25 @@ get_header(); ?>
 <section>
 
 <div class="livres-moment">
-        <div class="container">
-        	<div class="row row-offcanvas row-offcanvas-right">
-
-            <div class="col-xs-12 col-sm-12">
-
-
-                    <h2 class="blog-post-title">Livres du moment</h2>
-					<?php foreach($products as $product){ ?>
-						<div class="col-xs-6 col-lg-2">
-							<?php if(!get_field('image', $product->ID)){ ?>
-								<a href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>"><img src="https://pictures.abebooks.com/isbn/9782070543588-fr.jpg"></img></a>
-							<?php }else{ ?>
-								<a href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>"><img src="<?php echo get_field('image', $product->ID); ?>"></img></a>
-							<?php } ?>
-							<p class="title_book"><a  class="link-book" href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>"><?php echo $product->post_title; ?></a></p>
-							<p><a class="btn btn-primary" href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>" role="button">plus d'infos &raquo;</a></p>
-						</div><!--/.col-xs-6.col-lg-4-->
-					<?php } ?>
-                </div>
-        </div>    
+	<div class="container">
+		<div class="row row-offcanvas row-offcanvas-right">
+			<div class="col-xs-12 col-sm-12">
+				<h2 class="blog-post-title">Livres du moment</h2>
+				<?php foreach($products as $product){ ?>
+					<div class="col-xs-6 col-lg-2">
+						<?php if(!get_field('image', $product->ID)){ ?>
+							<a href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>"><img src="<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>"></img></a>
+						<?php }else{ ?>
+							<a href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>"><img src="<?php echo get_field('image', $product->ID); ?>"></img></a>
+						<?php } ?>
+						<p class="title_book"><a  class="link-book" href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>"><?php echo $product->post_title; ?></a></p>
+						<p><a class="btn btn-primary" href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>" role="button">plus d'infos &raquo;</a></p>
+					</div><!--/.col-xs-6.col-lg-4-->
+				<?php } ?>
+			</div>
+		</div>    
+	</div>
 </div>
-
 </section>
 
 <!-- FIN SECTION LIVRES -->
@@ -208,38 +205,33 @@ get_header(); ?>
 <section>
 
 <div class="contact-section">
-        <div class="container">
-        	<div class="row ">
-
+    <div class="container">
+        <div class="row ">
             <div class="col-xs-12 col-sm-12">
-
-			<h2>Contact Us</h2>
-			<p class="description_contact">Feel free to shout us by feeling the contact form or visiting our social network sites like Fackebook,Whatsapp,Twitter.</p>
-			<div class="row">
-				<div class="col-md-12">
-					<form class="form-horizontal">
-						<div class="form-group">
-							<label for="exampleInputName2">Name</label>
-							<input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
-						</div>
-						<div class="form-group">
-							<label for="exampleInputEmail2">Email</label>
-							<input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
-						</div>
-						<div class="form-group ">
-							<label for="exampleInputText">Your Message</label>
-							<textarea  class="form-control" placeholder="Description"></textarea>
-						</div>
-						<button type="submit" class="btn btn-default">Send Message</button>
-					</form>
-
-
+				<h2>Contact Us</h2>
+				<p class="description_contact">Feel free to shout us by feeling the contact form or visiting our social network sites like Fackebook,Whatsapp,Twitter.</p>
+				<div class="row">
+					<div class="col-md-12">
+						<form class="form-horizontal">
+							<div class="form-group">
+								<label for="exampleInputName2">Name</label>
+								<input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
+							</div>
+							<div class="form-group">
+								<label for="exampleInputEmail2">Email</label>
+								<input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
+							</div>
+							<div class="form-group ">
+								<label for="exampleInputText">Your Message</label>
+								<textarea  class="form-control" placeholder="Description"></textarea>
+							</div>
+							<button type="submit" class="btn btn-default">Send Message</button>
+						</form>
+					</div>
 				</div>
-			</div>
-
-        </div>    
-</div>
-</div>
+			</div>    
+		</div>
+	</div>
 </div>
 </section>
 

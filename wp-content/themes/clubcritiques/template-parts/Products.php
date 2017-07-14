@@ -62,7 +62,7 @@ $formats = get_terms( array(
 			} ?>
 
 		<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-		<p>Nombre de Produits correspondant a votre recherche: <?php echo $countProducts; ?></p>
+		<p>Nombre de Produits correspondant à votre recherche: <?php echo $countProducts; ?></p>
 			<form action="" method="POST">
 				<input type='hidden' name='type' value='search'></input>
 				Titre ou auteur : <input type='text' name='keywords' value='<?php echo $_POST['keywords'] ?>'></input><br>
@@ -116,7 +116,21 @@ $formats = get_terms( array(
 				</a><br>
 				<?php  $averageNote = Utilisateur::getAverageNote($product->ID);
 				if ( $averageNote['total'] > 0){ ?>
-					<span class="notation_book"><?php echo $averageNote['average']; ?>/5</span>
+					<span class='star_rating'>
+					<?php
+					if($averageNote['average'] >= 0.5 && $averageNote['average'] < 1.5){
+						echo "<span class='note_star'>★</span>★★★★</span>";
+					}elseif($averageNote['average'] >= 1.5 && $averageNote['average'] < 2.5){
+						echo "<span class='note_star'>★★</span>★★★</span>";
+					}elseif($averageNote['average'] >= 2.5 && $averageNote['average'] < 3.5){
+						echo "<span class='note_star'>★★★</span>★★</span>";
+					}elseif($averageNote['average'] >= 3.5 && $averageNote['average'] < 4.5){
+						echo "<span class='note_star'>★★★★</span>★</span>";						
+					}elseif($averageNote['average'] >= 4.5){
+						echo "<span class='note_star'>★</span>★★★★</span>";
+					}else{
+						echo '★★★★★</span>';
+					} ?>
 				<?php }else{ ?>
 					<span>Aucune note</span>
 				<?php } ?>
