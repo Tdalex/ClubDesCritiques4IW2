@@ -62,7 +62,7 @@ get_header();
 							<div class="row">
 								<form action="" method='POST'>
 								<?php if(Utilisateur::isContact($user->ID)){ ?>
-									<button type='submit' name='type' value='modifyContact'>Supprimer des contacts</button>	
+									<button type='submit' name='type' value='modifyContact'>Retirer de la liste d'amis</button>	
 								<?php }else{ ?>
 									<button type='submit' name='type' value='modifyContact'>Ajouter Contact</button>
 								<?php } ?>
@@ -146,7 +146,7 @@ get_header();
 
 		<div class="container contact-user" id="contact">
 			<div class="contact_profil">
-				<h2>Contactez <?php echo ucfirst(strtolower ($user->user_lastname)).' '.ucfirst(strtolower ($user->user_firstname));?></h2>
+				<h2>Contacter <?php echo ucfirst(strtolower ($user->user_lastname)).' '.ucfirst(strtolower ($user->user_firstname));?></h2>
 			</div>
 
 			<div class="form-contact col-md-6 col-md-offset-3">

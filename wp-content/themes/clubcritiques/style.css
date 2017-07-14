@@ -4852,3 +4852,16 @@ button:hover{
 .input-group-lg {
 	text-align: center;
 }
+
+.biblio_content h3{
+	font-size: 18px;
+    font-weight: 600;
+}
+
+.img_biblio {
+	box-shadow: 2px 2px 10px #333;
+	height: 230px;
+	width: 150px;
+	margin:; auto;
+
+}
