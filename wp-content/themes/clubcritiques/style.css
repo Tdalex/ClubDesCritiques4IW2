@@ -1551,7 +1551,7 @@ nav {
 .hero {
     color: white;
     background-color: rgba(0, 0, 0, 0.5) !important;
-    background: url("assets/images/bibliotheque.jpg") no-repeat;
+    background: url("assets/images/blue-background.jpg") no-repeat;
     background-size: cover;
     background-position: bottom;
     /*padding-bottom: 200px; */
@@ -1568,7 +1568,9 @@ nav {
     margin-bottom: 0px;
     padding-top: inherit;
     padding-bottom: inherit;
+    background-color: #fff;
     width: 100%;
+    height: 90px;
     border-bottom:none;
     min-width: 300px;
     border: none;
@@ -1626,18 +1628,34 @@ nav {
 
 .hero {
     text-align: center;
-    padding-top: 150px;
-    padding-bottom: 100px;
+    padding-top: 90px;
+    padding-bottom: 20px;
 }
 
 .hero h1 {
-    color: white;
+    color: #70BEB1;
     font-weight: bold;
     font-size: 55px;
     margin-bottom: 36px;
     text-transform: inherit;
 }
 
+.hero h2 {
+    color: #CEE8DF;
+    font-size: 22px;
+    max-width: 100%;
+    margin: 0 auto 20px;
+    font-weight: normal;
+    line-height: 1.5;
+}
+
+.chat-link {
+	color: #CEE8DF;
+}
+
+.chat-link:hover {
+	color: #CEE8DF;
+}
 
 .hero p {
     color: rgba(255, 255, 255, 0.6);
@@ -1656,7 +1674,7 @@ nav {
     margin-right: 20px;
     margin-top: 20px;
     font-size: 24px;
-    padding: 18px 24px;
+    padding: 18px 10px;
     transition:0.2s background-color;
 }
 
@@ -1670,6 +1688,243 @@ nav {
 
 /*--------------------------------------------------------------
 13.2 Front Page
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+  MORE INFO
+--------------------------------------------------------------*/
+
+.more_info {
+    color: white;
+    background-color: rgb(112, 190, 177) !important;
+    background: url("assets/images/book-background.jpg") no-repeat;
+    background-size: cover;
+    background-position: bottom;
+    background-blend-mode: multiply;
+}
+
+.more_info {
+    text-align: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.more_info h1 {
+    color: #70BEB1;
+    font-weight: bold;
+    font-size: 55px;
+    margin-bottom: 36px;
+    text-transform: inherit;
+}
+
+
+.more_info p {
+    color: #CEE8DF;
+    font-size: 22px;
+    max-width: 80%;
+    margin: 0 auto 20px;
+    font-weight: normal;
+    line-height: 1.5;
+}
+
+.hint-action-icon {
+    background: url(https://static.senscritique.com/img/layout/misc/introduction/sprite-actions.png?201612221624);
+    display: block;
+    margin: 0 auto 25px;
+}
+
+
+
+.hint-action-icon.discover {
+    background-position: -44px 0;
+    height: 45px;
+    width: 30px;
+}
+
+.hint-action-icon.rate-home {
+    background-position: 0 0;
+    height: 45px;
+    width: 45px;
+    float: inherit;
+}
+
+.hint-action-icon.share {
+    background-position: -113px 0;
+    height: 45px;
+    width: 46px;
+}
+
+.card {
+    float: left;
+    width: 33.333%;
+    padding: .75rem;
+    margin-bottom: 2rem;
+    border: 0;
+    list-style: none;
+}
+
+.hint-action-title {
+	font-size: 30px;
+	text-transform: uppercase;
+	text-align: center;
+	font-weight: 700;
+}
+
+/*--------------------------------------------------------------
+  END MORE INFO
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+  NEXT CHAT
+--------------------------------------------------------------*/
+
+.next-chat {
+    color: white;
+    background-color: rgb(217, 158, 126) !important;
+    background: url("assets/images/chat-background.jpg") no-repeat;
+    background-size: cover;
+    background-position: bottom;
+    background-blend-mode: multiply;
+}
+
+.next-chat {
+    text-align: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.next-chat h1 {
+    color: #70BEB1;
+    font-weight: bold;
+    font-size: 55px;
+    margin-bottom: 36px;
+    text-transform: inherit;
+}
+
+.join-room {
+    color: #CEE8DF;
+    font-size: 22px;
+    max-width: 80%;
+    margin: 0 auto 20px;
+    font-weight: normal;
+    line-height: 1.5;
+}
+
+.join-room:hover {
+   color: #CEE8DF;
+}
+
+.next-chat p {
+    color: #CEE8DF;
+    font-size: 22px;
+    max-width: 80%;
+    margin: 0 auto 20px;
+    font-weight: normal;
+    line-height: 1.5;
+}
+
+/*--------------------------------------------------------------
+  END NEXT CHAT
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+  LIVRES DU MOMENT
+--------------------------------------------------------------*/
+
+.livres-moment {
+    color: white;
+    background-color: rgb(189, 188, 186) !important;
+    background: url("assets/images/bookWall.jpg") no-repeat;
+    background-size: cover;
+    background-position: bottom;
+    background-blend-mode: luminosity;
+}
+
+.livres-moment {
+    text-align: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.livres-moment h1 {
+    color: #70BEB1;
+    font-weight: bold;
+    font-size: 55px;
+    margin-bottom: 36px;
+    text-transform: inherit;
+}
+
+
+.livres-moment p {
+    color: #CEE8DF;
+    font-size: 22px;
+    max-width: 80%;
+    margin: 0 0 20px;
+    font-weight: normal;
+    line-height: 1.5;
+}
+
+.link-book {
+    color: #CEE8DF;
+    font-size: 22px;
+    max-width: 80%;
+    margin: 0 auto 20px;
+    font-weight: normal;
+    line-height: 1.5;
+}
+
+.link-book:hover {
+	color: #CEE8DF;
+}
+
+/*--------------------------------------------------------------
+  END LIVRES DU MOMENT
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+  CONTACT SECTION
+--------------------------------------------------------------*/
+
+.contact-section {
+    color: white;
+    background-color: rgb(38, 40, 61) !important;
+    background: url("assets/images/contact-wallpaper.jpg") no-repeat;
+    background-size: cover;
+    background-position: bottom;
+    background-blend-mode: multiply;
+}
+
+.contact-section {
+    text-align: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.contact-section h2 {
+    color: #70BEB1;
+    font-weight: bold;
+    font-size: 55px;
+    margin-bottom: 36px;
+    text-transform: inherit;
+}
+
+
+.contact-section p {
+    color: #CEE8DF;
+    font-size: 22px;
+    max-width: 80%;
+    margin: 0 auto 20px;
+    font-weight: normal;
+    line-height: 1.5;
+}
+
+.form-group > label {
+	font-size: 15px;
+	color: #fff;
+}
+
+/*--------------------------------------------------------------
+ END CONTACT SECTION
 --------------------------------------------------------------*/
 
 .clubcritiques-front-page .site-content {
@@ -1688,6 +1943,10 @@ nav {
 	font-weight: 700;
 	font-size: 20px;
 
+}
+
+#content {
+	padding-top: 100px;
 }
 
 .title-about {
@@ -4170,6 +4429,7 @@ object {
 .description {
 	background-color: #CEE8DF;
 	padding: 10px;
+    box-shadow: 2px 2px 10px #333;
 }
 
 .description h2{
@@ -4204,6 +4464,7 @@ p{
 
 .suggestions h3{
 	margin: 0;
+	font-size: 18px;
 	font-weight: 600;
 	text-align: center;
 }
@@ -4215,7 +4476,7 @@ p{
 
 .title_profil h1{
 	text-align: center;
-	font-size: 25px;
+	font-size: 35px;
 	font-weight: bold;
 	margin-bottom: 8%;
 
@@ -4236,7 +4497,7 @@ p{
 	font-weight: bold;
 	font-size: 25px;
 	margin-left: 1%;
-	margin-top: 5%;
+	margin-top: 3%;
 	margin-bottom: 2%;
 }
 
@@ -4257,7 +4518,6 @@ p{
 }
 
 .form_contact div label{
-	text-align: right;
 	font-size: 18px;
 	font-weight: normal;
 	margin: 0;
@@ -4267,16 +4527,24 @@ p{
 	font-size: 30px;
 }
 
+.content_myProfil h2{
+	font-size: 23px;
+}
+
+.content_myProfil p{
+	font-size: 18px;
+	margin-top: 2%;
+}
+
 .div_menu_right {
 	padding-left: 5%;
 }
 
-.menu_right {
-	position: fixed;
+.menu_right h2{
+	font-size: 23px;
 }
 
 .menu_flottant {
-	/*position: fixed;*/
 	padding-left: 5px;
 	border-left: solid;
 	border-width: 2px;
@@ -4285,7 +4553,8 @@ p{
 .menu_flottant ul li {
 	list-style: none;
 	margin: auto;
-	font-size: 13px;
+	font-size: 18px;
+	margin: 10px;
 
 }
 
@@ -4295,6 +4564,7 @@ p{
 
 .submit_contact {
 	font-size: 12px !important;
+	width: 200px;
 }
 
 #sidebar {
@@ -4325,14 +4595,11 @@ p{
 	margin: auto;
 	height: 300px; 
 	width: 200px;
+	box-shadow: 2px 2px 10px #333;
 }
 
 .description_livre {
 	margin-top: 4%;
-}
-
-.contain {
-	margin-top: 5%;
 }
 
 .interligne_big {
@@ -4393,6 +4660,10 @@ button:hover{
 	border-radius: 50%;
 	margin: 5px;
 	box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+	background-repeat: no-repeat !important;
+    background-position: center top !important;
+    background-size: cover !important;
+    box-shadow: 0px 0px 10px #4b6762;
 }
 
 .star_rating_small {
@@ -4404,7 +4675,7 @@ button:hover{
 	background-color: #CEE8DF;
 	border: none;
 	border-radius: 4px;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, .15);
+	box-shadow: 0 1px 1px #aaa;
 	color: #25283C;
 	font-family: inherit;
 	font-size: 14px;
@@ -4420,7 +4691,7 @@ button:hover{
 	background-color: white;
 	border: 1px solid #bbb;
 	border-radius: 4px;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, .15);
+	box-shadow: 0 1px 1px #aaa;
 	color: #25283C;
 	font-family: inherit;
 	font-size: 14px;
@@ -4511,4 +4782,73 @@ button:hover{
 
 .exchanges {
 	margin-bottom: 3%;
+}
+
+.profil_img {
+	max-height: 300px;
+	border: 1px solid #888;
+	box-shadow: 2px 2px 10px #333;
+}
+
+.bg_page_profil {
+	margin-top: 3%;
+}
+
+.bg_page_profil h1{
+	text-align: center;
+	font-size: 35px;
+	font-weight: bold;
+}
+
+.bg_page_profil p {
+	text-align: center;
+	font-size: 20px;	
+}
+
+.suggestions-img {
+	height: 230px;
+	width: 150px;
+	margin: auto;
+}
+
+.suggestions-img img {
+    box-shadow: 2px 2px 10px #333;
+}
+
+.suggestions h3 {
+	padding-top: 2%;
+}
+
+.btn_delete {
+    margin: 0;
+    padding: 0;
+    line-height: 100%; /* Si ça fonctionne pas mets 0 */
+    border: 0;
+    background: none; /* ou transparent je sais plus... */
+    font: /* Définis le même font qu'un lien traditionnel */;
+    color: #aaa/* La même couleur... */;
+    text-decoration: underline; /* Normalement */
+    box-shadow: none;
+}
+
+.btn_delete:hover{
+	background: none;
+	color: #FF5B2B;
+}
+
+.btn_submit_com {
+	text-align: right;
+	margin-top: 1%;
+}
+
+.contact-user {
+	margin-top: 5%;
+}
+
+.contact_profil {
+	text-align: center;
+}
+
+.input-group-lg {
+	text-align: center;
 }

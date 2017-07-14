@@ -87,7 +87,7 @@ if(count($suggestedProductsTemp)<4){
 get_header(); 
 ?>
 
-<div class="container-fluid contain">
+<div class="container-fluid">
 	<div class="row header_page">
 		<div class="container">
 			<?php if(isset($_SESSION['message'])){ ?>
@@ -196,11 +196,13 @@ get_header();
 		<?php foreach($suggestedProductsTemp as $sp){ ?>
 			<div class="col-md-3 suggestions col-xs-6">
 				<a href="<?php echo get_permalink(get_page_by_title('Produit')).$sp->ID; ?>">
-					<?php if(!get_field('image', $sp->ID)){ ?> 
-						<img class="img-responsive"  src="<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>"> 
-					<?php }else{ ?>
-						<img class="img-responsive"  src="<?php echo get_field('image', $sp->ID); ?>"></img>
-					<?php } ?>
+					<div class="suggestions-img">
+						<?php if(!get_field('image', $sp->ID)){ ?> 
+							<img class="img-responsive"  src="<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>"> 
+						<?php }else{ ?>
+							<img class="img-responsive"  src="<?php echo get_field('image', $sp->ID); ?>"></img>
+						<?php } ?>
+					</div>
 					<h3><?php echo $sp->post_title; ?></h3>
 				</a>				
 				<a href="<?php echo get_permalink(get_page_by_title('Auteur')).get_field('author', $sp->ID)[0]->ID; ?>">
@@ -222,13 +224,14 @@ get_header();
 		<h2 class="troc_h2 col-md-5 col-md-offset-3">Ces utilisateurs souhaitent recevoir ce livre :</h2>
 			<?php foreach($exchanges['take'] as $exchange){ ?>
 				<div class="user_troc">
-					<div class="col-md-2 col-md-offset-3 img_troc">
+					<div class="col-md-2 col-md-offset-3 col-xs-12 img_troc">
 		              <a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$commentAuthor->ID; ?>'>
 						<?php if(!get_field('image', $sp->ID)){ ?> 
-							<img src="<?php echo get_parent_theme_file_uri( '/assets/images/avatar_defaut.png' ); ?>" 
-							class="avatar_sp avatar_echange img-responsive" alt="avatar" />
+							<div style="background-image: url(<?php echo get_parent_theme_file_uri( '/assets/images/avatar_defaut.png' ); ?>)" 
+							class="avatar_sp avatar_echange img-responsive"></div>
 						<?php }else{ ?>
-							<img class="img-responsive"  src="<?php echo get_field('image', $sp->ID); ?>"></img>
+							<div class="img-responsive avatar_sp avatar_echange"
+								style="background-image: url(<?php echo get_field('image', $sp->ID); ?>)"></div>
 						<?php } ?>
 		              </a>
 					</div>
@@ -243,7 +246,7 @@ get_header();
 	<?php }?>
 
 	<?php if (isset($exchanges['give'])){ ?>
-		<h2 class="troc_h2 col-md-5 col-md-offset-3">Ces utilisateurs souhaitent échanger ce livre :</h2>
+		<h2 class="troc_h2 col-md-5 col-md-offset-3">Ces utilisateurs possèdent ce livre</h2>
 			<?php foreach($exchanges['give'] as $exchange){ ?>
 				<?php $exchangeAuthor = get_user_by('ID', $exchange->post_author); ?>
 				<div class="user_troc">
@@ -253,7 +256,7 @@ get_header();
 							<img src="<?php echo get_parent_theme_file_uri( '/assets/images/avatar_defaut.png' ); ?>" 
 							class="avatar_sp avatar_echange img-responsive" alt="avatar" />
 						<?php }else{ ?>
-							<img class="img-responsive"  src="<?php echo get_field('image', $sp->ID); ?>"></img>
+							<img class="avatar_sp avatar_echange img-responsive"  src="<?php echo get_field('image', $sp->ID); ?>" alt="avatar"></img>
 						<?php } ?>							
 						</a>
 					</div>
@@ -284,19 +287,19 @@ get_header();
 					</div>
 
 					<?php if( Utilisateur::getUserComment($product_ID)){
-					$userComment = Utilisateur::getUserComment($product_ID); ?>
-					<textarea name='comment' class="send_commentaire" placeholder="Ajouter un commentaire..."><?php echo strip_tags($userComment->post_content); ?></textarea>
+						$userComment = Utilisateur::getUserComment($product_ID); ?>
+						<textarea name='comment' class="send_commentaire" placeholder="Ajouter un commentaire..."><?php echo strip_tags($userComment->post_content); ?></textarea>
 					
-					<div class="row">
-						<div class="col-md-2 col-md-offset-8 btn_submit">
-							<button type='submit' value='deleteComment' class="btn" name='type'>supprimer</button>
+						<div class="btn_submit_com">
+							<button type='submit' value='deleteComment' class="btn" name='type'>annuler</button>&nbsp;&nbsp;
+							<button type='submit' value='comment' class="btn" name='type'> commenter</button>
 						</div>
 						<?php }else{ ?>
-						<textarea name='comment'></textarea>
+							<textarea name='comment'></textarea>
+							<div class="btn_submit_com">
+								<button type='submit' value='comment' class="btn" name='type'> commenter</button>
+							</div>
 						<?php } ?>
-						<div class="col-md-2 btn_submit">
-							<button type='submit' value='comment' class="btn" name='type'>commenter</button>
-						</div>
 					</div>
 					</form>
 				</div>
@@ -309,9 +312,9 @@ get_header();
 						<div class="col-md-2 ">
 			              <a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$commentAuthor->ID; ?>'>
 							<?php if(!get_field('photo', 'user_'.$commentAuthor->ID)){ ?> 
-								<img src="<?php echo get_parent_theme_file_uri( '/assets/images/avatar_defaut.png' ); ?>" class="avatar_sp img-responsive" alt="avatar" />
+								<div class="avatar_sp img-responsive" style="background-image: url(<?php echo get_parent_theme_file_uri( '/assets/images/avatar_defaut.png' ); ?>)"></div>
 							<?php }else{ ?>
-								<img class="img-responsive"  src="<?php echo get_field('photo', 'user_'.$commentAuthor->ID); ?>"></img>
+								<div class="avatar_sp img-responsive" style="background-image: url(<?php echo get_field('photo', 'user_'.$commentAuthor->ID); ?>)"></div>
 							<?php } ?>
 			              </a>
 						</div>
