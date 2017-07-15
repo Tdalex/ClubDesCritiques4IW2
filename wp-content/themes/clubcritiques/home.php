@@ -21,6 +21,8 @@ $products = get_posts( $args );
 //next Chat
 setlocale (LC_TIME, 'fr_FR.utf8','fra'); 
 $nextChat  = ChatRoom::getNextChat();
+$_SESSION['message']['type'] = 'success';
+$_SESSION['message']['text'] = 'success';
 $startDate = get_field('start_date', $nextChat->ID);
 $endDate   = get_field('end_date',  $nextChat->ID);
 $today     = date('Y-m-d H:i:s');
@@ -31,14 +33,15 @@ $end   = strftime('%A %d %B à %Hh%M',strtotime($endDate));
 <?php
 get_header(); ?>
 
-<section>
-
 <?php if(isset($_SESSION['message'])){ ?>
 	<div class="alert alert-<?php echo $_SESSION['message']['type'] ?>">
 	  <?php echo $_SESSION['message']['text']; ?>
 	</div>	
 <?php unset($_SESSION['message']);
 	} ?>
+
+<section>
+
 <div class="hero">
 
 
@@ -90,7 +93,7 @@ get_header(); ?>
         	<div class="row">
         		<ul class="card">
 			<li class="hint-column hint-action">
-				<span class="hint-action-icon discover"></span>
+				<span class="hint-action-icon discover fa fa-star-o fa-4x"></span>
 				<span class="hint-action-title">Découvrez</span>
 				<p class="hint-action-description">
 					<?php echo get_field('discover', get_the_ID()); ?>
@@ -100,7 +103,7 @@ get_header(); ?>
 
 		<ul class="card">
 			<li class="hint-column hint-action">
-				<span class="hint-action-icon rate-home"></span>
+				<span class="hint-action-icon rate-home fa fa-bookmark-o fa-4x"></span>
 				<span class="hint-action-title">NOTEZ</span>
 				<p class="hint-action-description">
 					<?php echo get_field('notation', get_the_ID()); ?>
@@ -110,7 +113,7 @@ get_header(); ?>
 
 		<ul class="card">
 			<li class="hint-column hint-action">
-				<span class="hint-action-icon share"></span>
+				<span class="hint-action-icon share fa fa-share-alt fa-4x"></span>
 				<span class="hint-action-title">PARTAGEZ</span>
 				<p class="hint-action-description">
 					<?php echo get_field('share', get_the_ID()); ?>

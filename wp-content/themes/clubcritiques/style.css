@@ -1538,6 +1538,14 @@ body {
 13.1 Header
 --------------------------------------------------------------*/
 
+.alert {
+	text-align: center;
+	margin-bottom: 0;
+	font-size: 22px;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
 .search-form {
 	width: 650px;
 	position: absolute;
@@ -1635,7 +1643,7 @@ nav {
 
 .hero {
     text-align: center;
-    padding-top: 90px;
+    padding-top: 20px;
     padding-bottom: 20px;
 }
 
@@ -1732,10 +1740,10 @@ nav {
     margin: 0 auto 20px;
     font-weight: normal;
     line-height: 1.5;
+    text-align: center;
 }
 
 .hint-action-icon {
-    background: url(https://static.senscritique.com/img/layout/misc/introduction/sprite-actions.png?201612221624);
     display: block;
     margin: 0 auto 25px;
 }
@@ -1837,6 +1845,14 @@ nav {
 /*--------------------------------------------------------------
   LIVRES DU MOMENT
 --------------------------------------------------------------*/
+
+h2.blog-post-title {
+	color: #70BEB1;
+    font-weight: bold;
+    font-size: 55px;
+    margin-bottom: 36px;
+    text-transform: inherit;
+}
 
 .livres-moment {
     color: white;
