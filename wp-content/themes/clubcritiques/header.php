@@ -49,6 +49,7 @@ if(isset($_POST) && $_POST['type'] == 'register'){
             <div class="container">
                 <a class="navbar-brand" href="/"><img id="logo_header" src="<?php echo get_parent_theme_file_uri( '/assets/images/logo.png' ); ?>" width="200" height="75" ></a>
                 <div class="collapse navbar-collapse" id="myNavbar">
+					<?php get_search_form(); ?>
                     <ul class="nav navbar-nav navbar-right">
                         <?php get_template_part('template-parts/navigation/navigation', 'top'); ?>
                     </ul>

@@ -1538,6 +1538,13 @@ body {
 13.1 Header
 --------------------------------------------------------------*/
 
+.search-form {
+	width: 650px;
+	position: absolute;
+	margin-left: 170px;
+	top: 20px;
+}
+
 nav {
     font-family: 'Montserrat', sans-serif;
 }
@@ -1573,7 +1580,7 @@ nav {
 
 #logo_header {
 	position: absolute;
-	top: 0;
+	top: 10px;
 	width: 8%; 
 }
 
@@ -1934,7 +1941,7 @@ nav {
 }
 
 #content {
-	padding-top: 100px;
+	padding-top: 90px;
 }
 
 .title-about {
@@ -2840,10 +2847,6 @@ h2.widget-title {
 }
 
 /* Search */
-
-.search-form {
-	position: relative;
-}
 
 .search-form .search-submit {
 	bottom: 3px;

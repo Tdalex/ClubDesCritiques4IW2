@@ -115,8 +115,47 @@ Class Chatroom {
 			if ( $message->id <= $_POST['last_update_id'] )
 				unset( $messages[$key] );
 		}
-		$messages = array_values( $messages );
-		echo json_encode( $messages );
+		$return['chat'] = array_values( $messages );
+		
+		$userId	     = $_POST['userId'];
+		$roomId 	 = $_POST['roomId'];
+		$currentUser = get_field('current_user', $roomId); 
+		$user_meta   = get_userdata($userId);
+		$user_role   = $user_meta->roles[0]; 
+		$current     = "";
+		
+		if(!empty($currentUser)){
+			foreach($currentUser as $cu){					
+				$user = get_user_by('ID', $cu['user']['ID']);
+				$user_meta   = get_userdata($cu['user']['ID']);
+				$cu_role   = $user_meta->roles[0]; 
+				$current .= "<tr><td><a target='_blank' href='". get_permalink(get_page_by_title('utilisateur')).$user->id ."'> ". strtoupper($user->user_lastname)." ".ucfirst(strtolower ($user->user_firstname))."</a></td>";
+				if($user_role == 'administrator' && $cu_role != 'administrator'){
+					$current .= "<td><a href='". get_permalink($roomId).'?kick='. $cu['user']['ID'] ."'>expulser</a></td>";
+				}else{
+					$current .= "<td></td>";
+				}
+				$current .= "</tr>";
+			}
+		}
+		$return['current'] = $current;
+		
+		$kickedFrom  = chat::isUserKicked($roomId, $userId);
+		$kicked     = "";
+		
+		if($kickedFrom){
+			$kicked = "<div class='alert alert-danger'>
+							Vous avez été expulsé du salon. <a href='/'>retour à l'accueil</a>
+						</div>";
+		}
+		$return['kicked'] = $kicked;
+		
+		if(false === chat::isUserKicked($roomId, $userId)){
+			chat::cleanCurrentUsers($roomId);
+			chat::joinChatRoom($roomId, $userId);
+		}
+		
+		echo json_encode($return);
 		die;
 	}
 
@@ -229,58 +268,6 @@ Class Chatroom {
 		<textarea style="resize:none" class="chat-text-entry"></textarea>
 		<?php
 		return '';
-	}
-	
-	function ajax_join_room_handler(){
-		$userId = $_POST['userId'];
-		$roomId = $_POST['roomId'];
-		if(true === chat::isUserKicked($roomId, $userId)){
-			die();
-		}
-		chat::cleanCurrentUsers($roomId);
-		chat::joinChatRoom($roomId, $userId);
-		die();
-	}
-	
-	function ajax_current_user_handler(){
-		$userId	     = $_POST['userId'];
-		$roomId 	 = $_POST['roomId'];
-		$currentUser = get_field('current_user', $roomId); 
-		$user_meta   = get_userdata($userId);
-		$user_role   = $user_meta->roles[0]; 
-		$message     = "";
-		
-		if(!empty($currentUser)){
-			foreach($currentUser as $cu){					
-				$user = get_user_by('ID', $cu['user']['ID']);
-				$user_meta   = get_userdata($cu['user']['ID']);
-				$cu_role   = $user_meta->roles[0]; 
-				$message .= "<tr><td><a target='_blank' href='". get_permalink(get_page_by_title('utilisateur')).$user->id ."'> ". strtoupper($user->user_lastname)." ".ucfirst(strtolower ($user->user_firstname))."</a></td>";
-				if($user_role == 'administrator' && $cu_role != 'administrator'){
-					$message .= "<td><a href='". get_permalink($roomId).'?kick='. $cu['user']['ID'] ."'>expulser</a></td>";
-				}else{
-					$message .= "<td></td>";
-				}
-				$message .= "</tr>";
-			}
-		}
-		echo $message;
-		die();
-	}
-	
-	function ajax_kicked_user_handler(){
-		$userId	     = $_POST['userId'];
-		$roomId 	 = $_POST['roomId'];
-		$kickedFrom  = chat::isUserKicked($roomId, $userId);
-		$message     = "";
-		
-		if($kickedFrom){
-			$message = "<div class='alert alert-danger'>
-							Vous avez été expulsé du salon. <a href='/'>retour à l'accueil</a>
-						</div>";
-		}
-		echo $message;
-		die();
 	}
 }
 
