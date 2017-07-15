@@ -64,7 +64,6 @@ $formats = get_terms( array(
 		<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
 		<p>Nombre de Produits correspondant à votre recherche: <?php echo $countProducts; ?></p>
 			<form action="" method="POST">
-				<input type='hidden' name='type' value='search'></input>
 				Titre ou auteur : <input type='text' name='keywords' value='<?php echo $_POST['keywords'] ?>'></input><br>
 				<br><label>Genre</label>
 
@@ -95,7 +94,7 @@ $formats = get_terms( array(
 						<?php } ?>
 					<?php } ?>
 				</select><br>
-				<br><button type='submit'>rechercher</button>
+				<br><button name='type' value='search' type='submit'>rechercher</button>
 			</form>
 		</div><!-- /.blog-sidebar -->
 
