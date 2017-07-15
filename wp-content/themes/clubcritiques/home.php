@@ -52,8 +52,8 @@ get_header(); ?>
 			<form action="" method="POST" class="login">
 			<p>Connectez vous</p>
 				 <input type='hidden' name='type' value='login'></input>
-				email:<input type='text' name='email' placeholder="email"></input><br>
-				password:<input type='password' name='password' placeholder="mot de passe"></input><br>
+				Email:<input type='text' name='email' placeholder="email"></input><br>
+				Mot de passe:<input type='password' name='password' placeholder="mot de passe"></input><br>
 				<button type='submit'>se connecter</button>
 			</form>
 		</div>
@@ -204,8 +204,7 @@ get_header(); ?>
     <div class="container">
         <div class="row ">
             <div class="col-xs-12 col-sm-12">
-				<h2>Contact Us</h2>
-				<p class="description_contact">Feel free to shout us by feeling the contact form or visiting our social network sites like Fackebook,Whatsapp,Twitter.</p>
+				<h2>Contactez nous</h2>
 				<div class="row">
 					<div class="col-md-12">
 						<form class="form-horizontal">
