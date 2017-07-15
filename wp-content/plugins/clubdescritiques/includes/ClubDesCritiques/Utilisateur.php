@@ -41,7 +41,7 @@ class Utilisateur{
 			$_SESSION['message'] = array('type' => 'danger', 'text' => 'email deja utilise');
 			return false;
 		}
-		$_SESSION['message'] = array('type' => 'success', 'text' => 'un email vous a ete envoye');
+		$_SESSION['message'] = array('type' => 'success', 'text' => 'un email comportant vos identifiants vous a ete envoyé');
 		return self::redirect(strtok($_SERVER["REQUEST_URI"],'?'));
 	}
 

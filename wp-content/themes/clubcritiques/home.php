@@ -26,7 +26,6 @@ $endDate   = get_field('end_date',  $nextChat->ID);
 $today     = date('Y-m-d H:i:s');
 $start = strftime('%A %d %B à %Hh%M',strtotime($start));
 $end   = strftime('%A %d %B à %Hh%M',strtotime($endDate));
-
 ?>
 
 <?php
@@ -34,16 +33,17 @@ get_header(); ?>
 
 <section>
 
+<?php if(isset($_SESSION['message'])){ ?>
+	<div class="alert alert-<?php echo $_SESSION['message']['type'] ?>">
+	  <?php echo $_SESSION['message']['text']; ?>
+	</div>	
+<?php unset($_SESSION['message']);
+	} ?>
 <div class="hero">
 
-<?php if(isset($_SESSION['message'])){ ?>
-			<div class="alert alert-<?php echo $_SESSION['message']['type'] ?>">
-			  <?php echo $_SESSION['message']['text']; ?>
-			</div>	
-		<?php unset($_SESSION['message']);
-			} ?>
 
 <div class="container">
+<<<<<<< HEAD
 			<div class="col-md-7 col-md-offset-5 col-xs-10 col-xs-offset-2">
 	            <h1 class="page-title">Le concept</h1>
 	            <h2 class="lead blog-description"><?php echo get_the_content() ?><h2>
@@ -54,31 +54,39 @@ get_header(); ?>
             <?php if(!is_user_logged_in()){ ?>
 
             <div class="col-xs-6 col-sm-6">
+=======
+		<h1 class="page-title"><?php echo get_the_title(); ?></h1>
+		<h2 class="lead blog-description"><?php echo get_the_content(); ?><h2>
+		<div class="container">
+>>>>>>> 3f4fc85e6b9eeb58e0b5fc6506153fb19bca364e
 
-	<form action="" method="POST" class="login">
-	<p>Connectez vous</p>
-		 <input type='hidden' name='type' value='login'></input>
-		email:<input type='text' name='email' placeholder="email"></input><br>
-		password:<input type='password' name='password' placeholder="mot de passe"></input><br>
-		<button type='submit'>se connecter</button>
-	</form>
-		</div>
-	
+	<?php if(!is_user_logged_in()){ ?>
 		<div class="col-xs-6 col-sm-6">
-		<p>Inscrivez vous</p>
-	<form action="" method="POST">
-		<input type='hidden' name='type' value='register'></input>
-		Email:<input required='required' type='text' name='email' placeholder="email"></input><br>
-		<button type='submit'>S'inscrire</button>
-	</form>
-	</div>
-	
-<?php } else { ?>
-		<form action="" method="POST" class="logout">
-		<input type='hidden' name='type' value='logout'></input>
-		<button type='submit'>se deconnecter</button>
-	</form>	
-<?php } ?>
+			<form action="" method="POST" class="login">
+			<p>Connectez vous</p>
+				 <input type='hidden' name='type' value='login'></input>
+				Email:<input type='text' name='email' placeholder="email"></input><br>
+				Mot de passe:<input type='password' name='password' placeholder="mot de passe"></input><br>
+				<button type='submit'>se connecter</button>
+			</form>
+		</div>
+		<div class="col-xs-6 col-sm-6">
+			<p>Inscrivez vous</p>
+			<form action="" method="POST">
+				<input type='hidden' name='type' value='register'></input>
+				Email:<input required='required' type='text' name='email' placeholder="email"></input><br>
+				<button type='submit'>S'inscrire</button>
+			</form>
+		</div>
+		
+	<?php } elseif($_SESSION['activate']) { 
+			echo $_SESSION['activate'];
+		  } else { ?>
+			<form action="" method="POST" class="logout">
+			<input type='hidden' name='type' value='logout'></input>
+			<button type='submit'>se deconnecter</button>
+		</form>	
+	<?php } ?>
 
 </div> <!-- Container -->
        </div>
@@ -98,7 +106,7 @@ get_header(); ?>
 				<img class="icone-info" src="<?php echo get_parent_theme_file_uri( '/assets/images/icone_book.png' ); ?>" alt="icone" /><br/>
 				<span class="hint-action-title">Découvrez</span>
 				<p class="hint-action-description">
-					Nous organisons votre bouche à oreille culturel. Découvrez des livres qui correspondent à vos goûts.
+					<?php echo get_field('discover', get_the_ID()); ?>
 				</p>
 			</li>
 		</ul>
@@ -108,7 +116,7 @@ get_header(); ?>
 				<img class="icone-info" src="<?php echo get_parent_theme_file_uri( '/assets/images/icone_star.png' ); ?>" alt="icone" /><br/>
 				<span class="hint-action-title">NOTEZ</span>
 				<p class="hint-action-description">
-					Evaluez les livres que vous avez lus. Classez-les selon vos critères ou donnez votre avis détaillé dans une critique.
+					<?php echo get_field('notation', get_the_ID()); ?>
 				</p>
 			</li>
 		</ul>
@@ -118,9 +126,7 @@ get_header(); ?>
 				<img class="icone-info" src="<?php echo get_parent_theme_file_uri( '/assets/images/icone_share.png' ); ?>" alt="icone" /><br/>
 				<span class="hint-action-title">PARTAGEZ</span>
 				<p class="hint-action-description">
-					Faites découvrir vos coups de coeur et vos coups de gueule à vos amis, conseillez leur ce qu'ils pourront aimer.
-
-
+					<?php echo get_field('share', get_the_ID()); ?>
 				</p>
 			</li>
 		</ul>
@@ -211,8 +217,7 @@ get_header(); ?>
     <div class="container">
         <div class="row ">
             <div class="col-xs-12 col-sm-12">
-				<h2>Contact Us</h2>
-				<p class="description_contact">Feel free to shout us by feeling the contact form or visiting our social network sites like Fackebook,Whatsapp,Twitter.</p>
+				<h2>Contactez nous</h2>
 				<div class="row">
 					<div class="col-md-12">
 						<form class="form-horizontal">

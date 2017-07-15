@@ -94,8 +94,7 @@ get_header();
 	<div class="container">
 		<div class="bg_page_profil row">
 			<h1>L'ESPACE TROC</h1>
-			<p class="col-md-10 col-md-offset-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores officia aut vel facilis ducimus doloremque harum, dicta laborum repellat exercitationem id adipisci culpa, commodi quisquam quis nobis fuga libero eligendi!
-			</p>
+			<?php echo get_field('exchange_description', get_the_ID()); ?>
 		</div>
 		<div class="row exchange">
 			<?php if(isset($exchanges['take'])){ ?>
@@ -104,7 +103,7 @@ get_header();
 					<?php foreach($exchanges['take'] as $exchange){ ?>
 						<?php $exchangeProduct = get_field('product', $exchange->ID)[0]; ?>
 						<div class="col-md-3 col-xs-6 suggestions">
-							<a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$exchangeProduct->ID; ?>'>
+							<a href='<?php echo get_permalink(get_page_by_title('Produit')).$exchangeProduct->ID; ?>'>	
 								<div class="suggestions-img">
 									<?php if(!get_field('image', $exchangeProduct->ID)){ ?> 
 										<img class="img-responsive" src="<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>"> 
@@ -113,6 +112,9 @@ get_header();
 									<?php } ?>
 								</div>
 								<h3><?php echo $exchangeProduct->post_title; ?></h3>
+							
+							</a>	
+							<a href="<?php echo get_permalink(get_page_by_title('Auteur')).get_field('author',$exchangeProduct->ID)[0]->ID; ?>">
 								<p><?php echo get_field('author',$exchangeProduct->ID)[0]->post_title; ?></p>
 							</a>
 						</div>
@@ -125,7 +127,7 @@ get_header();
 					<?php foreach($exchanges['give'] as $exchange){ ?>
 						<?php $exchangeProduct = get_field('product', $exchange->ID)[0]; ?>
 						<div class="col-md-3 col-xs-6 suggestions">
-							<a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$exchangeProduct->ID; ?>'>	
+							<a href='<?php echo get_permalink(get_page_by_title('Produit')).$exchangeProduct->ID; ?>'>	
 								<div class="suggestions-img">
 									<?php if(!get_field('image', $exchangeProduct->ID)){ ?> 
 										<img class="img-responsive" src="<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>"> 
@@ -133,7 +135,10 @@ get_header();
 										<img class="img-responsive" src="<?php echo get_field('image', $exchangeProduct->ID); ?>"></img>
 									<?php } ?>
 								</div>
-								<h3><?php echo $exchangeProduct->post_title; ?></h3>
+								<h3><?php echo $exchangeProduct->post_title; ?></h3>							
+							</a>
+							<a>		
+							<a href="<?php echo get_permalink(get_page_by_title('Auteur')).get_field('author',$exchangeProduct->ID)[0]->ID; ?>">
 								<p><?php echo get_field('author',$exchangeProduct->ID)[0]->post_title; ?></p>
 							</a>
 						</div>
