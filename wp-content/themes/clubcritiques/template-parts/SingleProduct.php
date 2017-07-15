@@ -200,8 +200,7 @@ get_header();
 <?php if (isset($exchanges['give']) || isset($exchanges['take'])){ ?>
 <div class="bg_page row" id="troc">
 	<h1 class="h1_troc">L'ESPACE TROC</h1>
-	<p class="col-md-10 col-md-offset-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores officia aut vel facilis ducimus doloremque harum, dicta laborum repellat exercitationem id adipisci culpa, commodi quisquam quis nobis fuga libero eligendi!
-	</p>
+		<?php echo get_field('exchange_description', get_the_ID()); ?>
 </div>
 <div class="container exchanges">
 	<?php if(isset($exchanges['take'])){ ?>
@@ -210,12 +209,12 @@ get_header();
 				<div class="user_troc">
 					<div class="col-md-2 col-md-offset-3 col-xs-12 img_troc">
 		              <a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$commentAuthor->ID; ?>'>
-						<?php if(!get_field('image', $sp->ID)){ ?> 
+						<?php if(!get_field('photo',  'user_'.$exchangeAuthor->ID)){ ?> 
 							<div style="background-image: url(<?php echo get_parent_theme_file_uri( '/assets/images/avatar_defaut.png' ); ?>)" 
 							class="avatar_sp avatar_echange img-responsive"></div>
 						<?php }else{ ?>
 							<div class="img-responsive avatar_sp avatar_echange"
-								style="background-image: url(<?php echo get_field('image', $sp->ID); ?>)"></div>
+								style="background-image: url(<?php echo get_field('photo',  'user_'.$exchangeAuthor->ID); ?>)"></div>
 						<?php } ?>
 		              </a>
 					</div>
@@ -236,11 +235,11 @@ get_header();
 				<div class="user_troc">
 					<div class="col-md-2 col-md-offset-3 img_troc">
 						<a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$exchangeAuthor->ID; ?>'>
-						<?php if(!get_field('image', $sp->ID)){ ?> 
+						<?php if(!get_field('photo', 'user_'.$exchangeAuthor->ID)){ ?> 
 							<img src="<?php echo get_parent_theme_file_uri( '/assets/images/avatar_defaut.png' ); ?>" 
 							class="avatar_sp avatar_echange img-responsive" alt="avatar" />
 						<?php }else{ ?>
-							<img class="avatar_sp avatar_echange img-responsive"  src="<?php echo get_field('image', $sp->ID); ?>" alt="avatar"></img>
+							<img class="avatar_sp avatar_echange img-responsive"  src="<?php echo get_field('photo',  'user_'.$exchangeAuthor->ID); ?>" alt="avatar"></img>
 						<?php } ?>							
 						</a>
 					</div>

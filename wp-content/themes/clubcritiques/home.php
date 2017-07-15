@@ -26,7 +26,6 @@ $endDate   = get_field('end_date',  $nextChat->ID);
 $today     = date('Y-m-d H:i:s');
 $start = strftime('%A %d %B à %Hh%M',strtotime($start));
 $end   = strftime('%A %d %B à %Hh%M',strtotime($endDate));
-
 ?>
 
 <?php
@@ -34,48 +33,47 @@ get_header(); ?>
 
 <section>
 
+<?php if(isset($_SESSION['message'])){ ?>
+	<div class="alert alert-<?php echo $_SESSION['message']['type'] ?>">
+	  <?php echo $_SESSION['message']['text']; ?>
+	</div>	
+<?php unset($_SESSION['message']);
+	} ?>
 <div class="hero">
 
-<?php if(isset($_SESSION['message'])){ ?>
-			<div class="alert alert-<?php echo $_SESSION['message']['type'] ?>">
-			  <?php echo $_SESSION['message']['text']; ?>
-			</div>	
-		<?php unset($_SESSION['message']);
-			} ?>
 
 <div class="container">
-            <h1 class="page-title">La puissance du bouche à oreille</h1>
-            <h2 class="lead blog-description"><?php echo get_the_content() ?><h2>
-            <div class="container">
+		<h1 class="page-title"><?php echo get_the_title(); ?></h1>
+		<h2 class="lead blog-description"><?php echo get_the_content(); ?><h2>
+		<div class="container">
 
-            <?php if(!is_user_logged_in()){ ?>
-
-            <div class="col-xs-6 col-sm-6">
-
-	<form action="" method="POST" class="login">
-	<p>Connectez vous</p>
-		 <input type='hidden' name='type' value='login'></input>
-		email:<input type='text' name='email' placeholder="email"></input><br>
-		password:<input type='password' name='password' placeholder="mot de passe"></input><br>
-		<button type='submit'>se connecter</button>
-	</form>
-		</div>
-	
+	<?php if(!is_user_logged_in()){ ?>
 		<div class="col-xs-6 col-sm-6">
-		<p>Inscrivez vous</p>
-	<form action="" method="POST">
-		<input type='hidden' name='type' value='register'></input>
-		Email:<input required='required' type='text' name='email' placeholder="email"></input><br>
-		<button type='submit'>S'inscrire</button>
-	</form>
-	</div>
-	
-<?php } else { ?>
-		<form action="" method="POST" class="logout">
-		<input type='hidden' name='type' value='logout'></input>
-		<button type='submit'>se deconnecter</button>
-	</form>	
-<?php } ?>
+			<form action="" method="POST" class="login">
+			<p>Connectez vous</p>
+				 <input type='hidden' name='type' value='login'></input>
+				email:<input type='text' name='email' placeholder="email"></input><br>
+				password:<input type='password' name='password' placeholder="mot de passe"></input><br>
+				<button type='submit'>se connecter</button>
+			</form>
+		</div>
+		<div class="col-xs-6 col-sm-6">
+			<p>Inscrivez vous</p>
+			<form action="" method="POST">
+				<input type='hidden' name='type' value='register'></input>
+				Email:<input required='required' type='text' name='email' placeholder="email"></input><br>
+				<button type='submit'>S'inscrire</button>
+			</form>
+		</div>
+		
+	<?php } elseif($_SESSION['activate']) { 
+			echo $_SESSION['activate'];
+		  } else { ?>
+			<form action="" method="POST" class="logout">
+			<input type='hidden' name='type' value='logout'></input>
+			<button type='submit'>se deconnecter</button>
+		</form>	
+	<?php } ?>
 
 </div> <!-- Container -->
        </div>
@@ -95,7 +93,7 @@ get_header(); ?>
 				<span class="hint-action-icon discover"></span>
 				<span class="hint-action-title">Découvrez</span>
 				<p class="hint-action-description">
-					Nous organisons votre bouche à oreille culturel. Découvrez des livres qui correspondent à vos goûts.
+					<?php echo get_field('discover', get_the_ID()); ?>
 				</p>
 			</li>
 		</ul>
@@ -105,7 +103,7 @@ get_header(); ?>
 				<span class="hint-action-icon rate-home"></span>
 				<span class="hint-action-title">NOTEZ</span>
 				<p class="hint-action-description">
-					Evaluez les livres que vous avez lus. Classez-les selon vos critères ou donnez votre avis détaillé dans une critique.
+					<?php echo get_field('notation', get_the_ID()); ?>
 				</p>
 			</li>
 		</ul>
@@ -115,9 +113,7 @@ get_header(); ?>
 				<span class="hint-action-icon share"></span>
 				<span class="hint-action-title">PARTAGEZ</span>
 				<p class="hint-action-description">
-					Faites découvrir vos coups de coeur et vos coups de gueule à vos amis, conseillez leur ce qu'ils pourront aimer.
-
-
+					<?php echo get_field('share', get_the_ID()); ?>
 				</p>
 			</li>
 		</ul>
