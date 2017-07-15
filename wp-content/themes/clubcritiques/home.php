@@ -44,8 +44,11 @@ get_header(); ?>
 			} ?>
 
 <div class="container">
-            <h1 class="page-title">La puissance du bouche à oreille</h1>
-            <h2 class="lead blog-description"><?php echo get_the_content() ?><h2>
+			<div class="col-md-7 col-md-offset-5 col-xs-10 col-xs-offset-2">
+	            <h1 class="page-title">Le concept</h1>
+	            <h2 class="lead blog-description"><?php echo get_the_content() ?><h2>
+	        </div>
+
             <div class="container">
 
             <?php if(!is_user_logged_in()){ ?>
@@ -92,7 +95,7 @@ get_header(); ?>
         	<div class="row">
         		<ul class="card">
 			<li class="hint-column hint-action">
-				<span class="hint-action-icon discover"></span>
+				<img class="icone-info" src="<?php echo get_parent_theme_file_uri( '/assets/images/icone_book.png' ); ?>" alt="icone" /><br/>
 				<span class="hint-action-title">Découvrez</span>
 				<p class="hint-action-description">
 					Nous organisons votre bouche à oreille culturel. Découvrez des livres qui correspondent à vos goûts.
@@ -102,7 +105,7 @@ get_header(); ?>
 
 		<ul class="card">
 			<li class="hint-column hint-action">
-				<span class="hint-action-icon rate-home"></span>
+				<img class="icone-info" src="<?php echo get_parent_theme_file_uri( '/assets/images/icone_star.png' ); ?>" alt="icone" /><br/>
 				<span class="hint-action-title">NOTEZ</span>
 				<p class="hint-action-description">
 					Evaluez les livres que vous avez lus. Classez-les selon vos critères ou donnez votre avis détaillé dans une critique.
@@ -112,7 +115,7 @@ get_header(); ?>
 
 		<ul class="card">
 			<li class="hint-column hint-action">
-				<span class="hint-action-icon share"></span>
+				<img class="icone-info" src="<?php echo get_parent_theme_file_uri( '/assets/images/icone_share.png' ); ?>" alt="icone" /><br/>
 				<span class="hint-action-title">PARTAGEZ</span>
 				<p class="hint-action-description">
 					Faites découvrir vos coups de coeur et vos coups de gueule à vos amis, conseillez leur ce qu'ils pourront aimer.

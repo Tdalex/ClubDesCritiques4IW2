@@ -69,62 +69,66 @@ $averageNote = Utilisateur::getAverageNote($product->ID);
 get_header();
 ?>
 
-<div class="container">
-	<div class="row">
-		<div class="col-md-12">
-			<h1 class="title title_margin" >Salon <?php echo get_field('room_number', get_the_ID())." : <a target='_blank' href='".get_permalink(get_page_by_title('Produit')).$product->ID."'>".$product->post_title."</a> (<a target='_blank'  href='".get_permalink(get_page_by_title('Auteur')).$author->ID."'>".$author->post_title."</a>)"; ?></h1>
+<div class="container-fluid">
+	<div class="row header_page">
+		<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<h1 class="title title_margin title_salon" >Salon <?php echo get_field('room_number', get_the_ID())." : <a target='_blank' href='".get_permalink(get_page_by_title('Produit')).$product->ID."'>".$product->post_title."</a> (<a target='_blank'  href='".get_permalink(get_page_by_title('Auteur')).$author->ID."'>".$author->post_title."</a>)"; ?></h1>
+					</div>
+				</div>
+
+				<div class="row description_livre">
+					<div class="col-md-3">
+						<?php if(!$image){ ?> 
+							<img class="img-responsive img-livre" src="<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>"> 
+						<?php }else{ ?>
+							<img class="img-responsive img-livre" src="<?php echo $image; ?>"></img>
+						<?php } ?>
+					</div>
+					<div class="col-md-9">
+						<div class="row description">
+						<p>Résumé du livre</p>
+						</div>
+					</div>
+				</div>
 		</div>
 	</div>
 
-	<div class="row description_livre">
-		<div class="col-md-3">
-			<?php if(!$image){ ?> 
-				<img class="img-responsive img-livre" style='height:300px; length:300px;' src="<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>"> 
-			<?php }else{ ?>
-				<img class="img-responsive img-livre" style='height:300px; length:300px;' src="<?php echo $image; ?>"></img>
+		<div class="row chatroom">
+			<?php if(isset($_SESSION['message'])){ ?>
+				<div class="alert alert-<?php echo $_SESSION['message']['type'] ?>">
+				  <?php echo $_SESSION['message']['text']; ?>
+				</div>	
+			<?php unset($_SESSION['message']);
+				} ?>
+			<div id='message'></div>
+			<div class='chat-box col-md-7'>
+				<?php
+					the_content();
+				?>
+			</div>
+			<?php if('administrator' == $user_role){ ?>
+			<div class='col-md-5'>
+				<h3>lien d'invitation</h3>
+				<p><?php echo get_permalink().'?token='.$token ?></p>
+			</div>
 			<?php } ?>
-		</div>
-		<div class="col-md-9">
-			<div class="row description">
-			<p>Résumé du livre</p>
+			
+			<div class='col-md-5'>
+				<table class="table table-striped table-salon">
+					<thead>
+				        <tr>
+				            <th>Liste des membres dans le salon</th>
+				            <th>Action</th>
+				        </tr>
+				    </thead>
+				    <tbody id='current-user-table'>
+				    </tbody>
+				</table>
 			</div>
 		</div>
 	</div>
-<br>
-	<div class="row chatroom">
-		<?php if(isset($_SESSION['message'])){ ?>
-			<div class="alert alert-<?php echo $_SESSION['message']['type'] ?>">
-			  <?php echo $_SESSION['message']['text']; ?>
-			</div>	
-		<?php unset($_SESSION['message']);
-			} ?>
-		<div id='message'></div>
-		<div class='chat-box col-md-7'>
-			<?php
-				the_content();
-			?>
-		</div>
-		<?php if('administrator' == $user_role){ ?>
-		<div class='col-md-5'>
-			<h3>lien d'invitation</h3>
-			<p><?php echo get_permalink().'?token='.$token ?></p>
-		</div>
-		<?php } ?>
-		
-		<div class='col-md-5'>
-			<table class="table table-striped table-salon">
-				<thead>
-			        <tr>
-			            <th>Liste des membres dans le salon</th>
-			            <th>Action</th>
-			        </tr>
-			    </thead>
-			    <tbody id='current-user-table'>
-			    </tbody>
-			</table>
-		</div>
-	</div>
-</div>
 
 <?php
 get_footer();
