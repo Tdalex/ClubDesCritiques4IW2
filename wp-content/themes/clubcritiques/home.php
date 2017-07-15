@@ -43,9 +43,8 @@ get_header(); ?>
 
 
 <div class="container">
-<<<<<<< HEAD
 			<div class="col-md-7 col-md-offset-5 col-xs-10 col-xs-offset-2">
-	            <h1 class="page-title">Le concept</h1>
+	            <h1 class="page-title"><?php echo get_the_title(); ?></h1>
 	            <h2 class="lead blog-description"><?php echo get_the_content() ?><h2>
 	        </div>
 
@@ -54,11 +53,6 @@ get_header(); ?>
             <?php if(!is_user_logged_in()){ ?>
 
             <div class="col-xs-6 col-sm-6">
-=======
-		<h1 class="page-title"><?php echo get_the_title(); ?></h1>
-		<h2 class="lead blog-description"><?php echo get_the_content(); ?><h2>
-		<div class="container">
->>>>>>> 3f4fc85e6b9eeb58e0b5fc6506153fb19bca364e
 
 	<?php if(!is_user_logged_in()){ ?>
 		<div class="col-xs-6 col-sm-6">
