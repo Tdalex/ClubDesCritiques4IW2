@@ -332,7 +332,7 @@ get_header(); ?>
 <div class="container">
     <div class="row">
         <div class="col-lg-12 title_contact">
-            <h1>Contactez Nous</h1>
+            <h1>Contactez nous</h1>
         </div>
     </div>
 	<div class="row">
@@ -344,10 +344,10 @@ get_header(); ?>
                             <input type="text" class="form-control" placeholder="Votre Nom *" id="name" required="">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Your Prénom *" id="surname" required="">
+                            <input type="text" class="form-control" placeholder="Votre Prénom *" id="surname" required="">
                         </div>
                         <div class="form-group">
-                            <input type="email" class="form-control" placeholder="Your Email *" id="email" required="">
+                            <input type="email" class="form-control" placeholder="Votre Email *" id="email" required="">
                         </div>
                     </div>
                     <div class="col-md-6">

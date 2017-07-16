@@ -1563,7 +1563,7 @@ nav {
 
 .header-nightsky .navbar {
     margin-bottom: 0px;
-    padding-top: inherit;
+    top:0;
     padding-bottom: inherit;
     background-color: #fff;
     width: 100%;
@@ -1830,7 +1830,7 @@ nav {
     color: #ff9f62;
     font-weight: bold;
     font-size: 55px;
-    margin-bottom: 36px;
+    margin-bottom: 8%;
     text-transform: inherit;
 }
 
@@ -1902,13 +1902,20 @@ nav {
 
 .title_book {
 	text-align: center;
-	margin-top: 2%;
-}
-.title_book a{
+	margin-top: 5%;
 
-	font-weight: 600;
-	font-size: 20px;
-	color: #70BEB1;
+}
+
+.title_book a{
+	font-size: 18px;
+    font-weight: 600;
+    text-align: center;    
+    color: #333;
+    text-decoration: none;
+}
+
+.title_book a:hover{
+	color: #759a95;
 }
 
 #content {
@@ -4961,3 +4968,88 @@ content:"secondes"}
 	padding-right: 2%;
 }
 
+.img-products {
+	margin: auto;
+    background-size: cover;
+    box-shadow: 2px 2px 10px #333;
+	height: 225px;
+    width: 150px;	
+    background-repeat: no-repeat;
+    background-position: center top;	
+}
+
+.books_container {
+	background-color: #fcf3f2;
+}
+
+
+.books_div {
+    border-bottom: 1px solid #ccc;
+    display: block;
+    padding: 20px 0;
+}
+
+.title_books {
+    margin-left: 15px;
+}
+
+.title_books a{
+	text-decoration: none;
+}
+
+.title_books a h2{
+	color: #25283C !important;
+	font-size: 30px;
+    font-weight: 600;  
+    color: #333;
+    margin-bottom: 0px;
+}
+
+.title_books a h2:hover{
+	color: #70BEB1 !important;
+}
+
+.title_books:hover {
+	    text-decoration: none;
+}
+
+.books_parution {
+    margin-left: 15px;
+    color: #777;
+    font-size: 15px;
+}
+
+.books_auteur {
+	margin-left: 15px;
+}
+
+.books_auteur a span {
+	font-size: 15px; 
+    color: #333;
+    text-decoration: none;
+    margin-bottom: 0px;
+}
+
+.books_note {
+	margin-left: 15px;
+}
+
+
+.books_header {
+	height: 250px;
+	width: 100%;
+    background: url("assets/images/bg-books.jpg") no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.blog-sidebar{
+	margin-top: 5%;
+	background-color: white;
+	padding: 2%;
+}
+
+.books_liste {
+	margin-top: 5%;
+	margin-left: 2%;
+}
