@@ -5053,3 +5053,13 @@ content:"secondes"}
 	margin-top: 5%;
 	margin-left: 2%;
 }
+
+.mess_not_connect {
+	text-align: center;
+	font-size: 15px !important;
+	font-style: italic;
+}
+
+.row_exchange {
+	border-bottom: 1px solid #ccc;
+}

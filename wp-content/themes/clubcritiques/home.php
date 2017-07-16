@@ -274,7 +274,8 @@ get_header(); ?>
 					</div>
 
 			<?php if(!is_user_logged_in()){ ?>
-					<p class="lead blog-description">Veuillez vous connecter avant de rejoindre le salon</p>
+				<div class="row"><p class="mess_not_connect">Veuillez vous connecter avant de rejoindre le salon</p></div>
+					
 				<?php }elseif(ChatRoom::isUserKicked($nextChat->ID, get_current_user_id())){ ?>
 						<p>Vous avez été expulsé du salon</p>
 				<?php }elseif(false !== Utilisateur::getNotation($chatProduct->ID, get_current_user_id())){ ?>

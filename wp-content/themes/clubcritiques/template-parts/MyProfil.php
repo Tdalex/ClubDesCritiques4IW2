@@ -50,7 +50,6 @@ get_header();
 							<div class="menu_flottant">
 								<ul>
 									<a href='<?php echo get_permalink(get_page_by_title('Modifier profil')); ?>'><li>Modifier mes informations</li></a>
-									<a href="#"><li>Gérer ses contacts</li></a>
 								</ul>
 							</div>
 						</div>
@@ -82,7 +81,7 @@ get_header();
 		<div class="row exchange">	
 			<?php if(isset($exchanges['take'])){ ?>
 				<h2>Je souhaite recevoir ces livres :</h2>
-				<div class="row">
+				<div class="row row_exchange">
 					<?php foreach($exchanges['take'] as $exchange){ ?>
 						<?php $exchangeProduct = get_field('product', $exchange->ID)[0]; ?>
 						<div class="col-md-3 col-xs-6 suggestions">
