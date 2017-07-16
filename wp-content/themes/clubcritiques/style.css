@@ -1630,7 +1630,6 @@ nav {
      background: url("assets/images/bg-concept.jpg") no-repeat;
     background-size: cover;
     background-position: bottom;
-    /*padding-bottom: 200px; */
     background-blend-mode: multiply;
 }
 
@@ -1696,15 +1695,11 @@ nav {
 /*--------------------------------------------------------------
   MORE INFO
 --------------------------------------------------------------*/
-
-.more_info {
-    color: #ff9f62;
-}
-
 .more_info {
     text-align: center;
     padding-top: 50px;
     padding-bottom: 50px;
+    color: #ff9f62;
 }
 
 .more_info h1 {
@@ -1825,49 +1820,26 @@ nav {
 --------------------------------------------------------------*/
 
 .livres-moment {
-    color: white;
-    background-color: rgb(189, 188, 186) !important;
-    background: url("assets/images/bookWall.jpg") no-repeat;
-    background-size: cover;
-    background-position: bottom;
-    background-blend-mode: luminosity;
-}
-
-.livres-moment {
     text-align: center;
-    padding-top: 50px;
-    padding-bottom: 50px;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    background-color: white;
 }
 
 .livres-moment h1 {
-    color: #70BEB1;
+    color: #ff9f62;
     font-weight: bold;
     font-size: 55px;
     margin-bottom: 36px;
     text-transform: inherit;
 }
 
-
-.livres-moment p {
-    color: #CEE8DF;
-    font-size: 22px;
-    max-width: 80%;
-    margin: 0 0 20px;
-    font-weight: normal;
-    line-height: 1.5;
-}
-
 .link-book {
-    color: #CEE8DF;
     font-size: 22px;
     max-width: 80%;
     margin: 0 auto 20px;
     font-weight: normal;
     line-height: 1.5;
-}
-
-.link-book:hover {
-	color: #CEE8DF;
 }
 
 /*--------------------------------------------------------------
@@ -1881,10 +1853,7 @@ nav {
 .contact-section {
     color: white;
     background-color: rgb(38, 40, 61) !important;
-    background: url("assets/images/contact-wallpaper.jpg") no-repeat;
-    background-size: cover;
-    background-position: bottom;
-    background-blend-mode: multiply;
+
 }
 
 .contact-section {
@@ -1898,7 +1867,6 @@ nav {
     font-weight: bold;
     font-size: 55px;
     margin-bottom: 36px;
-    text-transform: inherit;
 }
 
 
@@ -1933,9 +1901,14 @@ nav {
 }
 
 .title_book {
-	font-weight: 700;
-	font-size: 20px;
+	text-align: center;
+	margin-top: 2%;
+}
+.title_book a{
 
+	font-weight: 600;
+	font-size: 20px;
+	color: #70BEB1;
 }
 
 #content {
@@ -2071,7 +2044,6 @@ body.page:not(.clubcritiques-front-page) .entry-title {
 	color: #222;
 	font-size: 3rem;
 	font-weight: 800;
-	letter-spacing: 0.14em;
 	text-transform: uppercase;
 }
 
@@ -2094,7 +2066,6 @@ body.page:not(.clubcritiques-front-page) .entry-title {
 	font-size: 11px;
 	font-size: 0.6875rem;
 	font-weight: 800;
-	letter-spacing: 0.1818em;
 	padding-bottom: 0.25em;
 	text-transform: uppercase;
 }
@@ -4932,4 +4903,48 @@ content:"secondes"}
 
 .join-salon {
 	margin-top: 4%;
+}
+
+.book-moment {
+	box-shadow: 2px 2px 10px #333;
+	height: 225px;
+    width: 150px;	
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+}
+
+
+
+.cont-gauche {
+  transform: skew(-10deg);
+  background-color: red !important;
+  z-index: 99;
+}
+.cont-droite {
+
+	background-color: blue;
+}
+
+.title_contact h1{
+	text-align: center;
+	color: #ff9f62;
+    font-weight: bold;
+    font-size: 55px;
+    margin-bottom: 36px;
+    margin-top: 5%;
+    text-transform: inherit;
+}
+
+.div_contact {	
+    background: url("assets/images/bg-pastel.jpg") no-repeat;
+    background-size: cover;
+    background-position: bottom;
+    padding-bottom: 5%;
+}
+
+.button-submit button{
+	margin-top: 3%;
+	padding-left: 2%;
+	padding-right: 2%;
 }

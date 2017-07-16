@@ -238,59 +238,65 @@ get_header(); ?>
 
 <div class="livres-moment">
 	<div class="container">
-		<div class="row row-offcanvas row-offcanvas-right">
-			<div class="col-xs-12 col-sm-12">
-				<h2 class="blog-post-title">Livres du moment</h2>
-				<?php foreach($products as $product){ ?>
-					<div class="col-xs-6 col-lg-2">
-						<?php if(!get_field('image', $product->ID)){ ?>
-							<a href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>"><img src="<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>"></img></a>
-						<?php }else{ ?>
-							<a href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>"><img src="<?php echo get_field('image', $product->ID); ?>"></img></a>
-						<?php } ?>
-						<p class="title_book"><a  class="link-book" href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>"><?php echo $product->post_title; ?></a></p>
-						<p><a class="btn btn-primary" href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>" role="button">plus d'infos &raquo;</a></p>
-					</div><!--/.col-xs-6.col-lg-4-->
+		<h1>Livres du moment</h1>
+		<?php foreach($products as $product){ ?>
+			<div class="col-md-2 col-xs-4">
+				<?php if(!get_field('image', $product->ID)){ ?>
+					<a href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>"><div class="book-moment" style="background-image: url(<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>)"></div></a>
+				<?php }else{ ?>
+					<a href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>"><div class="book-moment" style="background-image: url(<?php echo get_field('image', $product->ID); ?>)"></div></a>
 				<?php } ?>
+				<p class="title_book"><a  class="link-book" href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>"><?php echo $product->post_title; ?></a></p>
 			</div>
-		</div>    
+		<?php } ?>
 	</div>
 </div>
 </section>
+
+
 
 <!-- FIN SECTION LIVRES -->
 
 <!-- SECTION CONTACT -->
 
-<section>
 
-<div class="contact-section">
-    <div class="container">
-        <div class="row ">
-            <div class="col-xs-12 col-sm-12">
-				<h2>Contactez nous</h2>
-				<div class="row">
-					<div class="col-md-12">
-						<form class="form-horizontal">
-							<div class="form-group">
-								<label for="exampleInputName2">Name</label>
-								<input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
-							</div>
-							<div class="form-group">
-								<label for="exampleInputEmail2">Email</label>
-								<input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
-							</div>
-							<div class="form-group ">
-								<label for="exampleInputText">Your Message</label>
-								<textarea  class="form-control" placeholder="Description"></textarea>
-							</div>
-							<button type="submit" class="btn btn-default">Send Message</button>
-						</form>
-					</div>
-				</div>
-			</div>    
-		</div>
+<section>
+<div class="div_contact">
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 title_contact">
+            <h1>Contactez Nous</h1>
+        </div>
+    </div>
+	<div class="row">
+        <div class="col-lg-12">
+            <form name="sentMessage">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Votre Nom *" id="name" required="">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Your Prénom *" id="surname" required="">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Your Email *" id="email" required="">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <textarea class="form-control" rows="6" placeholder="Votre Message *" id="message" required=""></textarea>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 text-center button-submit">
+                        <button type="submit" class="btn">Envoyer</button>
+                    </div>
+                </div>
+            </form>
+        </div>	
+
 	</div>
+
 </div>
 </section>
 
