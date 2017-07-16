@@ -1539,7 +1539,7 @@ body {
 --------------------------------------------------------------*/
 
 .search-form {
-	width: 650px;
+	width: 350px;
 	position: absolute;
 	margin-left: 170px;
 	top: 20px;
@@ -4905,6 +4905,18 @@ content:"secondes"}
 	margin-top: 4%;
 }
 
+
+.book-salon {
+	box-shadow: 2px 2px 10px #333;
+	height: 300px;
+    width: 200px;	
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+    margin: auto;
+}
+
+
 .book-moment {
 	box-shadow: 2px 2px 10px #333;
 	height: 225px;
@@ -4948,3 +4960,4 @@ content:"secondes"}
 	padding-left: 2%;
 	padding-right: 2%;
 }
+

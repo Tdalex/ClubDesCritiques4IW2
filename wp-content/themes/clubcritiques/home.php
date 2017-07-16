@@ -26,6 +26,7 @@ $endDate   = get_field('end_date',  $nextChat->ID);
 $today     = date('Y-m-d H:i:s');
 $start = strftime('%A %d %B à %Hh%M',strtotime($start));
 $end   = strftime('%A %d %B à %Hh%M',strtotime($endDate));
+$time_start_salon = date('F j, Y H:i:s', strtotime($startDate));
 $time_salon = date('F j, Y H:i:s', strtotime($endDate));
 ?>
 
@@ -137,23 +138,89 @@ get_header(); ?>
 		<h1 class="chat-title">Salons</h1>
 		<?php if($nextChat){ 
 			$chatProduct = get_field('product', $nextChat->ID)[0]; ?>
-				<?php if ($today < $startDate) { ?> 
-					<p class="lead blog-description">Le salon ouvrira le <?php echo $start; ?></p> 
+				<?php if ($today < $startDate) { ?>
+					<div class="row">
+						<div class="col-md-3">
+							<div class="row">
+								<a href="#">
+									<?php if(!$image){ ?> 
+										<div style="background-image: url(<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>)" class="book-salon"></div>
+									<?php }else{ ?>
+										<div class="book-salon" style="background-image: url(<?php echo $image; ?>"></div>
+									<?php } ?>
+								</a>
+							</div>
+						</div>
+
+
+						<div class="col-md-3">
+								<div class="row">
+									<h2 class="title"><a class="chat-link" href="<?php echo get_permalink(get_page_by_title('Produit')).$chatProduct->ID; ?>"><?php echo $chatProduct->post_title; ?></a></h2>
+								</div>
+
+								<div class="row author author-home">		
+									<a href='#'>[Auteur]</a>
+									[15/06/2017]
+								</div>
+
+							<div class="row">
+								<?php if ( $averageNote['total'] > 0){ ?>
+									<span class='star_rating'>
+									<?php
+									if($averageNote['average'] >= 0.5 && $averageNote['average'] < 1.5){
+										echo "<span class='note_star'>★</span>★★★★</span>";
+									}elseif($averageNote['average'] >= 1.5 && $averageNote['average'] < 2.5){
+										echo "<span class='note_star'>★★</span>★★★</span>";
+									}elseif($averageNote['average'] >= 2.5 && $averageNote['average'] < 3.5){
+										echo "<span class='note_star'>★★★</span>★★</span>";
+									}elseif($averageNote['average'] >= 3.5 && $averageNote['average'] < 4.5){
+										echo "<span class='note_star'>★★★★</span>★</span>";						
+									}elseif($averageNote['average'] >= 4.5){
+										echo "<span class='note_star'>★</span>★★★★</span>";
+									}else{
+										echo '★★★★★</span>';
+									} 
+									
+									if($averageNote['total'] > 1){
+										echo "<span>".$averageNote['total']." notes</span>";
+									}
+									else{
+										echo "<span>".$averageNote['total']." note</span>";
+									}?>
+								<?php }else{ ?>
+									<span class="aucune_note">Aucune note</span>
+								<?php } ?>
+							</div>
+						</div>
+					
+						<div class="col-md-6">
+							<div class="row">
+								<h2 class="h2-timer">Le salon commence dans :</h2>
+							</div>	
+							<div class="row timer" id="timer" data-timer="<?php echo $time_start_salon; ?>">
+							  <span class="time"></span>
+							  <span class="time"></span>
+							  <span class="time"></span>
+							  <span class="time"></span>
+							</div>
+						</div>
+					</div>
+
 				<?php }else{ ?> 
 
 					<div class="row">
-						<div class="col-md-2">
+						<div class="col-md-3">
 							<div class="row">
 								<?php if(!$image){ ?> 
-									<img class="img-responsive img-livre-accueil " src="<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>"> 
+									<div class="book-salon" style=" background-image: url(<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>)"></div>
 								<?php }else{ ?>
-									<img class="img-responsive img-livre-accueil " src="<?php echo $image; ?>"></img>
+									<div class="book-salon" style=" background-image: url(<?php echo $image; ?>)"></div>
 								<?php } ?>
 							</div>
 						</div>
 
 
-						<div class="col-md-4">
+						<div class="col-md-3">
 								<div class="row">
 									<h2 class="title"><a class="chat-link" href="<?php echo get_permalink(get_page_by_title('Produit')).$chatProduct->ID; ?>"><?php echo $chatProduct->post_title; ?></a></h2>
 								</div>
@@ -206,16 +273,16 @@ get_header(); ?>
 						</div>
 					</div>
 
-
 			<?php if(!is_user_logged_in()){ ?>
 					<p class="lead blog-description">Veuillez vous connecter avant de rejoindre le salon</p>
 				<?php }elseif(ChatRoom::isUserKicked($nextChat->ID, get_current_user_id())){ ?>
 						<p>Vous avez été expulsé du salon</p>
 				<?php }elseif(false !== Utilisateur::getNotation($chatProduct->ID, get_current_user_id())){ ?>
 					<div class="row col-md-2 col-md-offset-5 join-salon">
-					<a class="join-room" href='<?php echo get_permalink($nextChat->ID)?>?changeRoom=true' ><button class="btn">Rejoindre un salon</button></a></div>
+						<a class="join-room" href='<?php echo get_permalink($nextChat->ID)?>?changeRoom=true' ><button class="btn">Rejoindre le salon</button></a>
+					</div>
 					<?php if($userRoom = ChatRoom::getUserRoom($nextChat->ID)){ ?>
-						<div class="row col-md-2 col-md-offset-5 join-salon">
+						<div class="row col-md-2 col-md-offset-5 join-salon text-center">
 							<a class="join-room" href='<?php echo get_permalink($userRoom)?>' ><button class="btn">Rejoindre votre dernier salon</button></a>
 						</div>
 					<?php } ?>
@@ -223,9 +290,9 @@ get_header(); ?>
 					<a href='<?php echo get_permalink(get_page_by_title('Produit')).$chatProduct->ID;?>' >Veuillez noter le livre avant de rejoindre un salon</a><br>
 				<?php } ?>
 			<?php } ?>
-			<?php }else{ ?>
-				<h1 class="chat-title">Aucun salon programmé pour le moment</h1><br>
-			<?php } ?>
+		<?php }else{ ?>
+			<h1 class="chat-title">Aucun salon programmé pour le moment</h1><br>
+		<?php } ?>
 </div>
 
 </section>
