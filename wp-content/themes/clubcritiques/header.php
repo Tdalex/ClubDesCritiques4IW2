@@ -32,8 +32,11 @@ if(isset($_POST) && $_POST['type'] == 'register'){
 <meta charset="<?php bloginfo( 'charset' ); ?>">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="profile" href="http://gmpg.org/xfn/11">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
     <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -48,7 +51,6 @@ if(isset($_POST) && $_POST['type'] == 'register'){
 
         <?php if (has_nav_menu('top')) : ?>
         <nav class="navbar navbar-default">
-            <div class="container">
                 <a class="navbar-brand" href="/"><img id="logo_header" src="<?php echo get_parent_theme_file_uri( '/assets/images/logo.png' ); ?>" width="200" height="75" ></a>
                 <div class="collapse navbar-collapse" id="myNavbar">
 					<?php get_search_form(); ?>
@@ -71,7 +73,6 @@ if(isset($_POST) && $_POST['type'] == 'register'){
 						<?php } ?>
 					</ul>
                 </div>
-            </div>
         </nav>
 
         <!-- <div class="hero">

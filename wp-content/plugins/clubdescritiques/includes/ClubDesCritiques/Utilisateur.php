@@ -59,15 +59,39 @@ class Utilisateur{
 				do_action( 'wp_login', $user->user_login );
 
 				if(!get_field('activated', 'user_'.$user->ID)){
-					$activate = "
-					<form action='' method='POST'>
-						<input type='hidden' name='type' value='activate'></input>
-						Prénom:<input required='required' type='text' name='firstname'></input><br>
-						Nom de famille:<input required='required' type='text' name='lastname'></input><br>
-						Mot de passe:<input type='password' name='newPassword'></input><br>
-						Confirmation de mot de passe:<input type='password' name='newPasswordCheck'></input><br>
-						<button type='submit'>modifier  mot de passe</button>
-					</form>";
+					$activate = '
+					<div class="modal-backdrop in"></div>
+
+<div class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="channelModal" style="display:block;">
+
+    <div class="modal-dialog modal-lg" role="document">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h4 class="modal-title" id="channelModal">Welcome!</h4>
+
+            </div>
+
+            <div class="modal-body modal-password">
+
+               <form action="" method="POST">
+						<input type="hidden" name="type" value="activate"></input>
+						Prénom:<input required="required" type="text" name="firstname"></input><br>
+						Nom de famille:<input required="required" type="text" name="lastname"></input><br>
+						Mot de passe:<input type="password" name="newPassword"></input><br>
+						Confirmation de mot de passe:<input type="password" name="newPasswordCheck"></input><br>
+						<button type="submit">modifier  mot de passe</button>
+					</form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>';
 					$_SESSION['activate'] = $activate;
 					return true;
 				}else{

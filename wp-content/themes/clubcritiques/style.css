@@ -1538,6 +1538,12 @@ body {
 13.1 Header
 --------------------------------------------------------------*/
 
+.modal-password {
+	color: #000;
+	font-size: 22px;
+	font-weight: 700;
+}
+
 .alert {
 	text-align: center;
 	margin-bottom: 0;
@@ -2457,6 +2463,14 @@ body:not(.clubcritiques-front-page) .entry-header {
 /*--------------------------------------------------------------
 13.5 Pages
 --------------------------------------------------------------*/
+
+.modal-backdrop {
+	z-index: 98; 
+}
+
+#top-menu {
+	display: flex;
+}
 
 .page-header {
 	padding-bottom: 2em;
