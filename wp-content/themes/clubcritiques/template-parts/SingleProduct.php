@@ -121,7 +121,7 @@ get_header();
 							</form>
 						</div>
 					<?php } ?>
-					</div>
+				</div>
 				</div>
 				
 				<div class="col-md-9">

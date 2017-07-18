@@ -50,7 +50,8 @@ $formats = get_terms( array(
  get_header();
 ?>
 
-
+<div class="contaier-fluid books_container">
+<div class="books_header"></div>
 <div class="container">
 
 	<div class="row">
@@ -61,7 +62,7 @@ $formats = get_terms( array(
 		<?php unset($_SESSION['message']);
 			} ?>
 
-		<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+		<div class="col-md-3 blog-sidebar">
 		<p>Nombre de Produits correspondant à votre recherche: <?php echo $countProducts; ?></p>
 			<form action="" method="POST">
 				Titre ou auteur : <input type='text' name='keywords' value='<?php echo $_POST['keywords'] ?>'></input><br>
@@ -98,45 +99,55 @@ $formats = get_terms( array(
 			</form>
 		</div><!-- /.blog-sidebar -->
 
-		<div class="col-sm-8">
-		<?php foreach($products as $product){ ?>
-			<div class="col-xs-6 col-lg-4">
+		<div class="col-md-8 books_liste">
+			<?php foreach($products as $product){ ?>
+			<div class="col-md-12 books_div">
 				<a href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>">
 				<?php if(!get_field('image', $product->ID)){ ?> 
-					<img src="<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>"> 
+					<div class="img-products col-md-3" style="background-image: url(<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>)"></div>
                 <?php }else{ ?>
-					<img src="<?php echo get_field('image', $product->ID); ?>">
+					<div class="img-products col-md-3" style="background-image: url(<?php echo get_field('image', $product->ID); ?>)"></div>
 				<?php } ?>
-				</img></a>
-				<span class="title_book"><?php echo $product->post_title; ?></span>
-				
-				<a href="<?php echo get_permalink(get_page_by_title('Auteur')).get_field('author',$product->ID)[0]->ID; ?>">
-					<span class="author_book"><?php echo get_field('author',$product->ID)[0]->post_title; ?></span>
-				</a><br>
-				<?php  $averageNote = Utilisateur::getAverageNote($product->ID);
-				if ( $averageNote['total'] > 0){ ?>
-					<span class='star_rating'>
-					<?php
-					if($averageNote['average'] >= 0.5 && $averageNote['average'] < 1.5){
-						echo "<span class='note_star'>★</span>★★★★</span>";
-					}elseif($averageNote['average'] >= 1.5 && $averageNote['average'] < 2.5){
-						echo "<span class='note_star'>★★</span>★★★</span>";
-					}elseif($averageNote['average'] >= 2.5 && $averageNote['average'] < 3.5){
-						echo "<span class='note_star'>★★★</span>★★</span>";
-					}elseif($averageNote['average'] >= 3.5 && $averageNote['average'] < 4.5){
-						echo "<span class='note_star'>★★★★</span>★</span>";						
-					}elseif($averageNote['average'] >= 4.5){
-						echo "<span class='note_star'>★</span>★★★★</span>";
-					}else{
-						echo '★★★★★</span>';
-					} ?>
-				<?php }else{ ?>
-					<span>Aucune note</span>
-				<?php } ?>
-				<p><a class="btn btn-default" href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>" role="button">plus d'infos &raquo;</a></p>
-			</div><!--/.col-xs-6.col-lg-4-->
-		<?php } ?>
+				</a>
+
+				<div class="col-md-9">
+					<div class="row title_books">
+						<a href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>">
+						<h2><?php echo $product->post_title; ?></h2></a>
+					</div>
+					<div class="row books_parution">
+						<span>parue le :</span>
+					</div>
+					<div class="row books_auteur">
+						<a href="<?php echo get_permalink(get_page_by_title('Auteur')).get_field('author',$product->ID)[0]->ID; ?>">
+							<span><?php echo get_field('author',$product->ID)[0]->post_title; ?></span>
+						</a>
+					</div>
+
+					<div class="row books_note">		
+						<?php  $averageNote = Utilisateur::getAverageNote($product->ID);
+						if ( $averageNote['total'] > 0){ ?>
+							<span class='star_rating'>
+							<?php
+							if($averageNote['average'] >= 0.5 && $averageNote['average'] < 1.5){
+								echo "<span class='note_star'>★</span>★★★★</span>";
+							}elseif($averageNote['average'] >= 1.5 && $averageNote['average'] < 2.5){
+								echo "<span class='note_star'>★★</span>★★★</span>";
+							}elseif($averageNote['average'] >= 2.5 && $averageNote['average'] < 3.5){
+								echo "<span class='note_star'>★★★</span>★★</span>";
+							}elseif($averageNote['average'] >= 3.5 && $averageNote['average'] < 4.5){
+								echo "<span class='note_star'>★★★★</span>★</span>";						
+							}elseif($averageNote['average'] >= 4.5){
+								echo "<span class='note_star'>★</span>★★★★</span>";
+							}else{
+								echo '★★★★★</span>';
+							} ?>
+						<?php }?>
+					</div>
+				</div>
 			</div>
+			<?php } ?>
+		</div>
 
 
 	</div><!--/row-->
@@ -190,5 +201,6 @@ $formats = get_terms( array(
 			}
 			echo $pagination;
 		?>
+	</div>
 	</div>
 	</div>

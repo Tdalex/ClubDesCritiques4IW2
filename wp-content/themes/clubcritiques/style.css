@@ -1553,7 +1553,7 @@ body {
 }
 
 .search-form {
-	width: 650px;
+	width: 350px;
 	position: absolute;
 	margin-left: 170px;
 	top: 20px;
@@ -1567,27 +1567,17 @@ nav {
 	background-color: #fff;
 	position: fixed;
 	z-index: 99;
-}
 
-.hero {
-    color: white;
-    background-color: rgba(0, 0, 0, 0.5) !important;
-    background: url("assets/images/blue-background.jpg") no-repeat;
-    background-size: cover;
-    background-position: bottom;
-    /*padding-bottom: 200px; */
-    background-blend-mode: multiply;
 }
 
 .header-nightsky .navbar-nav>li>a {
     color: white;
     font-size: 18px;
-    border-radius: 10px;
 }
 
 .header-nightsky .navbar {
     margin-bottom: 0px;
-    padding-top: inherit;
+    top:0;
     padding-bottom: inherit;
     background-color: #fff;
     width: 100%;
@@ -1649,12 +1639,16 @@ nav {
 
 .hero {
     text-align: center;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 5%;
+    padding-bottom: 5%;
+     background: url("assets/images/bg-concept.jpg") no-repeat;
+    background-size: cover;
+    background-position: bottom;
+    background-blend-mode: multiply;
 }
 
 .hero h1 {
-    color: #70BEB1;
+    color: #ff9f62;
     font-weight: bold;
     font-size: 55px;
     margin-bottom: 36px;
@@ -1662,7 +1656,7 @@ nav {
 }
 
 .hero h2 {
-    color: #CEE8DF;
+    color: white;
     font-size: 22px;
     max-width: 100%;
     margin: 0 auto 20px;
@@ -1671,11 +1665,12 @@ nav {
 }
 
 .chat-link {
-	color: #CEE8DF;
+	color: white;
 }
 
 .chat-link:hover {
-	color: #CEE8DF;
+	color: #759a95;
+	text-decoration: none;
 }
 
 .hero p {
@@ -1714,24 +1709,14 @@ nav {
 /*--------------------------------------------------------------
   MORE INFO
 --------------------------------------------------------------*/
-
-.more_info {
-    color: white;
-    background-color: rgb(112, 190, 177) !important;
-    background: url("assets/images/book-background.jpg") no-repeat;
-    background-size: cover;
-    background-position: bottom;
-    background-blend-mode: multiply;
-}
-
 .more_info {
     text-align: center;
     padding-top: 50px;
     padding-bottom: 50px;
+    color: #ff9f62;
 }
 
 .more_info h1 {
-    color: #70BEB1;
     font-weight: bold;
     font-size: 55px;
     margin-bottom: 36px;
@@ -1740,7 +1725,7 @@ nav {
 
 
 .more_info p {
-    color: #CEE8DF;
+    color: #25283C;
     font-size: 22px;
     max-width: 80%;
     margin: 0 auto 20px;
@@ -1749,11 +1734,11 @@ nav {
     text-align: center;
 }
 
-.hint-action-icon {
-    display: block;
-    margin: 0 auto 25px;
+.icone-info {
+	height: 55px;
+	width: 55px;
+	margin-bottom: 2%;
 }
-
 
 
 .hint-action-icon.discover {
@@ -1801,21 +1786,18 @@ nav {
 
 .next-chat {
     color: white;
-    background-color: rgb(217, 158, 126) !important;
-    background: url("assets/images/chat-background.jpg") no-repeat;
+    background: url("assets/images/bg-pastel.jpg") no-repeat;
     background-size: cover;
     background-position: bottom;
     background-blend-mode: multiply;
-}
-
-.next-chat {
-    text-align: center;
     padding-top: 50px;
     padding-bottom: 50px;
 }
 
+
 .next-chat h1 {
-    color: #70BEB1;
+	text-align: center;
+    color: #ff9f62;
     font-weight: bold;
     font-size: 55px;
     margin-bottom: 36px;
@@ -1836,7 +1818,7 @@ nav {
 }
 
 .next-chat p {
-    color: #CEE8DF;
+    color: white;
     font-size: 22px;
     max-width: 80%;
     margin: 0 auto 20px;
@@ -1861,49 +1843,26 @@ h2.blog-post-title {
 }
 
 .livres-moment {
-    color: white;
-    background-color: rgb(189, 188, 186) !important;
-    background: url("assets/images/bookWall.jpg") no-repeat;
-    background-size: cover;
-    background-position: bottom;
-    background-blend-mode: luminosity;
-}
-
-.livres-moment {
     text-align: center;
-    padding-top: 50px;
-    padding-bottom: 50px;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    background-color: white;
 }
 
 .livres-moment h1 {
-    color: #70BEB1;
+    color: #ff9f62;
     font-weight: bold;
     font-size: 55px;
-    margin-bottom: 36px;
+    margin-bottom: 8%;
     text-transform: inherit;
 }
 
-
-.livres-moment p {
-    color: #CEE8DF;
-    font-size: 22px;
-    max-width: 80%;
-    margin: 0 0 20px;
-    font-weight: normal;
-    line-height: 1.5;
-}
-
 .link-book {
-    color: #CEE8DF;
     font-size: 22px;
     max-width: 80%;
     margin: 0 auto 20px;
     font-weight: normal;
     line-height: 1.5;
-}
-
-.link-book:hover {
-	color: #CEE8DF;
 }
 
 /*--------------------------------------------------------------
@@ -1917,10 +1876,7 @@ h2.blog-post-title {
 .contact-section {
     color: white;
     background-color: rgb(38, 40, 61) !important;
-    background: url("assets/images/contact-wallpaper.jpg") no-repeat;
-    background-size: cover;
-    background-position: bottom;
-    background-blend-mode: multiply;
+
 }
 
 .contact-section {
@@ -1934,7 +1890,6 @@ h2.blog-post-title {
     font-weight: bold;
     font-size: 55px;
     margin-bottom: 36px;
-    text-transform: inherit;
 }
 
 
@@ -1969,9 +1924,21 @@ h2.blog-post-title {
 }
 
 .title_book {
-	font-weight: 700;
-	font-size: 20px;
+	text-align: center;
+	margin-top: 5%;
 
+}
+
+.title_book a{
+	font-size: 18px;
+    font-weight: 600;
+    text-align: center;    
+    color: #333;
+    text-decoration: none;
+}
+
+.title_book a:hover{
+	color: #759a95;
 }
 
 #content {
@@ -2107,7 +2074,6 @@ body.page:not(.clubcritiques-front-page) .entry-title {
 	color: #222;
 	font-size: 3rem;
 	font-weight: 800;
-	letter-spacing: 0.14em;
 	text-transform: uppercase;
 }
 
@@ -2130,7 +2096,6 @@ body.page:not(.clubcritiques-front-page) .entry-title {
 	font-size: 11px;
 	font-size: 0.6875rem;
 	font-weight: 800;
-	letter-spacing: 0.1818em;
 	padding-bottom: 0.25em;
 	text-transform: uppercase;
 }
@@ -4591,10 +4556,6 @@ p{
 
 }
 
-.menu_right div button {
-
-}
-
 .submit_contact {
 	font-size: 12px !important;
 	width: 200px;
@@ -4654,8 +4615,8 @@ p{
 }
 
 button {
-	background-color: #FF5B2B;
-	box-shadow: 0px 3px 0px 0px #CD6509;
+	background-color: #ff9f62;
+	box-shadow: 0px 2px 0px 0px #d78653;
 	color: #fff;
 }
 
@@ -4895,6 +4856,241 @@ button:hover{
 	box-shadow: 2px 2px 10px #333;
 	height: 230px;
 	width: 150px;
-	margin:; auto;
+	margin: auto;
 
+}
+
+.title_salon a{
+	color : #25283C !important;
+}
+
+.img-livre-accueil {
+
+	margin: auto;
+	height: 225px; 
+	width: 150px;
+	box-shadow: 2px 2px 10px #333;
+}
+
+.title a{
+	font-size: 40px;
+	margin: 0;
+}
+
+.author-home a{
+	color: white;
+}
+
+.author-home a:hover{
+	color: #759a95;
+	text-decoration: none;
+}
+
+.aucune_note{
+	font-size: 15px;
+}
+
+.timer {
+	text-align: center;
+}
+
+
+.timer span
+{
+	font-size:40px;
+	color:#fff;
+	display:inline-block;
+	width:95px;
+	height: 95px;
+	border-radius:10px;
+	text-align:center;
+    background-color: #ff9f62;
+    box-shadow: 0px 2px 0px 0px #d78653;
+}
+
+.timer span:after
+{
+	font-size:20px;
+	display:block;
+	margin:0 0 2px;
+	opacity:.8
+}
+
+.timer span:nth-of-type(1):after
+{
+content:"jours"}
+
+.timer span:nth-of-type(2):after
+{
+content:"heures"}
+
+.timer span:nth-of-type(3):after
+{
+content:"minutes"}
+
+.timer span:nth-of-type(4):after
+{
+content:"secondes"}
+
+
+.h2-timer {
+	text-align: center;
+	font-size: 30px;
+	color: white;
+}
+
+.join-salon {
+	margin-top: 4%;
+}
+
+
+.book-salon {
+	box-shadow: 2px 2px 10px #333;
+	height: 300px;
+    width: 200px;	
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+    margin: auto;
+}
+
+
+.book-moment {
+	box-shadow: 2px 2px 10px #333;
+	height: 225px;
+    width: 150px;	
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+}
+
+
+
+.cont-gauche {
+  transform: skew(-10deg);
+  background-color: red !important;
+  z-index: 99;
+}
+.cont-droite {
+
+	background-color: blue;
+}
+
+.title_contact h1{
+	text-align: center;
+	color: #ff9f62;
+    font-weight: bold;
+    font-size: 55px;
+    margin-bottom: 36px;
+    margin-top: 5%;
+    text-transform: inherit;
+}
+
+.div_contact {	
+    background: url("assets/images/bg-pastel.jpg") no-repeat;
+    background-size: cover;
+    background-position: bottom;
+    padding-bottom: 5%;
+}
+
+.button-submit button{
+	margin-top: 3%;
+	padding-left: 2%;
+	padding-right: 2%;
+}
+
+.img-products {
+	margin: auto;
+    background-size: cover;
+    box-shadow: 2px 2px 10px #333;
+	height: 225px;
+    width: 150px;	
+    background-repeat: no-repeat;
+    background-position: center top;	
+}
+
+.books_container {
+	background-color: #fcf3f2;
+}
+
+
+.books_div {
+    border-bottom: 1px solid #ccc;
+    display: block;
+    padding: 20px 0;
+}
+
+.title_books {
+    margin-left: 15px;
+}
+
+.title_books a{
+	text-decoration: none;
+}
+
+.title_books a h2{
+	color: #25283C !important;
+	font-size: 30px;
+    font-weight: 600;  
+    color: #333;
+    margin-bottom: 0px;
+}
+
+.title_books a h2:hover{
+	color: #70BEB1 !important;
+}
+
+.title_books:hover {
+	    text-decoration: none;
+}
+
+.books_parution {
+    margin-left: 15px;
+    color: #777;
+    font-size: 15px;
+}
+
+.books_auteur {
+	margin-left: 15px;
+}
+
+.books_auteur a span {
+	font-size: 15px; 
+    color: #333;
+    text-decoration: none;
+    margin-bottom: 0px;
+}
+
+.books_note {
+	margin-left: 15px;
+}
+
+
+.books_header {
+	height: 250px;
+	width: 100%;
+    background: url("assets/images/bg-books.jpg") no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.blog-sidebar{
+	margin-top: 5%;
+	background-color: white;
+	padding: 2%;
+}
+
+.books_liste {
+	margin-top: 5%;
+	margin-left: 2%;
+}
+
+.mess_not_connect {
+	text-align: center;
+	font-size: 15px !important;
+	font-style: italic;
+}
+
+.row_exchange {
+	border-bottom: 1px solid #ccc;
 }
