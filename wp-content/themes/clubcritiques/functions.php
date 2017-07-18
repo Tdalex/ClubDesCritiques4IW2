@@ -450,7 +450,7 @@ function clubcritiques_scripts() {
 		$clubcritiques_l10n['icon']           = clubcritiques_get_svg( array( 'icon' => 'angle-down', 'fallback' => true ) );
 	}
 
-	wp_enqueue_script( 'clubcritiques-global', get_theme_file_uri( '/assets/js/global.js' ), array( 'jquery' ), '1.0', true );
+	// wp_enqueue_script( 'clubcritiques-global', get_theme_file_uri( '/assets/js/global.js' ), array( 'jquery' ), '1.0', true );
 
 	wp_enqueue_script( 'jquery-scrollto', get_theme_file_uri( '/assets/js/jquery.scrollTo.js' ), array( 'jquery' ), '2.1.2', true );
 

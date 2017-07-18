@@ -104,7 +104,9 @@
 
 	// Set icon for quotes.
 	function setQuotesIcon() {
-		$( clubcritiquesScreenReaderText.quote ).prependTo( $formatQuote );
+		if(clubcritiquesScreenReaderText !== 'undefined'){
+			$( clubcritiquesScreenReaderText.quote ).prependTo( $formatQuote );
+		}
 	}
 
 	// Add 'below-entry-meta' class to elements.
@@ -179,7 +181,6 @@
 	window.onload = function timer(){
 		var timer = document.getElementById('timer');
 		var time_salon = timer.dataset.timer;
-		console.log(time_salon);
 		var s = document.getElementsByClassName('time');
 		var oneDay = 24 * 60 * 60 * 1000;
 		var firstDate = new Date(time_salon);var secondDate = new Date();
@@ -190,19 +191,55 @@
 		s[1].innerHTML = Math.floor(hrs);
 		s[2].innerHTML = Math.floor(min);
 		s[3].innerHTML = Math.floor((min - Math.floor(min)) * 60);
+		
+		if(s.length > 4){
+			s[4].innerHTML = Math.floor(days);
+			s[5].innerHTML = Math.floor(hrs);
+			s[6].innerHTML = Math.floor(min);
+			s[7].innerHTML = Math.floor((min - Math.floor(min)) * 60);
+		}
+		
 		var i = setInterval(function() {n()}, 1000)
 		function f(d, x) {s[d].innerHTML = x;s[d - 1].innerHTML = Number(s[d - 1].innerHTML) - 1;}
-		function n() {s[3].innerHTML = Number(s[3].innerHTML) - 1;
-		if (s[3].innerHTML == -1) {f(3, 59)
-		if (s[2].innerHTML == -1) {f(2, 59)
-		if (s[1].innerHTML == -1) {f(1, 23)
-		}}}if(s[0].innerHTML <= -1) {clearInterval(i);document.getElementsByTagName('div')[0].innerHTML='<h2>The event is over.</h2>'}}
+		function n() {
+			s[3].innerHTML = Number(s[3].innerHTML) - 1;
+			if (s[3].innerHTML == -1) {
+				f(3, 59)
+				if (s[2].innerHTML == -1) {
+					f(2, 59)
+					if (s[1].innerHTML == -1) {
+						f(1, 23)
+					}
+				}
+			}
+			if(s[0].innerHTML <= -1) {
+				clearInterval(i);
+				document.getElementsByTagName('div')[0].innerHTML='<h2>The event is over.</h2>'
+			}
+			
+			if(s.length > 4){
+				s[7].innerHTML = Number(s[3].innerHTML) - 1;
+				if (s[7].innerHTML == -1) {
+					f(3, 59)
+					if (s[6].innerHTML == -1) {
+						f(2, 59)
+						if (s[5].innerHTML == -1) {
+							f(1, 23)
+						}
+					}
+				}
+				if(s[4].innerHTML <= -1) {
+					clearInterval(i);
+					document.getElementsByTagName('div')[4].innerHTML='<h2>The event is over.</h2>'
+				}
+			}
+		}
 
 	}
 
+
 	// Fire on document ready.
 	$( document ).ready( function() {
-
 		// If navigation menu is present on page, setNavProps and adjustScrollClass.
 		if ( $navigation.length ) {
 			setNavProps();

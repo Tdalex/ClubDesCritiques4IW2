@@ -42,6 +42,7 @@ if(isset($_POST['type']) && $_POST['type'] == 'contactSend'){
 
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
+<script src="<?php echo get_theme_file_uri( '/assets/js/global.js' ) ?>"></script>
 <?php wp_head(); ?>
 </head>
 
