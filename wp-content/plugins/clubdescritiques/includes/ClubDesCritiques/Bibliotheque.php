@@ -7,6 +7,7 @@
 
 namespace ClubDesCritiques;
 
+use ClubDesCritiques\Utilisateur as Utilisateur;
 
 class Bibliotheque
 {
@@ -278,13 +279,13 @@ class Bibliotheque
         }
 
         // filter by note
-        if(isset($params['note']) && !empty($params['note'])){
-            $join         .= " INNER JOIN ". $wpdb->postmeta ." as metaC ON (". $wpdb->posts .".ID = metaC.post_id)";
-            if(is_array($params['note']))
-                $params['note'] = implode("','",$params['note']);
-            $where[]       = " metaC.meta_value LIKE '%true%' AND metaC.meta_key IN ('". $params['note'] ."'))";
-            $having[]      = " count(metaC.meta_value)=". count(explode(',',$params['note']));
-        }
+        // if(isset($params['note']) && !empty($params['note'])){
+            // $join         .= " INNER JOIN ". $wpdb->postmeta ." as metaC ON (". $wpdb->posts .".ID = metaC.post_id)";
+            // if(is_array($params['note']))
+                // $params['note'] = implode("','",$params['note']);
+            // $where[]       = " metaC.meta_key LIKE '%notation%' AND metaC.meta_value >= ". $params['note'] .")";
+            // $having[]      = " count(metaC.meta_value)=". count(explode(',',$params['note']));
+        // }
 
         //merge filters
         if(!empty($where)){
@@ -312,11 +313,24 @@ class Bibliotheque
 
         //send response
         if(!empty($result)){
+			$response['nb_products'] = 0;
             //create count query
             $countQuery .= $join ." WHERE (". $wpdb->posts .".post_type = 'product' AND ". $wpdb->posts .".post_status = 'publish' AND ". $where ." GROUP BY ". $wpdb->posts .".ID  ". $having .") as T";
-            $response['nb_products'] = $wpdb->get_results($countQuery)[0]->count;
-			$response['products']    = $result;
-            return $response;
+            
+			if(isset($params['note']) && !empty($params['note'])){
+				$response['products']    = array();
+				foreach($result as $r){				
+					$averageNote = Utilisateur::getAverageNote($r->ID);
+					if($averageNote['average'] >= $params['note'] && $averageNote['total'] > 0){
+						$response['nb_products']++;
+						$response['products'][]    = $r;							
+					}
+				}
+			}else{
+				$response['nb_products'] = $wpdb->get_results($countQuery)[0]->count;
+				$response['products']    = $result;
+            }
+			return $response;
         }
         $response['nb_products'] = 0;
         $response['products']    = array();
