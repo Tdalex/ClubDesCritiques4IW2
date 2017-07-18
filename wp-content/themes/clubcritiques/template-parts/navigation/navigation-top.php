@@ -11,6 +11,10 @@
 use ClubDesCritiques\Utilisateur as Utilisateur;
 use ClubDesCritiques\ChatRoom as ChatRoom;
 
+//next Chat
+$nextChat  = ChatRoom::getNextChat();
+$startDate = get_field('start_date', $nextChat->ID);
+$today     = date('Y-m-d H:i:s');
 ?>
 <nav id="site-navigation" class="main-navigation" role="navigation" aria-label="<?php _e( 'Top Menu', 'clubcritiques' ); ?>">
 	<button class="menu-toggle" aria-controls="top-menu" aria-expanded="false"><?php echo clubcritiques_get_svg( array( 'icon' => 'bars' ) ); echo clubcritiques_get_svg( array( 'icon' => 'close' ) ); _e( 'Menu', 'clubcritiques' ); ?></button>
@@ -23,23 +27,24 @@ use ClubDesCritiques\ChatRoom as ChatRoom;
             <?php } ?>
             <li id="menu-item-89" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-89">
                 <a href="<?php echo getTemplateUrl('Products') ?>">Liste Produits</a>
-            </li>
+            </li>	
             <li id="menu-chat">
                 <?php //next Chat
-                $nextChat = ChatRoom::getNextChat();
-                if($nextChat){
-                    $chatProduct = get_field('product', $nextChat->ID)[0];
-                    if(!is_user_logged_in()){ ?>
-                    <?php }elseif(ChatRoom::isUserKicked($nextChat->ID, get_current_user_id())){ ?>
-                    <?php }elseif(false !== Utilisateur::getNotation($chatProduct->ID, get_current_user_id())){ ?>
-                        <a href='<?php echo get_permalink($nextChat->ID)?>?changeRoom=true'>Rejoindre un salon</a><br>
-                        <?php if($userRoom = ChatRoom::getUserRoom($nextChat->ID)){ ?>
-                            <a href='<?php echo get_permalink($userRoom)?>'>Rejoindre votre dernier salon</a><br>
-                        <?php }?>
-                    <?php }else{ ?>
-                        <a href='<?php echo getTemplateUrl('SingleProduct').$chatProduct->ID;?>' >Veuillez noter le livre avant de rejoindre un salon</a><br>
-                    <?php }?>
-                <?php } ?>
+				if($nextChat){
+					if ($today >= $startDate) { 	
+						$chatProduct = get_field('product', $nextChat->ID)[0];
+						if(!is_user_logged_in()){ ?>
+						<?php }elseif(ChatRoom::isUserKicked($nextChat->ID, get_current_user_id())){ ?>
+						<?php }elseif(false !== Utilisateur::getNotation($chatProduct->ID, get_current_user_id())){ ?>
+							<a href='<?php echo get_permalink($nextChat->ID)?>?changeRoom=true'>Rejoindre un salon</a><br>
+							<?php if($userRoom = ChatRoom::getUserRoom($nextChat->ID)){ ?>
+								<a href='<?php echo get_permalink($userRoom)?>'>Rejoindre votre dernier salon</a><br>
+							<?php }?>
+						<?php }else{ ?>
+							<a href='<?php echo getTemplateUrl('SingleProduct').$chatProduct->ID;?>' >Veuillez noter le livre avant de rejoindre un salon</a><br>
+						<?php }?>
+					<?php } ?>
+				<?php } ?>
             </li>
             <li>
                 <?php if(!is_user_logged_in()){ ?>
