@@ -135,7 +135,7 @@ $time_salon = date('F j, Y H:i:s', strtotime($endDate));
 													<a class="join-room" href='<?php echo get_permalink($nextChat->ID)?>?changeRoom=true' ><button class="btn">Rejoindre le salon</button></a>
 												</div>
 												<?php if($userRoom = ChatRoom::getUserRoom($nextChat->ID)){ ?>
-													<div class="row col-md-2 col-md-offset-5 join-salon text-center">
+													<div class="row col-md-2 join-salon text-center">
 														<a class="join-room" href='<?php echo get_permalink($userRoom)?>' ><button class="btn">Rejoindre votre dernier salon</button></a>
 													</div>
 												<?php } ?>
