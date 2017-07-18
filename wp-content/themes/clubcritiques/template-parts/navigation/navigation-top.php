@@ -58,7 +58,7 @@ $time_salon = date('F j, Y H:i:s', strtotime($endDate));
 											<div class="row">
 												<div class="col-md-3">
 													<div class="row">
-														<a href="#">
+														<a href="<?php echo getTemplateUrl('SingleProduct').$chatProduct->ID; ?>">
 															<?php if(!$image){ ?> 
 																<div style="background-image: url(<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>)" class="book-salon"></div>
 															<?php }else{ ?>

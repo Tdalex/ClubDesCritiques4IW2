@@ -57,7 +57,7 @@ if ($today > $endDate or $today < $startDate) {
 //product
 $author = get_field('author', $product->ID)[0];
 $published_date = get_field('published_date', $product->ID);
-$published_date = new DateTime($published_date);
+$published_date = DateTime::createFromFormat('d-m-Y', $published_date);
 
 $description    = get_field('description', $product->ID);
 $original_title = get_field('original_title', $product->ID);

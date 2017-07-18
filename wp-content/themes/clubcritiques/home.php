@@ -109,7 +109,7 @@ get_header(); ?>
 				<div class="row">
 					<div class="col-md-3">
 						<div class="row">
-							<a href="#">
+							<a class="chat-link" href="<?php echo getTemplateUrl('SingleProduct').$chatProduct->ID; ?>">
 								<?php if(!$image){ ?> 
 									<div style="background-image: url(<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>)" class="book-salon"></div>
 								<?php }else{ ?>
@@ -197,7 +197,7 @@ get_header(); ?>
 						<a class="join-room" href='<?php echo get_permalink($nextChat->ID)?>?changeRoom=true' ><button class="btn">Rejoindre le salon</button></a>
 					</div>
 					<?php if($userRoom = ChatRoom::getUserRoom($nextChat->ID)){ ?>
-						<div class="row col-md-2 col-md-offset-5 join-salon text-center">
+						<div class="row col-md-12 join-salon-2 text-center">
 							<a class="join-room" href='<?php echo get_permalink($userRoom)?>' ><button class="btn">Rejoindre votre dernier salon</button></a>
 						</div>
 					<?php } ?>
