@@ -15,15 +15,22 @@
 use ClubDesCritiques\Utilisateur as Utilisateur;
 use ClubDesCritiques\ChatRoom as ChatRoom;
 
-if(isset($_POST) && $_POST['type'] == 'register'){
+if(isset($_POST['type']) && $_POST['type'] == 'contactSend'){
+	echo sendContactForm($_POST);
+	return true;
+}elseif(isset($_POST) && $_POST['type'] == 'register'){
 	echo Utilisateur::register($_POST);
+	return true;
 }elseif(isset($_POST) && $_POST['type'] == 'login'){
 	echo Utilisateur::login($_POST);
+	return true;
 }elseif(isset($_POST) && $_POST['type'] == 'logout'){
 	wp_logout();
 	Utilisateur::redirect($_SERVER['REQUEST_URI']);
+	return true;
 }elseif(isset($_POST) && $_POST['type'] == 'activate'){
 	echo Utilisateur::activateAccount($_POST);
+	return true;
 }
 
 ?><!DOCTYPE html>

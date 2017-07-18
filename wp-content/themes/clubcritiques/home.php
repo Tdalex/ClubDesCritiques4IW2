@@ -253,26 +253,29 @@ get_header(); ?>
     </div>
 	<div class="row">
         <div class="col-lg-12">
-            <form name="sentMessage">
+            <form method='POST' action=''>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-6">					
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Votre Nom *" id="name" required="">
+                            <input type="text" class="form-control" placeholder="Objet *" name='object' id="object" required="">
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Votre Prénom *" id="surname" required="">
+                            <input type="text" class="form-control" placeholder="Votre Nom *" name='lastname' id="name" required="">
                         </div>
                         <div class="form-group">
-                            <input type="email" class="form-control" placeholder="Votre Email *" id="email" required="">
+                            <input type="text" class="form-control" placeholder="Votre Prénom *" name='firstname' id="surname" required="">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Votre Email *" name='from' id="email" required="">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <textarea class="form-control" rows="6" placeholder="Votre Message *" id="message" required=""></textarea>
+                            <textarea class="form-control" rows="8" placeholder="Votre Message *" name='message' id="message" required=""></textarea>
                         </div>
                     </div>
                     <div class="col-lg-12 text-center button-submit">
-                        <button type="submit" class="btn">Envoyer</button>
+                        <button type="submit" name='type' value='contactSend' class="btn">Envoyer</button>
                     </div>
                 </div>
             </form>

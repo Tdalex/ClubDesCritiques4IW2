@@ -625,3 +625,22 @@ function getTemplateUrl($template){
 	return false;
 }
 
+function sendContactForm($request){
+	 $args = array(
+        'role' => 'administrator',
+        'orderby' => 'user_nicename',
+        'order' => 'ASC'
+      );
+	$users = get_users($args);
+	foreach ($users as $user) {
+		$admin[] = $user->user_email;
+	}
+	$object    = '[CONTACT] '.$request['object'];
+	$message   = 'Message de : '.$request['firstname'].' '.$request['lastname'].' ['. $request['from']. ']<br><br>'.$request['message'];
+	$headers[] = 'From: '. NO_REPLY;
+	wp_mail($admin, $object, $message, $headers);
+	$_SESSION['message'] = array('type' => 'success', 'text' => 'un email comportant vos identifiants vous a ete envoyé');
+	echo '<script type="text/javascript">window.location = "' . strtok($_SERVER["REQUEST_URI"],'?') . '"</script>';
+	return true;
+}
+
