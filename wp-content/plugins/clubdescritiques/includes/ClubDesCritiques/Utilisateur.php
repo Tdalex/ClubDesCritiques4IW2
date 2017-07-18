@@ -63,19 +63,12 @@ class Utilisateur{
 					<div class="modal-backdrop in"></div>
 
 <div class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="channelModal" style="display:block;">
-
     <div class="modal-dialog modal-lg" role="document">
-
         <div class="modal-content">
-
             <div class="modal-header">
-
-                <h4 class="modal-title" id="channelModal">Welcome!</h4>
-
+                <h4 class="modal-title" id="channelModal">Bienvenue sur Club des Critiques, <br>Afin de bénécifier d\'une experience optimale, veuillez remplir les champs ci-dessous.</h4>
             </div>
-
             <div class="modal-body modal-password">
-
                <form action="" method="POST">
 						<input type="hidden" name="type" value="activate"></input>
 						Prénom:<input required="required" type="text" name="firstname"></input><br>
@@ -84,13 +77,9 @@ class Utilisateur{
 						Confirmation de mot de passe:<input type="password" name="newPasswordCheck"></input><br>
 						<button type="submit">modifier  mot de passe</button>
 					</form>
-
             </div>
-
         </div>
-
     </div>
-
 </div>';
 					$_SESSION['activate'] = $activate;
 					return true;
