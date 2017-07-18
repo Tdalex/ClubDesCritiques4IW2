@@ -41,7 +41,7 @@ $time_salon = date('F j, Y H:i:s', strtotime($endDate));
 						<button type="button" class="btn-login" data-toggle="modal" data-target="#salonModal">Salon</button>	
 						 <!-- Modal -->
 						<div id="salonModal" class="modal fade" role="dialog">
-							<div class="modal-dialog">
+							<div class="modal-dialog modal-chat">
 
 								<!-- Modal content-->
 								<div class="modal-content">
@@ -49,8 +49,8 @@ $time_salon = date('F j, Y H:i:s', strtotime($endDate));
 										<h1 class="chat-title">Salon</h1>
 										<button type="button" class="close" data-dismiss="modal">&times;</button>
 									</div>
-									<div class="modal-body">
-										<?php if($nextChat){ 
+									<div class="modal-body modal-body-chat">
+										<?php if($nextChat){
 											$chatProduct   = get_field('product', $nextChat->ID)[0]; 
 											$averageNote   = Utilisateur::getAverageNote($chatProduct->ID); 
 											$productAuthor = get_field('author', $chatProduct->ID)[0]; ?>

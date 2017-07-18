@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f2d4fdeb-7215-426a-802a-79018bdd00e1" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/ClubDesCritiques4IW2.iml" afterPath="$PROJECT_DIR$/.idea/ClubDesCritiques4IW2.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wp-content/plugins/clubdescritiques/includes/ClubDesCritiques/Utilisateur.php" afterPath="$PROJECT_DIR$/wp-content/plugins/clubdescritiques/includes/ClubDesCritiques/Utilisateur.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wp-content/themes/clubcritiques/header.php" afterPath="$PROJECT_DIR$/wp-content/themes/clubcritiques/header.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wp-content/themes/clubcritiques/style.css" afterPath="$PROJECT_DIR$/wp-content/themes/clubcritiques/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/wp-content/themes/clubcritiques/template-parts/navigation/navigation-top.php" afterPath="$PROJECT_DIR$/wp-content/themes/clubcritiques/template-parts/navigation/navigation-top.php" />
     </list>
@@ -29,15 +26,16 @@
       <file leaf-file-name="SingleProduct.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wp-content/themes/clubcritiques/template-parts/SingleProduct.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1189">
-              <caret line="170" column="11" lean-forward="true" selection-start-line="170" selection-start-column="0" selection-end-line="171" selection-end-column="0" />
+            <state relative-caret-position="3674">
+              <caret line="170" column="11" lean-forward="false" selection-start-line="170" selection-start-column="11" selection-end-line="170" selection-end-column="11" />
               <folding>
-                <marker date="1500330168871" expanded="true" signature="12469:12543" ph="..." />
-                <marker date="1500330168871" expanded="true" signature="12636:12710" ph="..." />
-                <marker date="1500330168871" expanded="true" signature="12803:12877" ph="..." />
-                <marker date="1500330168871" expanded="true" signature="12970:13044" ph="..." />
-                <marker date="1500330168871" expanded="true" signature="13137:13211" ph="..." />
-                <marker date="1500330168871" expanded="true" signature="13315:13358" ph="..." />
+                <marker date="1500391005571" expanded="true" signature="12025:12163" ph="..." />
+                <marker date="1500391005571" expanded="true" signature="12332:12406" ph="..." />
+                <marker date="1500391005571" expanded="true" signature="12499:12573" ph="..." />
+                <marker date="1500391005571" expanded="true" signature="12666:12740" ph="..." />
+                <marker date="1500391005571" expanded="true" signature="12833:12907" ph="..." />
+                <marker date="1500391005571" expanded="true" signature="13000:13074" ph="..." />
+                <marker date="1500391005571" expanded="true" signature="13178:13221" ph="..." />
               </folding>
             </state>
           </provider>
@@ -46,30 +44,11 @@
       <file leaf-file-name="navigation-top.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wp-content/themes/clubcritiques/template-parts/navigation/navigation-top.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="18" column="21" lean-forward="false" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
+            <state relative-caret-position="660">
+              <caret line="51" column="74" lean-forward="false" selection-start-line="51" selection-start-column="74" selection-end-line="51" selection-end-column="74" />
               <folding>
                 <element signature="e#6#125#0#PHP" expanded="true" />
                 <element signature="e#127#175#0#PHP" expanded="true" />
-                <element signature="e#2966#2973#0#HTML" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Utilisateur.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wp-content/plugins/clubdescritiques/includes/ClubDesCritiques/Utilisateur.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1012">
-              <caret line="69" column="0" lean-forward="true" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
-              <folding>
-                <marker date="1500328537413" expanded="true" signature="2073:2087" ph="..." />
-                <marker date="1500328537413" expanded="true" signature="2088:2949" ph="..." />
-                <marker date="1500328537413" expanded="true" signature="2145:2941" ph="..." />
-                <marker date="1500328537413" expanded="true" signature="2182:2929" ph="..." />
-                <marker date="1500328537413" expanded="true" signature="2222:2315" ph="..." />
-                <marker date="1500328537413" expanded="true" signature="2368:2913" ph="..." />
-                <marker date="1500328537413" expanded="true" signature="2415:2893" ph="..." />
               </folding>
             </state>
           </provider>
@@ -78,8 +57,8 @@
       <file leaf-file-name="home.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wp-content/themes/clubcritiques/home.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="770">
-              <caret line="69" column="14" lean-forward="true" selection-start-line="53" selection-start-column="8" selection-end-line="69" selection-end-column="14" />
+            <state relative-caret-position="-572">
+              <caret line="50" column="10" lean-forward="false" selection-start-line="50" selection-start-column="10" selection-end-line="50" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -88,8 +67,8 @@
       <file leaf-file-name="header.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wp-content/themes/clubcritiques/header.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1408">
-              <caret line="75" column="0" lean-forward="false" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+            <state relative-caret-position="1122">
+              <caret line="62" column="0" lean-forward="false" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
               <folding>
                 <element signature="e#331#379#0#PHP" expanded="true" />
               </folding>
@@ -110,14 +89,19 @@
       <file leaf-file-name="Products.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wp-content/themes/clubcritiques/template-parts/Products.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2486">
-              <caret line="116" column="0" lean-forward="false" selection-start-line="116" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
+            <state relative-caret-position="2508">
+              <caret line="117" column="0" lean-forward="false" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>modal</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -413,8 +397,8 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -434,11 +418,12 @@
       <workItem from="1498678774641" duration="1454000" />
       <workItem from="1498729417323" duration="317000" />
       <workItem from="1500326808039" duration="3478000" />
+      <workItem from="1500395149105" duration="1598000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5249000" />
+    <option name="totallyTimeSpent" value="6847000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
@@ -484,15 +469,93 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/wp-content/themes/clubcritiques/template-parts/SingleProduct.php">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3740">
+          <caret line="170" column="11" lean-forward="true" selection-start-line="170" selection-start-column="0" selection-end-line="171" selection-end-column="0" />
+          <folding>
+            <marker date="1500391005571" expanded="true" signature="12025:12163" ph="..." />
+            <marker date="1500391005571" expanded="true" signature="12332:12406" ph="..." />
+            <marker date="1500391005571" expanded="true" signature="12499:12573" ph="..." />
+            <marker date="1500391005571" expanded="true" signature="12666:12740" ph="..." />
+            <marker date="1500391005571" expanded="true" signature="12833:12907" ph="..." />
+            <marker date="1500391005571" expanded="true" signature="13000:13074" ph="..." />
+            <marker date="1500391005571" expanded="true" signature="13178:13221" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wp-content/themes/clubcritiques/template-parts/navigation/navigation-top.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#6#125#0#PHP" expanded="true" />
+            <element signature="e#127#175#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wp-content/plugins/clubdescritiques/includes/ClubDesCritiques/Utilisateur.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1430">
+          <caret line="69" column="0" lean-forward="true" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
+          <folding>
+            <marker date="1500391005558" expanded="false" signature="2215:2229" ph="..." />
+            <marker date="1500391005558" expanded="true" signature="2230:3211" ph="..." />
+            <marker date="1500391005558" expanded="true" signature="2288:3199" ph="..." />
+            <marker date="1500391005558" expanded="true" signature="2323:3186" ph="..." />
+            <marker date="1500391005558" expanded="true" signature="2358:2554" ph="..." />
+            <marker date="1500391005558" expanded="true" signature="2602:3172" ph="..." />
+            <marker date="1500391005558" expanded="true" signature="2644:3157" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wp-content/themes/clubcritiques/home.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1430">
+          <caret line="69" column="14" lean-forward="true" selection-start-line="53" selection-start-column="8" selection-end-line="69" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wp-content/themes/clubcritiques/header.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1386">
+          <caret line="75" column="0" lean-forward="false" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+          <folding>
+            <element signature="e#331#379#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wp-content/themes/clubcritiques/template-parts/blocs/Sidebar.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="20" column="38" lean-forward="false" selection-start-line="20" selection-start-column="38" selection-end-line="20" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wp-content/themes/clubcritiques/template-parts/Products.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2486">
+          <caret line="116" column="0" lean-forward="false" selection-start-line="116" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wp-content/themes/clubcritiques/template-parts/SingleProduct.php">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3388">
           <caret line="154" column="2" lean-forward="false" selection-start-line="154" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
           <folding>
-            <marker date="1500330168871" expanded="true" signature="12469:12543" ph="..." />
-            <marker date="1500330168871" expanded="true" signature="12636:12710" ph="..." />
-            <marker date="1500330168871" expanded="true" signature="12803:12877" ph="..." />
-            <marker date="1500330168871" expanded="true" signature="12970:13044" ph="..." />
-            <marker date="1500330168871" expanded="true" signature="13137:13211" ph="..." />
-            <marker date="1500330168871" expanded="true" signature="13315:13358" ph="..." />
+            <marker date="1500391005571" expanded="true" signature="12025:12163" ph="..." />
+            <marker date="1500391005571" expanded="true" signature="12332:12406" ph="..." />
+            <marker date="1500391005571" expanded="true" signature="12499:12573" ph="..." />
+            <marker date="1500391005571" expanded="true" signature="12666:12740" ph="..." />
+            <marker date="1500391005571" expanded="true" signature="12833:12907" ph="..." />
+            <marker date="1500391005571" expanded="true" signature="13000:13074" ph="..." />
+            <marker date="1500391005571" expanded="true" signature="13178:13221" ph="..." />
           </folding>
         </state>
       </provider>
@@ -534,12 +597,13 @@
         <state relative-caret-position="2567">
           <caret line="154" column="2" lean-forward="false" selection-start-line="154" selection-start-column="2" selection-end-line="154" selection-end-column="2" />
           <folding>
-            <marker date="1500330168871" expanded="true" signature="12469:12543" ph="..." />
-            <marker date="1500330168871" expanded="true" signature="12636:12710" ph="..." />
-            <marker date="1500330168871" expanded="true" signature="12803:12877" ph="..." />
-            <marker date="1500330168871" expanded="true" signature="12970:13044" ph="..." />
-            <marker date="1500330168871" expanded="true" signature="13137:13211" ph="..." />
-            <marker date="1500330168871" expanded="true" signature="13315:13358" ph="..." />
+            <marker date="1500391005571" expanded="true" signature="12025:12163" ph="..." />
+            <marker date="1500391005571" expanded="true" signature="12332:12406" ph="..." />
+            <marker date="1500391005571" expanded="true" signature="12499:12573" ph="..." />
+            <marker date="1500391005571" expanded="true" signature="12666:12740" ph="..." />
+            <marker date="1500391005571" expanded="true" signature="12833:12907" ph="..." />
+            <marker date="1500391005571" expanded="true" signature="13000:13074" ph="..." />
+            <marker date="1500391005571" expanded="true" signature="13178:13221" ph="..." />
           </folding>
         </state>
       </provider>
@@ -562,8 +626,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/wp-content/themes/clubcritiques/template-parts/Products.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2486">
-          <caret line="116" column="0" lean-forward="false" selection-start-line="116" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
+        <state relative-caret-position="2508">
+          <caret line="117" column="0" lean-forward="false" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -584,63 +648,63 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wp-content/themes/clubcritiques/home.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="770">
-          <caret line="69" column="14" lean-forward="true" selection-start-line="53" selection-start-column="8" selection-end-line="69" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wp-content/plugins/clubdescritiques/includes/ClubDesCritiques/Utilisateur.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1012">
-          <caret line="69" column="0" lean-forward="true" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
-          <folding>
-            <marker date="1500328537413" expanded="true" signature="2073:2087" ph="..." />
-            <marker date="1500328537413" expanded="true" signature="2088:2949" ph="..." />
-            <marker date="1500328537413" expanded="true" signature="2145:2941" ph="..." />
-            <marker date="1500328537413" expanded="true" signature="2182:2929" ph="..." />
-            <marker date="1500328537413" expanded="true" signature="2222:2315" ph="..." />
-            <marker date="1500328537413" expanded="true" signature="2368:2913" ph="..." />
-            <marker date="1500328537413" expanded="true" signature="2415:2893" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/wp-content/themes/clubcritiques/template-parts/SingleProduct.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1189">
-          <caret line="170" column="11" lean-forward="true" selection-start-line="170" selection-start-column="0" selection-end-line="171" selection-end-column="0" />
+        <state relative-caret-position="3674">
+          <caret line="170" column="11" lean-forward="false" selection-start-line="170" selection-start-column="11" selection-end-line="170" selection-end-column="11" />
           <folding>
-            <marker date="1500330168871" expanded="true" signature="12469:12543" ph="..." />
-            <marker date="1500330168871" expanded="true" signature="12636:12710" ph="..." />
-            <marker date="1500330168871" expanded="true" signature="12803:12877" ph="..." />
-            <marker date="1500330168871" expanded="true" signature="12970:13044" ph="..." />
-            <marker date="1500330168871" expanded="true" signature="13137:13211" ph="..." />
-            <marker date="1500330168871" expanded="true" signature="13315:13358" ph="..." />
+            <marker date="1500391005571" expanded="true" signature="12025:12163" ph="..." />
+            <marker date="1500391005571" expanded="true" signature="12332:12406" ph="..." />
+            <marker date="1500391005571" expanded="true" signature="12499:12573" ph="..." />
+            <marker date="1500391005571" expanded="true" signature="12666:12740" ph="..." />
+            <marker date="1500391005571" expanded="true" signature="12833:12907" ph="..." />
+            <marker date="1500391005571" expanded="true" signature="13000:13074" ph="..." />
+            <marker date="1500391005571" expanded="true" signature="13178:13221" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/wp-content/themes/clubcritiques/header.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1408">
-          <caret line="75" column="0" lean-forward="false" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+        <state relative-caret-position="1122">
+          <caret line="62" column="0" lean-forward="false" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
           <folding>
             <element signature="e#331#379#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/wp-content/plugins/clubdescritiques/includes/ClubDesCritiques/Utilisateur.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1012">
+          <caret line="69" column="0" lean-forward="false" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
+          <folding>
+            <marker date="1500391005558" expanded="false" signature="2215:2229" ph="..." />
+            <marker date="1500391005558" expanded="true" signature="2230:3211" ph="..." />
+            <marker date="1500391005558" expanded="true" signature="2288:3199" ph="..." />
+            <marker date="1500391005558" expanded="true" signature="2323:3186" ph="..." />
+            <marker date="1500391005558" expanded="true" signature="2358:2554" ph="..." />
+            <marker date="1500391005558" expanded="true" signature="2602:3172" ph="..." />
+            <marker date="1500391005558" expanded="true" signature="2644:3157" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wp-content/themes/clubcritiques/home.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-572">
+          <caret line="50" column="10" lean-forward="false" selection-start-line="50" selection-start-column="10" selection-end-line="50" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/wp-content/themes/clubcritiques/template-parts/navigation/navigation-top.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="18" column="21" lean-forward="false" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
+        <state relative-caret-position="660">
+          <caret line="51" column="74" lean-forward="false" selection-start-line="51" selection-start-column="74" selection-end-line="51" selection-end-column="74" />
           <folding>
             <element signature="e#6#125#0#PHP" expanded="true" />
             <element signature="e#127#175#0#PHP" expanded="true" />
-            <element signature="e#2966#2973#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -1542,6 +1542,22 @@ svg.icon.icon-arrow-right {
 	display: none;
 }
 
+#channelModal {
+	text-align: center;
+}
+
+.modal-body-chat {
+	height: 440px;
+} 
+
+.modal-chat {
+	width: 1170px;
+}
+
+#menu-chat {
+	padding: 0px 20px;
+}
+
 .modal-password {
 	color: #000;
 	font-size: 22px;
@@ -1681,7 +1697,7 @@ nav {
 }
 
 .chat-link {
-	color: white;
+	color: #000;
 }
 
 .chat-link:hover {
@@ -4894,7 +4910,7 @@ button:hover{
 }
 
 .author-home a{
-	color: white;
+	color: #000;
 }
 
 .author-home a:hover{
@@ -4952,11 +4968,11 @@ content:"secondes"}
 .h2-timer {
 	text-align: center;
 	font-size: 30px;
-	color: white;
+	color: #000;
 }
 
 .join-salon {
-	margin-top: 4%;
+	/*margin-top: 4%;*/
 }
 
 
