@@ -70,7 +70,7 @@ get_header();
 				<li class="row single_book col-md-9">
 
 					<div class="col-md-3">
-						<a href='<?php echo get_permalink(get_page_by_title('Produit')).$biblio->ID; ?>'>
+						<a href='<?php echo getTemplateUrl('SingleProduct').$biblio->ID; ?>'>
 							<?php if(!$image){ ?> 
 								<img class="img-responsive img_biblio" src="<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>"> 
 							<?php }else{ ?>

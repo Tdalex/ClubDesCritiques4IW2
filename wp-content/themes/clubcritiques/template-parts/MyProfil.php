@@ -49,7 +49,7 @@ get_header();
 							<h2>Paramètres</h2>
 							<div class="menu_flottant">
 								<ul>
-									<a href='<?php echo get_permalink(get_page_by_title('Modifier profil')); ?>'><li>Modifier mes informations</li></a>
+									<a href='<?php echo getTemplateUrl('EditProfil'); ?>'><li>Modifier mes informations</li></a>
 								</ul>
 							</div>
 						</div>
@@ -60,7 +60,7 @@ get_header();
 								<div class="menu_flottant">
 								<?php foreach(get_field('contact', 'user_'.$user->ID) as $contact){ ?>
 									<ul>
-										<a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$contact['ID']; ?>'><li><?php echo $contact['user_firstname']. ' ' .$contact['user_lastname'];;?></li></a>
+										<a href='<?php echo getTemplateUrl('UserProfil').$contact['ID']; ?>'><li><?php echo $contact['user_firstname']. ' ' .$contact['user_lastname'];;?></li></a>
 									</ul>
 								<?php } ?>
 								</div>
@@ -85,7 +85,7 @@ get_header();
 					<?php foreach($exchanges['take'] as $exchange){ ?>
 						<?php $exchangeProduct = get_field('product', $exchange->ID)[0]; ?>
 						<div class="col-md-3 col-xs-6 suggestions">
-							<a href='<?php echo get_permalink(get_page_by_title('Produit')).$exchangeProduct->ID; ?>'>	
+							<a href='<?php echo getTemplateUrl('SingleProduct').$exchangeProduct->ID; ?>'>	
 								<div class="suggestions-img">
 									<?php if(!get_field('image', $exchangeProduct->ID)){ ?> 
 										<img class="img-responsive" src="<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>"> 
@@ -95,7 +95,7 @@ get_header();
 								</div>
 								<h3><?php echo $exchangeProduct->post_title; ?></h3>
 							</a>
-							<a href="<?php echo get_permalink(get_page_by_title('Auteur')).get_field('author',$exchangeProduct->ID)[0]->ID; ?>">
+							<a href="<?php echo getTemplateUrl('Author').get_field('author',$exchangeProduct->ID)[0]->ID; ?>">
 								<p><?php echo get_field('author',$exchangeProduct->ID)[0]->post_title; ?></p>
 							</a>
 						</div>
@@ -108,7 +108,7 @@ get_header();
 					<?php foreach($exchanges['give'] as $exchange){ ?>
 						<?php $exchangeProduct = get_field('product', $exchange->ID)[0]; ?>
 						<div class="col-md-3 col-xs-6 suggestions">
-							<a href='<?php echo get_permalink(get_page_by_title('Produit')).$exchangeProduct->ID; ?>'>	
+							<a href='<?php echo getTemplateUrl('SingleProduct').$exchangeProduct->ID; ?>'>	
 								<div class="suggestions-img">
 									<?php if(!get_field('image', $exchangeProduct->ID)){ ?> 
 										<img class="img-responsive" src="<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>"> 
@@ -118,7 +118,7 @@ get_header();
 								</div>
 								<h3><?php echo $exchangeProduct->post_title; ?></h3>
 							</a>
-							<a href="<?php echo get_permalink(get_page_by_title('Auteur')).get_field('author',$exchangeProduct->ID)[0]->ID; ?>">
+							<a href="<?php echo getTemplateUrl('Author').get_field('author',$exchangeProduct->ID)[0]->ID; ?>">
 								<p><?php echo get_field('author',$exchangeProduct->ID)[0]->post_title; ?></p>
 							</a>
 						</div>

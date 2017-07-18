@@ -130,7 +130,7 @@ get_header();
 					</div>
 
 					<div class="row author">		
-						<a href='<?php echo get_permalink(get_page_by_title('Auteur')).$author->ID; ?>'><?php echo $author->post_title;?></a>
+						<a href='<?php echo getTemplateUrl('Author').$author->ID; ?>'><?php echo $author->post_title;?></a>
 						<?php echo $published_date; ?>
 					</div>
 
@@ -179,7 +179,7 @@ get_header();
 		<div class="row">
 		<?php foreach($suggestedProductsTemp as $sp){ ?>
 			<div class="col-md-3 suggestions col-xs-6">
-				<a href="<?php echo get_permalink(get_page_by_title('Produit')).$sp->ID; ?>">
+				<a href="<?php echo getTemplateUrl('SingleProduct').$sp->ID; ?>">
 					<div class="suggestions-img">
 						<?php if(!get_field('image', $sp->ID)){ ?> 
 							<img class="img-responsive"  src="<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>"> 
@@ -189,7 +189,7 @@ get_header();
 					</div>
 					<h3><?php echo $sp->post_title; ?></h3>
 				</a>				
-				<a href="<?php echo get_permalink(get_page_by_title('Auteur')).get_field('author', $sp->ID)[0]->ID; ?>">
+				<a href="<?php echo getTemplateUrl('Author').get_field('author', $sp->ID)[0]->ID; ?>">
 					<p><?php echo get_field('author', $sp->ID)[0]->post_title; ?></p>
 				</a>
 			</div>
@@ -208,7 +208,7 @@ get_header();
 			<?php foreach($exchanges['take'] as $exchange){ ?>
 				<div class="user_troc">
 					<div class="col-md-2 col-md-offset-3 col-xs-12 img_troc">
-		              <a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$commentAuthor->ID; ?>'>
+		              <a href='<?php echo getTemplateUrl('UserProfil').$commentAuthor->ID; ?>'>
 						<?php if(!get_field('photo',  'user_'.$exchangeAuthor->ID)){ ?> 
 							<div style="background-image: url(<?php echo get_parent_theme_file_uri( '/assets/images/avatar_defaut.png' ); ?>)" 
 							class="avatar_sp avatar_echange img-responsive"></div>
@@ -220,7 +220,7 @@ get_header();
 					</div>
 					<div class="col-md-3 name_troc">
 						<?php $exchangeAuthor = get_user_by('ID', $exchange->post_author); ?>
-							<h2><a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$exchangeAuthor->ID; ?>'>
+							<h2><a href='<?php echo getTemplateUrl('UserProfil').$exchangeAuthor->ID; ?>'>
 								<?php echo ucfirst(strtolower($exchangeAuthor->user_firstname)) .' '. ucfirst(strtolower($exchangeAuthor->user_lastname)); ?>
 								</a></h2>	
 					</div>
@@ -234,7 +234,7 @@ get_header();
 				<?php $exchangeAuthor = get_user_by('ID', $exchange->post_author); ?>
 				<div class="user_troc">
 					<div class="col-md-2 col-md-offset-3 img_troc">
-						<a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$exchangeAuthor->ID; ?>'>
+						<a href='<?php echo getTemplateUrl('UserProfil').$exchangeAuthor->ID; ?>'>
 						<?php if(!get_field('photo', 'user_'.$exchangeAuthor->ID)){ ?> 
 							<img src="<?php echo get_parent_theme_file_uri( '/assets/images/avatar_defaut.png' ); ?>" 
 							class="avatar_sp avatar_echange img-responsive" alt="avatar" />
@@ -244,7 +244,7 @@ get_header();
 						</a>
 					</div>
 					<div class="col-md-3 name_troc">
-						<h2><a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$exchangeAuthor->ID; ?>'>
+						<h2><a href='<?php echo getTemplateUrl('UserProfil').$exchangeAuthor->ID; ?>'>
 							<?php echo $exchangeAuthor->user_firstname .' '. $exchangeAuthor->user_lastname; ?>
 						</a></h2>
 					</div>
@@ -293,7 +293,7 @@ get_header();
 				<div class="row div_comment">
 					<div class="col-md-11 comments">
 						<div class="col-md-2 ">
-			              <a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$commentAuthor->ID; ?>'>
+			              <a href='<?php echo getTemplateUrl('UserProfil').$commentAuthor->ID; ?>'>
 							<?php if(!get_field('photo', 'user_'.$commentAuthor->ID)){ ?> 
 								<div class="avatar_sp img-responsive" style="background-image: url(<?php echo get_parent_theme_file_uri( '/assets/images/avatar_defaut.png' ); ?>)"></div>
 							<?php }else{ ?>
@@ -306,7 +306,7 @@ get_header();
 							<div class="row">
 								<h2>
 									<div class="row">
-										<a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$commentAuthor->ID; ?>'><?php echo ucfirst(strtolower($commentAuthor->user_firstname)) .' '. ucfirst(strtolower($commentAuthor->user_lastname)); ?>
+										<a href='<?php echo getTemplateUrl('UserProfil').$commentAuthor->ID; ?>'><?php echo ucfirst(strtolower($commentAuthor->user_firstname)) .' '. ucfirst(strtolower($commentAuthor->user_lastname)); ?>
 										</a> 
 										<?php
 

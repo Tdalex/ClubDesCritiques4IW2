@@ -102,7 +102,7 @@ $formats = get_terms( array(
 		<div class="col-md-8 books_liste">
 			<?php foreach($products as $product){ ?>
 			<div class="col-md-12 books_div">
-				<a href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>">
+				<a href="<?php echo getTemplateUrl('SingleProduct').$product->ID; ?>">
 				<?php if(!get_field('image', $product->ID)){ ?> 
 					<div class="img-products col-md-3" style="background-image: url(<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>)"></div>
                 <?php }else{ ?>
@@ -112,14 +112,14 @@ $formats = get_terms( array(
 
 				<div class="col-md-9">
 					<div class="row title_books">
-						<a href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>">
+						<a href="<?php echo getTemplateUrl('SingleProduct').$product->ID; ?>">
 						<h2><?php echo $product->post_title; ?></h2></a>
 					</div>
 					<div class="row books_parution">
 						<span>parue le : <?php echo get_field('published_date', $product->ID);?></span>
 					</div>
 					<div class="row books_auteur">
-						<a href="<?php echo get_permalink(get_page_by_title('Auteur')).get_field('author',$product->ID)[0]->ID; ?>">
+						<a href="<?php echo getTemplateUrl('Author').get_field('author',$product->ID)[0]->ID; ?>">
 							<span><?php echo get_field('author',$product->ID)[0]->post_title; ?></span>
 						</a>
 					</div>

@@ -610,3 +610,18 @@ function hide_admin_bar_from_front_end(){
   return false;
 }
 add_filter( 'show_admin_bar', 'hide_admin_bar_from_front_end' );
+
+function getTemplateUrl($template){
+	$page = get_posts( array(
+		'post_type'  => 'page',
+		'meta_key'   => '_wp_page_template',
+		'meta_value' => 'template-parts/'.$template.'.php',
+	));
+
+	if(!empty($page)){
+		return get_page_link($page[0]);
+	}
+
+	return false;
+}
+

@@ -123,11 +123,11 @@ get_header(); ?>
 
 				<div class="col-md-3">
 						<div class="row">
-							<h2 class="title"><a class="chat-link" href="<?php echo get_permalink(get_page_by_title('Produit')).$chatProduct->ID; ?>"><?php echo $chatProduct->post_title; ?></a></h2>
+							<h2 class="title"><a class="chat-link" href="<?php echo getTemplateUrl('SingleProduct').$chatProduct->ID; ?>"><?php echo $chatProduct->post_title; ?></a></h2>
 						</div>
 
 						<div class="row author author-home">		
-							<a href='<?php echo get_permalink(get_page_by_title('Auteur')).$productAuthor->ID; ?>'><?php echo $productAuthor->post_title; ?></a>
+							<a href='<?php echo getTemplateUrl('Author').$productAuthor->ID; ?>'><?php echo $productAuthor->post_title; ?></a>
 							[<?php echo get_field('published_date', $chatProduct->ID); ?>]
 						</div>
 
@@ -203,7 +203,7 @@ get_header(); ?>
 						</div>
 					<?php } ?>
 				<?php }else{ ?>
-					<a href='<?php echo get_permalink(get_page_by_title('Produit')).$chatProduct->ID;?>' >Veuillez noter le livre avant de rejoindre un salon</a><br>
+					<a href='<?php echo getTemplateUrl('SingleProduct').$chatProduct->ID;?>' >Veuillez noter le livre avant de rejoindre un salon</a><br>
 				<?php } ?>
 			<?php } ?>
 		<?php }else{ ?>
@@ -225,11 +225,11 @@ get_header(); ?>
 		<?php foreach($products as $product){ ?>
 			<div class="col-md-2 col-xs-4">
 				<?php if(!get_field('image', $product->ID)){ ?>
-					<a href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>"><div class="book-moment" style="background-image: url(<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>)"></div></a>
+					<a href="<?php echo getTemplateUrl('SingleProduct').$product->ID; ?>"><div class="book-moment" style="background-image: url(<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>)"></div></a>
 				<?php }else{ ?>
-					<a href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>"><div class="book-moment" style="background-image: url(<?php echo get_field('image', $product->ID); ?>)"></div></a>
+					<a href="<?php echo getTemplateUrl('SingleProduct').$product->ID; ?>"><div class="book-moment" style="background-image: url(<?php echo get_field('image', $product->ID); ?>)"></div></a>
 				<?php } ?>
-				<p class="title_book"><a  class="link-book" href="<?php echo get_permalink(get_page_by_title('Produit')).$product->ID; ?>"><?php echo $product->post_title; ?></a></p>
+				<p class="title_book"><a  class="link-book" href="<?php echo getTemplateUrl('SingleProduct').$product->ID; ?>"><?php echo $product->post_title; ?></a></p>
 			</div>
 		<?php } ?>
 	</div>

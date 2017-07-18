@@ -74,7 +74,7 @@ get_header();
 		<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<h1 class="title title_margin title_salon" >Salon <?php echo get_field('room_number', get_the_ID())." : <a target='_blank' href='".get_permalink(get_page_by_title('Produit')).$product->ID."'>".$product->post_title."</a> (<a target='_blank'  href='".get_permalink(get_page_by_title('Auteur')).$author->ID."'>".$author->post_title."</a>)"; ?></h1>
+						<h1 class="title title_margin title_salon" >Salon <?php echo get_field('room_number', get_the_ID())." : <a target='_blank' href='".getTemplateUrl('SingleProduct').$product->ID."'>".$product->post_title."</a> (<a target='_blank'  href='".getTemplateUrl('Author').$author->ID."'>".$author->post_title."</a>)"; ?></h1>
 					</div>
 				</div>
 

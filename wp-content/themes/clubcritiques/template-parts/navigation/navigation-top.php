@@ -18,11 +18,11 @@ use ClubDesCritiques\ChatRoom as ChatRoom;
         <ul id="top-menu" class="menu">
             <?php if(is_user_logged_in()){ ?>
             <li id="menu-item-88" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-88">
-                <a href="http://club-des-critiques.loc/mon-profil/">Mon Profil</a>
+                <a href="<?php echo getTemplateUrl('MyProfil') ?>">Mon Profil</a>
             </li>
             <?php } ?>
             <li id="menu-item-89" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-89">
-                <a href="http://club-des-critiques.loc/liste-produits/">Liste Produits</a>
+                <a href="<?php echo getTemplateUrl('Products') ?>">Liste Produits</a>
             </li>
             <li id="menu-chat">
                 <?php //next Chat
@@ -37,7 +37,7 @@ use ClubDesCritiques\ChatRoom as ChatRoom;
                             <a href='<?php echo get_permalink($userRoom)?>'>Rejoindre votre dernier salon</a><br>
                         <?php }?>
                     <?php }else{ ?>
-                        <a href='<?php echo get_permalink(get_page_by_title('Produit')).$chatProduct->ID;?>' >Veuillez noter le livre avant de rejoindre un salon</a><br>
+                        <a href='<?php echo getTemplateUrl('SingleProduct').$chatProduct->ID;?>' >Veuillez noter le livre avant de rejoindre un salon</a><br>
                     <?php }?>
                 <?php } ?>
             </li>

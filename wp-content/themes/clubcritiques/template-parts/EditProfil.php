@@ -61,7 +61,7 @@ get_header();
 						<div class="menu_flottant">
 						<?php foreach(get_field('contact', 'user_'.$user->ID) as $contact){ ?>
 							<ul>
-								<a href='<?php echo get_permalink(get_page_by_title('utilisateur')).$contact['ID']; ?>'><li><?php echo $contact['user_firstname']. ' ' .$contact['user_lastname'];;?></li></a>
+								<a href='<?php echo getTemplateUrl('UserProfil').$contact['ID']; ?>'><li><?php echo $contact['user_firstname']. ' ' .$contact['user_lastname'];;?></li></a>
 							</ul>
 						<?php } ?>
 						</div>
