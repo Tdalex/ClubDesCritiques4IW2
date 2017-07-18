@@ -36,7 +36,7 @@ get_header();
 <div class="container-fluid">
 	<div class="row header_page">
 		<div class="container">
-			<?php if(isset($_SESSION['message'])){ ?>
+			<?php if(isset($_SESSION['message']) && !isset($_POST['type'])){ ?>
 				<div class="alert alert-<?php echo $_SESSION['message']['type'] ?>">
 				  <?php echo $_SESSION['message']['text']; ?>
 				</div>	

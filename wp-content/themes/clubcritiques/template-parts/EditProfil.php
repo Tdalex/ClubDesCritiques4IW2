@@ -23,7 +23,7 @@ get_header();
 	<div class="row title_profil">
 		<h1><?php echo get_the_title();  ?></h1>
 	</div>
-	<?php if(isset($_SESSION['message'])){ ?>
+	<?php if(isset($_SESSION['message']) && !isset($_POST['type'])){ ?>
 		<div class="alert alert-<?php echo $_SESSION['message']['type'] ?>">
 		  <?php echo $_SESSION['message']['text']; ?>
 		</div>	

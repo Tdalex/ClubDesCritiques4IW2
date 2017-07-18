@@ -32,8 +32,7 @@ $time_salon = date('F j, Y H:i:s', strtotime($endDate));
 
 <?php
 get_header(); ?>
-
-<?php if(isset($_SESSION['message'])){ ?>
+<?php if(isset($_SESSION['message']) && !isset($_POST['type'])){ ?>
 	<div class="alert alert-<?php echo $_SESSION['message']['type'] ?>">
 	  <?php echo $_SESSION['message']['text']; ?>
 	</div>	

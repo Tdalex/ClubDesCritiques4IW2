@@ -96,7 +96,7 @@ get_header();
 	</div>
 
 		<div class="row chatroom">
-			<?php if(isset($_SESSION['message'])){ ?>
+			<?php if(isset($_SESSION['message']) && !isset($_POST['type'])){ ?>
 				<div class="alert alert-<?php echo $_SESSION['message']['type'] ?>">
 				  <?php echo $_SESSION['message']['text']; ?>
 				</div>	

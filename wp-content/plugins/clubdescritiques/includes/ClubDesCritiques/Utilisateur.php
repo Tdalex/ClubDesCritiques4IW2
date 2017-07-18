@@ -23,7 +23,7 @@ class Utilisateur{
 
 	public static function register($request){
 		if(empty($request))
-			return false;
+			return self::redirect(strtok($_SERVER["REQUEST_URI"],'?'));
 
 		//generate random password
 
@@ -39,7 +39,7 @@ class Utilisateur{
 			wp_mail($request['email'], $object, $message, $headers);
 		}else{
 			$_SESSION['message'] = array('type' => 'danger', 'text' => 'email deja utilise');
-			return false;
+			return self::redirect(strtok($_SERVER["REQUEST_URI"],'?'));
 		}
 		$_SESSION['message'] = array('type' => 'success', 'text' => 'un email comportant vos identifiants vous a ete envoyé');
 		return self::redirect(strtok($_SERVER["REQUEST_URI"],'?'));
@@ -47,7 +47,7 @@ class Utilisateur{
 
 	public static function login($request){
 		if(empty($request))
-			return false;
+			return self::redirect(strtok($_SERVER["REQUEST_URI"],'?'));
 
 		//get user by email
 		$user =	get_user_by('email', $request['email']);
@@ -61,38 +61,38 @@ class Utilisateur{
 				if(!get_field('activated', 'user_'.$user->ID)){
 					$activate = '
 					<div class="modal-backdrop in"></div>
-
-<div class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="channelModal" style="display:block;">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="channelModal">Bienvenue sur Club des Critiques, <br>Afin de bénécifier d\'une experience optimale, veuillez remplir les champs ci-dessous.</h4>
-            </div>
-            <div class="modal-body modal-password">
-               <form action="" method="POST">
-						<input type="hidden" name="type" value="activate"></input>
-						Prénom:<input required="required" type="text" name="firstname"></input><br>
-						Nom de famille:<input required="required" type="text" name="lastname"></input><br>
-						Mot de passe:<input type="password" name="newPassword"></input><br>
-						Confirmation de mot de passe:<input type="password" name="newPasswordCheck"></input><br>
-						<button type="submit">modifier  mot de passe</button>
-					</form>
-            </div>
-        </div>
-    </div>
-</div>';
+					<div class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="channelModal" style="display:block;">
+						<div class="modal-dialog modal-lg" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h4 class="modal-title" id="channelModal">Bienvenue sur Club des Critiques, <br>Afin de bénécifier d\'une experience optimale, veuillez remplir les champs ci-dessous.</h4>
+								</div>
+								<div class="modal-body modal-password">
+								   <form action="" method="POST">
+											<input type="hidden" name="type" value="activate"></input>
+											Prénom:<input required="required" type="text" name="firstname"></input><br>
+											Nom de famille:<input required="required" type="text" name="lastname"></input><br>
+											Mot de passe:<input type="password" name="newPassword"></input><br>
+											Confirmation de mot de passe:<input type="password" name="newPasswordCheck"></input><br>
+											<button type="submit">modifier  mot de passe</button>
+										</form>
+								</div>
+							</div>
+						</div>
+					</div>';
+					
 					$_SESSION['activate'] = $activate;
-					return true;
+					return self::redirect(strtok($_SERVER["REQUEST_URI"],'?'));
 				}else{
 					return self::redirect(strtok($_SERVER["REQUEST_URI"],'?'));
 				}
 			}else{
 				$_SESSION['message'] = array('type' => 'danger', 'text' => 'email ou mot de passe non valide');
-				return false;
+				return self::redirect(strtok($_SERVER["REQUEST_URI"],'?'));
 			}
 		}else{
 			$_SESSION['message'] = array('type' => 'danger', 'text' => 'email ou mot de passe non valide');
-			return false;
+			return self::redirect(strtok($_SERVER["REQUEST_URI"],'?'));
 		}
 	}
 
@@ -111,7 +111,7 @@ class Utilisateur{
 		}
 
 		if($error){
-			return false;
+			return self::redirect(strtok($_SERVER["REQUEST_URI"],'?'));
 		}
 		unset($_SESSION['activate']);
 		wp_update_user(array('ID' => $user->ID, 'first_name' => $request['firstname'], 'last_name' => $request['lastname']));
