@@ -202,7 +202,9 @@ get_header(); ?>
 						</div>
 					<?php } ?>
 				<?php }else{ ?>
-					<a href='<?php echo getTemplateUrl('SingleProduct').$chatProduct->ID;?>' >Veuillez noter le livre avant de rejoindre un salon</a><br>
+					<div class="chat-not-rated">
+                        <a class="chat-not-rated" href='<?php echo getTemplateUrl('SingleProduct').$chatProduct->ID;?>' >Veuillez noter le livre avant de rejoindre un salon</a><br>
+                    </div>
 				<?php } ?>
 			<?php } ?>
 		<?php }else{ ?>

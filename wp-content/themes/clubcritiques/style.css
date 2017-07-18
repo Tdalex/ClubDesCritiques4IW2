@@ -1832,6 +1832,13 @@ nav {
     padding-bottom: 50px;
 }
 
+.chat-not-rated {
+	font-size: 20px;
+	font-weight: 700;
+	text-transform: uppercase;
+	padding-top: 15px;
+}
+
 
 .next-chat h1 {
 	text-align: center;
