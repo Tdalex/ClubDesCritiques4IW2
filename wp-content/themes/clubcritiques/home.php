@@ -99,93 +99,93 @@ get_header(); ?>
 <!-- SECTION CHAT -->
 
 <section>
-<div class="next-chat">
-    <div class="container">
-		<h1 class="chat-title">Salons</h1>
-		<?php if($nextChat){ 
-			$chatProduct   = get_field('product', $nextChat->ID)[0]; 
-			$averageNote   = Utilisateur::getAverageNote($chatProduct->ID); 
-			$productAuthor = get_field('author', $chatProduct->ID)[0]; ?>
-			<div class="row">
-				<div class="col-md-3">
-					<div class="row">
-						<a href="#">
-							<?php if(!$image){ ?> 
-								<div style="background-image: url(<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>)" class="book-salon"></div>
-							<?php }else{ ?>
-								<div class="book-salon" style="background-image: url(<?php echo $image; ?>"></div>
-							<?php } ?>
-						</a>
-					</div>
-				</div>
-
-
-				<div class="col-md-3">
+	<div class="next-chat">
+		<div class="container">
+			<h1 class="chat-title">Salons</h1>
+			<?php if($nextChat){ 
+				$chatProduct   = get_field('product', $nextChat->ID)[0]; 
+				$averageNote   = Utilisateur::getAverageNote($chatProduct->ID); 
+				$productAuthor = get_field('author', $chatProduct->ID)[0]; ?>
+				<div class="row">
+					<div class="col-md-3">
 						<div class="row">
-							<h2 class="title"><a class="chat-link" href="<?php echo getTemplateUrl('SingleProduct').$chatProduct->ID; ?>"><?php echo $chatProduct->post_title; ?></a></h2>
+							<a href="#">
+								<?php if(!$image){ ?> 
+									<div style="background-image: url(<?php echo get_parent_theme_file_uri( '/assets/images/book_defaut.png' ); ?>)" class="book-salon"></div>
+								<?php }else{ ?>
+									<div class="book-salon" style="background-image: url(<?php echo $image; ?>"></div>
+								<?php } ?>
+							</a>
 						</div>
+					</div>
 
-						<div class="row author author-home">		
-							<a href='<?php echo getTemplateUrl('Author').$productAuthor->ID; ?>'><?php echo $productAuthor->post_title; ?></a>
-							[<?php echo get_field('published_date', $chatProduct->ID); ?>]
+
+					<div class="col-md-3">
+							<div class="row">
+								<h2 class="title"><a class="chat-link" href="<?php echo getTemplateUrl('SingleProduct').$chatProduct->ID; ?>"><?php echo $chatProduct->post_title; ?></a></h2>
+							</div>
+
+							<div class="row author author-home">		
+								<a href='<?php echo getTemplateUrl('Author').$productAuthor->ID; ?>'><?php echo $productAuthor->post_title; ?></a>
+								[<?php echo get_field('published_date', $chatProduct->ID); ?>]
+							</div>
+
+						<div class="row">
+							<?php if ( $averageNote['total'] > 0){ ?>
+								<span class='star_rating'>
+								<?php
+								if($averageNote['average'] >= 0.5 && $averageNote['average'] < 1.5){
+									echo "<span class='note_star'>★</span>★★★★</span>";
+								}elseif($averageNote['average'] >= 1.5 && $averageNote['average'] < 2.5){
+									echo "<span class='note_star'>★★</span>★★★</span>";
+								}elseif($averageNote['average'] >= 2.5 && $averageNote['average'] < 3.5){
+									echo "<span class='note_star'>★★★</span>★★</span>";
+								}elseif($averageNote['average'] >= 3.5 && $averageNote['average'] < 4.5){
+									echo "<span class='note_star'>★★★★</span>★</span>";						
+								}elseif($averageNote['average'] >= 4.5){
+									echo "<span class='note_star'>★</span>★★★★</span>";
+								}else{
+									echo '★★★★★</span>';
+								} 
+								
+								if($averageNote['total'] > 1){
+									echo "<span>".$averageNote['total']." notes</span>";
+								}
+								else{
+									echo "<span>".$averageNote['total']." note</span>";
+								}?>
+							<?php }else{ ?>
+								<span class="aucune_note">Aucune note</span>
+							<?php } ?>
 						</div>
+					</div>
+				<?php if ($today < $startDate) { ?>					
+					<div class="col-md-6">
+						<div class="row">
+							<h2 class="h2-timer">Le salon commence dans :</h2>
+						</div>	
+						<div class="row timer" id="timer" data-timer="<?php echo $time_start_salon; ?>">
+						  <span class="time"></span>
+						  <span class="time"></span>
+						  <span class="time"></span>
+						  <span class="time"></span>
+						</div>
+					</div>
+				</div>
 
-					<div class="row">
-						<?php if ( $averageNote['total'] > 0){ ?>
-							<span class='star_rating'>
-							<?php
-							if($averageNote['average'] >= 0.5 && $averageNote['average'] < 1.5){
-								echo "<span class='note_star'>★</span>★★★★</span>";
-							}elseif($averageNote['average'] >= 1.5 && $averageNote['average'] < 2.5){
-								echo "<span class='note_star'>★★</span>★★★</span>";
-							}elseif($averageNote['average'] >= 2.5 && $averageNote['average'] < 3.5){
-								echo "<span class='note_star'>★★★</span>★★</span>";
-							}elseif($averageNote['average'] >= 3.5 && $averageNote['average'] < 4.5){
-								echo "<span class='note_star'>★★★★</span>★</span>";						
-							}elseif($averageNote['average'] >= 4.5){
-								echo "<span class='note_star'>★</span>★★★★</span>";
-							}else{
-								echo '★★★★★</span>';
-							} 
-							
-							if($averageNote['total'] > 1){
-								echo "<span>".$averageNote['total']." notes</span>";
-							}
-							else{
-								echo "<span>".$averageNote['total']." note</span>";
-							}?>
-						<?php }else{ ?>
-							<span class="aucune_note">Aucune note</span>
-						<?php } ?>
+				<?php }else{ ?> 					
+					<div class="col-md-6">
+						<div class="row">
+							<h2 class="h2-timer">Le salon fini dans :</h2>
+						</div>	
+						<div class="row timer" id="timer" data-timer="<?php echo $time_salon; ?>">
+						  <span class="time"></span>
+						  <span class="time"></span>
+						  <span class="time"></span>
+						  <span class="time"></span>
+						</div>
 					</div>
 				</div>
-			<?php if ($today < $startDate) { ?>					
-				<div class="col-md-6">
-					<div class="row">
-						<h2 class="h2-timer">Le salon commence dans :</h2>
-					</div>	
-					<div class="row timer" id="timer" data-timer="<?php echo $time_start_salon; ?>">
-					  <span class="time"></span>
-					  <span class="time"></span>
-					  <span class="time"></span>
-					  <span class="time"></span>
-					</div>
-				</div>
-			</div>
-
-			<?php }else{ ?> 					
-				<div class="col-md-6">
-					<div class="row">
-						<h2 class="h2-timer">Le salon fini dans :</h2>
-					</div>	
-					<div class="row timer" id="timer" data-timer="<?php echo $time_salon; ?>">
-					  <span class="time"></span>
-					  <span class="time"></span>
-					  <span class="time"></span>
-					  <span class="time"></span>
-					</div>
-				</div>
-			</div>
 
 			<?php if(!is_user_logged_in()){ ?>
 				<div class="row"><p class="mess_not_connect">Veuillez vous connecter avant de rejoindre le salon</p></div>
@@ -208,8 +208,7 @@ get_header(); ?>
 		<?php }else{ ?>
 			<h1 class="chat-title">Aucun salon programmé pour le moment</h1><br>
 		<?php } ?>
-</div>
-
+	</div>
 </section>
 
 <!-- FIN SECTION CHAT -->
