@@ -23,7 +23,7 @@ class ChatRoom{
     public static function getNextChat(){
         global $wpdb;
 
-        $query = "SELECT ". $wpdb->posts .".ID, ".$wpdb->posts .".post_title  FROM ". $wpdb->posts ." INNER JOIN ". $wpdb->postmeta ." as metaA ON (". $wpdb->posts .".ID = metaA.post_id) WHERE cast(metaA.meta_value as datetime) >= now() AND metaA.meta_key = 'end_date' order by cast(metaA.meta_value as date) ASC";
+        $query = "SELECT ". $wpdb->posts .".ID, ".$wpdb->posts .".post_title  FROM ". $wpdb->posts ." INNER JOIN ". $wpdb->postmeta ." as metaA ON (". $wpdb->posts .".ID = metaA.post_id) WHERE cast(metaA.meta_value as datetime) >= now() AND metaA.meta_key = 'end_date' and ". $wpdb->posts .".post_status ='publish' order by cast(metaA.meta_value as date) ASC";
 
 		$result = $wpdb->get_results($query);
         if(!empty($result))
