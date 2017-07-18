@@ -79,7 +79,7 @@ $time_salon = date('F j, Y H:i:s', strtotime($endDate));
 
 													<div class="row">
 														<?php if ( $averageNote['total'] > 0){ ?>
-															<span class='star_rating'>
+															<span class='star_rating_modal'>
 															<?php
 															if($averageNote['average'] >= 0.5 && $averageNote['average'] < 1.5){
 																echo "<span class='note_star'>★</span>★★★★</span>";
@@ -94,16 +94,7 @@ $time_salon = date('F j, Y H:i:s', strtotime($endDate));
 															}else{
 																echo '★★★★★</span>';
 															} 
-															
-															if($averageNote['total'] > 1){
-																echo "<span>".$averageNote['total']." notes</span>";
-															}
-															else{
-																echo "<span>".$averageNote['total']." note</span>";
-															}?>
-														<?php }else{ ?>
-															<span class="aucune_note">Aucune note</span>
-														<?php } ?>
+														}?>
 													</div>
 												</div>
 											<?php if ($today < $startDate) { ?>					

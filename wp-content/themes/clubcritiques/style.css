@@ -1704,6 +1704,7 @@ nav {
 
 .chat-link-modal {
 	color: #000;
+	padding: 0 !important;
 }
 
 .chat-link:hover {
@@ -4926,8 +4927,15 @@ button:hover{
 	color: white;
 }
 
+.author-home-modal{
+	font-weight: normal;
+	margin-top: 10%;	
+}
+
 .author-home-modal a{
 	color: #000;
+	padding: 0;
+	font-weight: normal;
 }
 
 .author-home a:hover{
@@ -5148,4 +5156,11 @@ content:"secondes"}
 
 .row_exchange {
 	border-bottom: 1px solid #ccc;
+}
+
+.star_rating_modal {
+	
+	font-size: 30px;
+	color: #aaa;
+	font-weight: normal;
 }
