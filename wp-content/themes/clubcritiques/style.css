@@ -1546,16 +1546,12 @@ svg.icon.icon-arrow-right {
 	text-align: center;
 }
 
-.modal-body-chat {
-	height: 440px;
-} 
+.modal-body.modal-body-chat {
+	height: 470px;
+}
 
 .modal-chat {
 	width: 1170px;
-}
-
-#menu-chat {
-	padding: 0px 20px;
 }
 
 .modal-password {
@@ -1574,6 +1570,12 @@ svg.icon.icon-arrow-right {
 
 #menu-chat {
 	display: flex;
+	margin: 0 20px;
+}
+
+.btn-chat {
+	margin-top: 20px;
+    margin-bottom: 10px;
 }
 
 .alert {
@@ -1697,6 +1699,10 @@ nav {
 }
 
 .chat-link {
+	color: white;
+}
+
+.chat-link-modal {
 	color: #000;
 }
 
@@ -4910,6 +4916,10 @@ button:hover{
 }
 
 .author-home a{
+	color: white;
+}
+
+.author-home-modal a{
 	color: #000;
 }
 
@@ -4968,11 +4978,17 @@ content:"secondes"}
 .h2-timer {
 	text-align: center;
 	font-size: 30px;
+	color: white;
+}
+
+.h2-timer-modal {
+	text-align: center;
+	font-size: 30px;
 	color: #000;
 }
 
 .join-salon {
-	/*margin-top: 4%;*/
+	margin-top: 4%;
 }
 
 

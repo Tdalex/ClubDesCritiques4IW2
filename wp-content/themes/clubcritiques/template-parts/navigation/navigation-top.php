@@ -38,7 +38,8 @@ $time_salon = date('F j, Y H:i:s', strtotime($endDate));
                 <?php //next Chat
 				if($nextChat){
 					if ($today >= $startDate) { ?>
-						<button type="button" class="btn-login" data-toggle="modal" data-target="#salonModal">Salon</button>	
+						<button type="button" class="btn-chat" data-toggle="modal" data-target="#salonModal">Salon</button>
+            </li>
 						 <!-- Modal -->
 						<div id="salonModal" class="modal fade" role="dialog">
 							<div class="modal-dialog modal-chat">
@@ -68,10 +69,10 @@ $time_salon = date('F j, Y H:i:s', strtotime($endDate));
 												</div>
 												<div class="col-md-3">
 														<div class="row">
-															<h2 class="title"><a class="chat-link" href="<?php echo getTemplateUrl('SingleProduct').$chatProduct->ID; ?>"><?php echo $chatProduct->post_title; ?></a></h2>
+															<h2 class="title"><a class="chat-link-modal" href="<?php echo getTemplateUrl('SingleProduct').$chatProduct->ID; ?>"><?php echo $chatProduct->post_title; ?></a></h2>
 														</div>
 
-														<div class="row author author-home">		
+														<div class="row author author-home-modal">
 															<a href='<?php echo getTemplateUrl('Author').$productAuthor->ID; ?>'><?php echo $productAuthor->post_title; ?></a>
 															[<?php echo get_field('published_date', $chatProduct->ID); ?>]
 														</div>
@@ -108,7 +109,7 @@ $time_salon = date('F j, Y H:i:s', strtotime($endDate));
 											<?php if ($today < $startDate) { ?>					
 												<div class="col-md-6">
 													<div class="row">
-														<h2 class="h2-timer">Le salon commence dans :</h2>
+														<h2 class="h2-timer-modal">Le salon commence dans :</h2>
 													</div>	
 													<div class="row timer" id="timer" data-timer="<?php echo $time_start_salon; ?>">
 													  <span class="time"></span>
@@ -122,7 +123,7 @@ $time_salon = date('F j, Y H:i:s', strtotime($endDate));
 											<?php }else{ ?> 					
 												<div class="col-md-6">
 													<div class="row">
-														<h2 class="h2-timer">Le salon fini dans :</h2>
+														<h2 class="h2-timer-modal">Le salon fini dans :</h2>
 													</div>	
 													<div class="row timer" id="timer" data-timer="<?php echo $time_salon; ?>">
 													  <span class="time"></span>
