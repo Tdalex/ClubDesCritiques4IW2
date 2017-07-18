@@ -55,22 +55,7 @@ if(isset($_POST) && $_POST['type'] == 'register'){
                 <div class="collapse navbar-collapse" id="myNavbar">
 					<?php get_search_form(); ?>
 					<ul class="nav navbar-nav navbar-right">
-					<?php get_template_part('template-parts/navigation/navigation', 'top'); ?>
-						<?php //next Chat
-						$nextChat = ChatRoom::getNextChat();
-						if($nextChat){ 
-							$chatProduct = get_field('product', $nextChat->ID)[0]; 
-							if(!is_user_logged_in()){ ?>
-							<?php }elseif(ChatRoom::isUserKicked($nextChat->ID, get_current_user_id())){ ?>
-							<?php }elseif(false !== Utilisateur::getNotation($chatProduct->ID, get_current_user_id())){ ?>
-								<a href='<?php echo get_permalink($nextChat->ID)?>?changeRoom=true'>Rejoindre un salon</a><br>
-								<?php if($userRoom = ChatRoom::getUserRoom($nextChat->ID)){ ?>
-									<a href='<?php echo get_permalink($userRoom)?>'>Rejoindre votre dernier salon</a><br>
-								<?php }?>
-							<?php }else{ ?>
-								<a href='<?php echo get_permalink(get_page_by_title('Produit')).$chatProduct->ID;?>' >Veuillez noter le livre avant de rejoindre un salon</a><br>
-							<?php }?>
-						<?php } ?>
+						<?php get_template_part('template-parts/navigation/navigation', 'top'); ?>
 					</ul>
                 </div>
         </nav>

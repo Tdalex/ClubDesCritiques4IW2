@@ -116,7 +116,7 @@ $formats = get_terms( array(
 						<h2><?php echo $product->post_title; ?></h2></a>
 					</div>
 					<div class="row books_parution">
-						<span>parue le :</span>
+						<span>parue le : <?php echo get_field('published_date', $product->ID);?></span>
 					</div>
 					<div class="row books_auteur">
 						<a href="<?php echo get_permalink(get_page_by_title('Auteur')).get_field('author',$product->ID)[0]->ID; ?>">
