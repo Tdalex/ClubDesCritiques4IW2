@@ -21,8 +21,6 @@ $products = get_posts( $args );
 //next Chat
 setlocale (LC_TIME, 'fr_FR.utf8','fra'); 
 $nextChat  = ChatRoom::getNextChat();
-$_SESSION['message']['type'] = 'success';
-$_SESSION['message']['text'] = 'success';
 $startDate = get_field('start_date', $nextChat->ID);
 $endDate   = get_field('end_date',  $nextChat->ID);
 $today     = date('Y-m-d H:i:s');

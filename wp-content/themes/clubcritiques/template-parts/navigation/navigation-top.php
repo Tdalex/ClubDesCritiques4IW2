@@ -24,7 +24,7 @@ use ClubDesCritiques\ChatRoom as ChatRoom;
             <li id="menu-item-89" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-89">
                 <a href="http://club-des-critiques.loc/liste-produits/">Liste Produits</a>
             </li>
-            <li>
+            <li id="menu-chat">
                 <?php //next Chat
                 $nextChat = ChatRoom::getNextChat();
                 if($nextChat){
@@ -75,9 +75,6 @@ use ClubDesCritiques\ChatRoom as ChatRoom;
                                         </form>
                                     </div>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                </div>
                                 </div>
                             </div>
 
@@ -89,7 +86,7 @@ use ClubDesCritiques\ChatRoom as ChatRoom;
                 } else { ?>
                     <form action="" method="POST" class="logout">
                         <input type='hidden' name='type' value='logout'></input>
-                        <button type='submit'>se deconnecter</button>
+                        <button type='submit' class="btn-logout">se deconnecter</button>
                     </form>
                 <?php } ?>
             </li>

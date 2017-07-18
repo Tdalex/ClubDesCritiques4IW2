@@ -1538,10 +1538,26 @@ body {
 13.1 Header
 --------------------------------------------------------------*/
 
+svg.icon.icon-arrow-right {
+	display: none;
+}
+
 .modal-password {
 	color: #000;
 	font-size: 22px;
 	font-weight: 700;
+}
+
+.btn-login {
+	margin-top: 15px;
+}
+
+.btn-logout {
+	margin-top: 20px;
+}
+
+#menu-chat {
+	display: flex;
 }
 
 .alert {
