@@ -17,14 +17,14 @@ use ClubDesCritiques\ChatRoom as ChatRoom;
 
 if(isset($_POST['type']) && $_POST['type'] == 'contactSend'){
 	echo sendContactForm($_POST);
-}elseif(isset($_POST) && $_POST['type'] == 'register'){
+}elseif(isset($_POST['type']) && $_POST['type'] == 'register'){
 	echo Utilisateur::register($_POST);
-}elseif(isset($_POST) && $_POST['type'] == 'login'){
+}elseif(isset($_POST['type']) && $_POST['type'] == 'login'){
 	echo Utilisateur::login($_POST);
-}elseif(isset($_POST) && $_POST['type'] == 'logout'){
+}elseif(isset($_POST['type']) && $_POST['type'] == 'logout'){
 	wp_logout();
 	echo Utilisateur::redirect($_SERVER['REQUEST_URI']);
-}elseif(isset($_POST) && $_POST['type'] == 'activate'){
+}elseif(isset($_POST['type']) && $_POST['type'] == 'activate'){
 	echo Utilisateur::activateAccount($_POST);
 }
 
