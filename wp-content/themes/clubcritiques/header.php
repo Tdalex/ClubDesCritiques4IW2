@@ -1,4 +1,4 @@
-<?php
+<?php $_SESSION['activate'] = 0;
 /**
  * The header for our theme
  *

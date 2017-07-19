@@ -187,7 +187,8 @@ get_header();
 							<img class="img-responsive"  src="<?php echo get_field('image', $sp->ID); ?>"></img>
 						<?php } ?>
 					</div>
-					<h3><?php echo $sp->post_title; ?></h3>
+
+					<h3 class="h3-autres"><?php echo $sp->post_title; ?></h3>
 				</a>				
 				<a href="<?php echo getTemplateUrl('Author').get_field('author', $sp->ID)[0]->ID; ?>">
 					<p><?php echo get_field('author', $sp->ID)[0]->post_title; ?></p>

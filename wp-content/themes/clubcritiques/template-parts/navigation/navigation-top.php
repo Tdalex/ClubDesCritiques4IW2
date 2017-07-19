@@ -17,7 +17,7 @@ $nextChat  = ChatRoom::getNextChat();
 $startDate = get_field('start_date', $nextChat->ID);
 $endDate   = get_field('end_date',  $nextChat->ID);
 $today     = date('Y-m-d H:i:s');
-$start = strftime('%A %d %B à %Hh%M',strtotime($start));
+// $start = strftime('%A %d %B à %Hh%M',strtotime($start));
 $end   = strftime('%A %d %B à %Hh%M',strtotime($endDate));
 $time_start_salon = date('F j, Y H:i:s', strtotime($startDate));
 $time_salon = date('F j, Y H:i:s', strtotime($endDate));
@@ -54,7 +54,9 @@ $time_salon = date('F j, Y H:i:s', strtotime($endDate));
 										<?php if($nextChat){
 											$chatProduct   = get_field('product', $nextChat->ID)[0]; 
 											$averageNote   = Utilisateur::getAverageNote($chatProduct->ID); 
-											$productAuthor = get_field('author', $chatProduct->ID)[0]; ?>
+											$productAuthor = get_field('author', $chatProduct->ID)[0]; 
+											$image = get_field('image', $chatProduct->ID); 
+											?>
 											<div class="row">
 												<div class="col-md-3">
 													<div class="row">

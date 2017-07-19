@@ -35,7 +35,7 @@ get_header();
 		<div class="container">
 			<div class="row content_profil">
 				<div class="col-md-3">
-					<?php if(!$image){ ?> 
+					<?php if(!$photo){ ?> 
 						<img src="<?php echo get_parent_theme_file_uri( '/assets/images/avatar_defaut.png' ); ?>" 
 						class=" img-responsive profil_img" alt="photo profil" />
 					<?php }else{ ?>

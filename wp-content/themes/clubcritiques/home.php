@@ -105,7 +105,9 @@ get_header(); ?>
 			<?php if($nextChat){ 
 				$chatProduct   = get_field('product', $nextChat->ID)[0]; 
 				$averageNote   = Utilisateur::getAverageNote($chatProduct->ID); 
-				$productAuthor = get_field('author', $chatProduct->ID)[0]; ?>
+				$productAuthor = get_field('author', $chatProduct->ID)[0]; 
+				$image = get_field('image', $chatProduct->ID);
+				?>
 				<div class="row">
 					<div class="col-md-3">
 						<div class="row">
