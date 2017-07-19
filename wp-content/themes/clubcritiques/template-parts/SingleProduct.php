@@ -57,9 +57,15 @@ $userNote = 0;
 
 $userExchange = array();
 if($userId = get_current_user_id()){
+	$exchangeType = null;
     $userNote = Utilisateur::getNotation($product_ID, $userId);
 	$userExchange = Utilisateur::getUserExchange($product_ID, $userId);
-	$exchangeType = wp_get_post_terms($userExchange->ID, 'exchange_type')[0]->slug;
+	if(isset($userExchange) && is_object($userExchange)){
+		$exchangeType = wp_get_post_terms($userExchange->ID, 'exchange_type');
+		if(isset($exchangeType[0])){
+			$exchangeType = $exchangeType[0]->slug;
+		}
+	}
 }
 
 $comments    = Utilisateur::getProductComments($product_ID);

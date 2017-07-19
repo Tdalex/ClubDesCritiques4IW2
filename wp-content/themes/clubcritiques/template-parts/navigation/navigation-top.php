@@ -17,7 +17,7 @@ $nextChat  = ChatRoom::getNextChat();
 $startDate = get_field('start_date', $nextChat->ID);
 $endDate   = get_field('end_date',  $nextChat->ID);
 $today     = date('Y-m-d H:i:s');
-$start = strftime('%A %d %B à %Hh%M',strtotime($start));
+$start = strftime('%A %d %B à %Hh%M',strtotime($startDate));
 $end   = strftime('%A %d %B à %Hh%M',strtotime($endDate));
 $time_start_salon = date('F j, Y H:i:s', strtotime($startDate));
 $time_salon = date('F j, Y H:i:s', strtotime($endDate));
@@ -193,7 +193,7 @@ $time_salon = date('F j, Y H:i:s', strtotime($endDate));
                         </div>
                     </div>
 
-                <?php } elseif($_SESSION['activate']) {
+                <?php } elseif(isset($_SESSION['activate'])) {
                     echo $_SESSION['activate'];
                 } else { ?>
                     <form action="" method="POST" class="logout">
